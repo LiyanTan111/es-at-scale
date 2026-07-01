@@ -24,3 +24,7 @@ datasets/**/.cache
 .venv/
 venv/
 env/
+
+# Local machine-specific setup helpers / logs (paths are cluster-specific)
+env.sh
+install.log
