@@ -6,6 +6,7 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 
 | run (EXPNAME) | task | model | recipe | seed | engines | iters | gens | wall (h) | best (iter) | final | notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
+| forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:10 PT** |
 
 ## Reference rows imported from NERSC (A100-40GB, 4 engines) — see PROJECT_STATUS.md §2
 
@@ -21,4 +22,5 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 
 | probe | model | engines | s/iter (steady) | notes |
 |---|---|---|---|---|
+| probe-1p5b-v2-2eng | 1.5B v2 | 2 (GPUs 1,2) | 15–19 (mean 17.9) | rollout ~12 s, score ~5.5 s, update ~1.5 s; eval ≈ 50 s |
 | probe-1p5b-v2-speed | 1.5B v2 | 4 | 11.5–12.5 (mean 13.0 incl. eval step) | H100, GPUs 1–4; eval of 2000 prompts ≈ 28 s; base acc 1.60%/1.75% (NERSC 1.80%/1.40%) ✓; A100 ref 17.7 |

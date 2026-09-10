@@ -88,16 +88,20 @@ Re-run this search **two weeks before submission** (2027-01-02) — field moves 
 Hardware: lambda-scalar, GPUs **1,2,3,4 only** (GPU 0 banned; max 4; shared box — check
 `nvidia-smi` before every launch; `scripts/local_forge.sh` refuses busy cards).
 
-Reference costs (A100-40GB, NERSC, 4 engines; H100 numbers to be filled by E0.2):
-- FORGE v2, 1.5B, Countdown, 512 tok: **17.7 s/iter → 4000 iters ≈ 20 h**.
-- ES paper recipe, 1.5B, 512 tok: **41.5 s/iter → 500 iters ≈ 5.8 h**.
-- Eval (2000 prompts, sharded 4 engines): ~9 s (0.5B); 1.5B TBD.
+Measured costs on H100 (2026-09-10; FORGE v2, 1.5B, Countdown, 512 tok):
+- 4 engines (GPUs 1–4): **~12 s/iter** (rollout ≈ 60%, scoring ≈ 30%, update ≈ 10%);
+  eval of 2000 prompts ≈ 28 s. 4000 iters ≈ 15 h.
+- 2 engines (GPUs 1,2): **~16–19 s/iter** (rollout ~12 s, scoring ~5.5 s, update ~1.5 s);
+  eval ≈ 50 s. 4000 iters ≈ 21 h. Slowdown 1.4–1.5× < 1.7 ⇒ total throughput preserved.
+- A100 reference (NERSC): FORGE v2 17.7 s/iter; ES paper recipe 41.5 s/iter (500 iters ≈ 5.8 h).
 
-Scheduling policy (decided after E0.2/E0.3):
-- **Lane A (4 GPUs)** = one full-budget run at a time (flagship / final-recipe seeds), OR
-- **2+2 split** = flagship on 2 engines + a probe lane on 2 engines, *if* the per-iteration
-  slowdown at 2 engines is < 1.7× (then total throughput is preserved and research
-  iteration never blocks). E0.3 measures this.
+**Scheduling policy (decided 2026-09-10): 2+2 split.**
+- **Lane A = GPUs (1,2):** the flagship / final-recipe seeds (one run at a time).
+- **Lane B = GPUs (3,4):** probes, baselines (ES, GRPO), instrumentation runs (≤1500 iters).
+- Topology rule: GPUs 0–3 are NUMA node 0, 4–7 node 1. A 2-GPU NCCL group across sockets
+  crashes at init unless `NCCL_P2P_DISABLE=1`; `local_forge.sh` sets it automatically for
+  spanning sets (SETUP.md P10). Same-socket pairs (1,2), (2,3) need nothing.
+- A 4-engine run (GPUs 1–4) is allowed only when Lane B is idle and the run needs <1 day.
 - Every run: `LOGGING=wandb`, project `grzo-rlvr`, EXPNAME = `<recipe>-<task>-<model>-h100-s<seed>`.
 - Every result is appended to `RESULTS.md` (table: run, recipe, budget, best, final, wall-clock,
   generations) the day it finishes. wandb is the curve store; RESULTS.md is the paper store.
@@ -108,10 +112,10 @@ Scheduling policy (decided after E0.2/E0.3):
 
 ### Phase 0 — Restart (2026-09-10 → 09-12)  ✅ mostly done
 - E0.1 Environment + local runner + smoke — **done** (SETUP.md).
-- E0.2 H100 speed probe, v2 recipe, 4 engines (30 iters) — **running**.
-- E0.3 2-engine speed probe (8 iters) — queued → decides §4 policy.
+- E0.2 H100 speed probe, v2 recipe, 4 engines (30 iters) — **done** (§4).
+- E0.3 2-engine speed probe (8 iters) — **done** → 2+2 policy (§4).
 - E0.4 Literature refresh — **done** (§3).
-- E0.5 Launch **F1**: FORGE v2, Countdown, 1.5B, seed 42, 4000 iters, wandb — **next**.
+- E0.5 Launch **F1**: FORGE v2, Countdown, 1.5B, seed 42, 4000 iters, wandb — **launched 2026-09-10 12:10 PT on GPUs (1,2)**.
 
 ### Phase 1 — Foundations for the paper's main figure (09-12 → 10-05)
 Runs in the probe lane while F1 trains (or after, if lane A only):
@@ -218,11 +222,12 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 
 ## 9. Status block (update at every milestone)
 
-- **Today:** 2026-09-10.
-- **Current step:** Phase 0 — E0.2 speed probe running; E0.3 queued; then E0.5 launch F1.
-- **In flight:** `probe-1p5b-v2-speed` (throwaway).
-- **Next decision:** §4 scheduling policy (after E0.3).
-- **Next gate:** G1 at F1 iter 1500 (~2026-09-1x depending on H100 speed).
+- **Today:** 2026-09-10 (12:10 PT).
+- **Current step:** Phase 0 complete; Phase 1 starts. F1 launched (E0.5 ✅).
+- **In flight:** Lane A: `forge2-cd-1p5b-h100-s42` (F1, v2 recipe, 4000 iters, wandb grzo-rlvr,
+  ETA ~2026-09-11 09:00 PT). Lane B: idle → next E1.1 (ES on H100) then E1.7 (noise decomposition).
+- **Next decision:** none pending; E1.6 GRPO venv build (CPU) can proceed anytime.
+- **Next gate:** G1 at F1 iter 1500 (~2026-09-10 20:30 PT): best ≥ 9%, no collapse.
 
 ## 10. Parking lot (ideas not scheduled; each needs a lit check before promotion)
 

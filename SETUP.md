@@ -168,6 +168,15 @@ inter-engine rendezvous cross. Fix: `es_trainer.py` honours `FORGE_MASTER_PORT`;
 `scripts/local_forge.sh` assigns a unique unused port per run. If launching by hand, set
 `FORGE_MASTER_PORT` yourself or stagger launches by ≥2 minutes.
 
+### P10 — Cross-socket 2-GPU NCCL group crashes at init
+GPUs 0–3 are on NUMA node 0, GPUs 4–7 on node 1 (`nvidia-smi topo -m`). A 2-engine run on
+a pair that spans sockets (e.g. 3,4) dies in `init_inter_engine_group` with
+`CUDA error: an illegal memory access` — solo, with unique ports, every time. Same-socket
+pairs (1,2) work; the 4-engine group (1,2,3,4) also works. Fix: `NCCL_P2P_DISABLE=1`
+(forces NCCL off PCIe P2P onto shared-memory transport) — verified on (3,4).
+`scripts/local_forge.sh` sets it automatically whenever the GPU set spans both sockets.
+Lane policy: Lane A = (1,2), Lane B = (3,4).
+
 ### Status on this box
 - [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)
 - [x] HF hub reachable; `HF_HOME=/data/liyan/hf-cache`; wandb creds in `~/.netrc`
