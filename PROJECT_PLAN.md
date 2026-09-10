@@ -132,11 +132,13 @@ Runs in the probe lane while F1 trains (or after, if lane A only):
 - E1.5 **Estimator sanity (C1)**: on Qwen2.5-0.5B, one fixed batch: true surrogate gradient
   (autograd, CPU/one GPU) vs FORGE estimate at N ∈ {16, 64, 256, 1024}; report cosine and
   variance ∝ 1/N. Small, but it is the figure that convinces a theory-minded reviewer.
-- E1.6 **GRPO baseline infra**: separate venv (`/data/liyan/venvs/grpo`, TRL + vLLM), Countdown
+- E1.6 **GRPO baseline infra** — venv built (`/data/liyan/venvs/grpo`: TRL 0.29.1, vLLM 0.11, torch 2.8 cu128;
+  a cu130 torch pulled by default is incompatible with driver 570), `scripts/grpo_countdown.py` +
+  `scripts/eval_hf_ckpt.sh` written, **untested** until Lane B frees. Countdown
   reward = ours, protocol = ours (512 tok, same eval set). Run 1.5B to the generation budgets
   {0.1M, 0.5M, 3M} — gives the backprop ceiling for the Pareto figure. (Needs ≥1 GPU for
   training memory; schedule in probe lane.)
-- E1.7 **Noise decomposition** (from METHOD_REVIEW R1): on one fixed batch, re-score the same
+- E1.7 **Noise decomposition** (from METHOD_REVIEW R1) — `scripts/noise_decomposition.py` written, runs first on Lane B after E1.1: on one fixed batch, re-score the same
   pairs with fresh directions (ZO projection variance) and re-roll the same prompts (policy-
   gradient sampling variance); report both vs N and G. Justifies/kills bets B1–B3 before they run.
 - **Gate G1 (F1 @ iter 1500):** local curve must track NERSC v2 (best ≥ 9% by 1500, no
@@ -227,5 +229,5 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
   ~15 s/iter → 4000 iters ≈ 18 h, ETA ~2026-09-11 06:30 PT). Lane B: E1.1 ES-on-H100 running
   (started 12:10 PT, ~47 s/iter → 500 iters ≈ 7 h, ETA ~19:30 PT). E1.6 GRPO venv building (CPU).
 - **In flight:** `forge2-cd-1p5b-h100-s42` (wandb ngqa6knz), `es512-cd-1p5b-h100-s42`.
-- **Next decision:** none pending. After E1.1 finishes, Lane B → E1.7 noise decomposition, then B1 probe.
+- **Next decision:** at ~19:30 PT when E1.1 ends: Lane B → E1.7 (20 min, 2 GPUs) → then GRPO (GPU 3, ~1–2 days) + B1 probe (GPU 4, 1 engine).
 - **Next gate:** G1 at F1 iter 1500 (~2026-09-10 19:30 PT): best ≥ 9%, no collapse.
