@@ -160,6 +160,14 @@ down its Ray actors.
 `dashboard.log` prints INFO lines like "Module ... cannot be loaded ... No module named
 'opentelemetry'". Harmless (dashboard disabled); ignore.
 
+### P9 — Two runs starting at the same time crash in `init_inter_engine_group`
+Symptom: `CUDA error: an illegal memory access was encountered` inside
+`init_inter_engine_group` on both runs, ~1 min after launch. Cause: both trainers call
+vLLM's `get_open_port()` within seconds, receive the same free port, and their NCCL
+inter-engine rendezvous cross. Fix: `es_trainer.py` honours `FORGE_MASTER_PORT`;
+`scripts/local_forge.sh` assigns a unique unused port per run. If launching by hand, set
+`FORGE_MASTER_PORT` yourself or stagger launches by ≥2 minutes.
+
 ### Status on this box
 - [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)
 - [x] HF hub reachable; `HF_HOME=/data/liyan/hf-cache`; wandb creds in `~/.netrc`

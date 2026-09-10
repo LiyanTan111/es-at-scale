@@ -167,7 +167,13 @@ class EvolutionStrategiesTrainer:
         )
 
         master_address = get_ip()
-        master_port = get_open_port()
+        # Two trainers starting within seconds on the same host can both get the
+        # same "open" port from get_open_port() before either binds it; their NCCL
+        # inter-engine rendezvous then cross -> CUDA illegal memory access in
+        # init_inter_engine_group. FORGE_MASTER_PORT lets the launcher assign a
+        # unique port per run (TP ranks use port+tp_rank).
+        master_port = int(os.environ.get("FORGE_MASTER_PORT", "0")) or get_open_port()
+        print(f"[ENGINES] inter-engine rendezvous {master_address}:{master_port}")
         ray.get(
             [
                 self.engines[i].collective_rpc.remote(

@@ -79,6 +79,20 @@ last_iter() {
 is_done() { [[ "$(last_iter)" -ge $((ITERS - 1)) ]]; }
 
 echo $$ > "$OUT/$EXPNAME/driver.pid"
+
+# Unique NCCL rendezvous port per run (see es_trainer: FORGE_MASTER_PORT). Reserve a small
+# range (port .. port+GPUS_PER_ENGINE) that no listener currently uses.
+pick_port() {
+    local p tries=0
+    while (( tries < 50 )); do
+        p=$(( 30000 + RANDOM % 25000 ))
+        if ! ss -ltn 2>/dev/null | awk '{print $4}' | grep -qE ":($p|$((p+1))|$((p+2))|$((p+3)))$"; then echo "$p"; return; fi
+        tries=$((tries+1))
+    done
+    echo 0
+}
+export FORGE_MASTER_PORT="${FORGE_MASTER_PORT:-$(pick_port)}"
+echo "[LOCAL $EXPNAME] FORGE_MASTER_PORT=$FORGE_MASTER_PORT"
 CHILD=""
 forward() { echo "[LOCAL $EXPNAME] driver got signal; forwarding TERM to trainer ${CHILD:-?}"; [[ -n "$CHILD" ]] && kill -TERM "$CHILD" 2>/dev/null; wait "$CHILD" 2>/dev/null; exit 130; }
 trap forward TERM INT HUP

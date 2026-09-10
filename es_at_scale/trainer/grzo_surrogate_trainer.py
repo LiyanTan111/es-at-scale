@@ -273,6 +273,13 @@ class GRZOSurrogateTrainer(GRZOTrainer):
     def train_step(self, iteration, seeds, input_text, target_text):
         G = self.group_size
         rng = np.random.default_rng((self.global_seed or 42) + iteration)
+        # E1.2/E1.3 instrumentation: per-phase wall time + cumulative generations
+        # (paper cost accounting). Print/log only; no effect on the update.
+        import time as _time
+        _t = {"start": _time.perf_counter()}
+        if not hasattr(self, "_gens_total"):
+            self._gens_total = 0
+            self._score_tokens_total = 0
 
         # tau homotopy: exponential anneal tau0 -> tau_end over the run; swap
         # the grading task to the current tau (module-level fn + partial stays
@@ -294,6 +301,7 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                 max_tokens=self.max_tokens,
             )
             outs = self._sharded_generate(prompts, sp)
+            self._gens_total += len(prompts) * G
             rews = np.array(self._grade_rollouts(outs, targets))
             return list(zip(outs, rews))
 
@@ -316,6 +324,7 @@ class GRZOSurrogateTrainer(GRZOTrainer):
             if pooled:
                 entries = pooled[: max(self.dapo_target_groups, len(input_text))]
 
+        _t["rollout"] = _time.perf_counter()
         B = len(entries)
         outputs = [e[0] for e in entries]
         rewards = np.stack([e[1] for e in entries])  # [B,G]
@@ -417,6 +426,8 @@ class GRZOSurrogateTrainer(GRZOTrainer):
             return
 
         # ---- 3) Two-point ZO scoring of the surrogate.
+        _t["prep"] = _time.perf_counter()
+        self._score_tokens_total += 2 * sum(len(j["xy_ids"]) for j in jobs)
         hybrid = (self.pairs_per_direction > 1 or self.directions_per_step > 0)
         if hybrid:
             # Direction-level m>1: N fresh direction seeds, each scored as the
@@ -437,6 +448,7 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                 for j, job in enumerate(jobs)
             ])
 
+        _t["score"] = _time.perf_counter()
         # GRZO-layer normalization.
         if self.delta_norm == "zscore" and n_act > 1 and deltas.std() > 1e-12:
             # Unit-variance coeffs: fixed-magnitude updates regardless of signal
@@ -482,6 +494,12 @@ class GRZOSurrogateTrainer(GRZOTrainer):
             self._pending_seeds, self._pending_coeffs = [], []
             applied = True
 
+        _t["update"] = _time.perf_counter()
+        t_roll = _t["rollout"] - _t["start"]
+        t_score = _t["score"] - _t["prep"]
+        t_upd = _t["update"] - _t["score"]
+        t_step = _t["update"] - _t["start"]
+
         gen_lens = float(np.mean([
             len(c.token_ids) for out in outputs for c in out.outputs
         ]))
@@ -492,6 +510,11 @@ class GRZOSurrogateTrainer(GRZOTrainer):
             f"| delta mean={deltas.mean():+.2e} std={deltas.std():.2e} "
             f"| len={gen_lens:.0f} rounds={rollout_rounds} "
             f"| {'UPDATED n=' + str(n_pending) if applied else 'pending=' + str(n_pending)}"
+        )
+        print(
+            f"[GRZO-T] iter {iteration} | rollout={t_roll:.1f}s score={t_score:.1f}s "
+            f"update={t_upd:.1f}s step={t_step:.1f}s | gens_total={self._gens_total} "
+            f"score_tokens_total={self._score_tokens_total}"
         )
 
         if self.logging == "wandb":
@@ -510,4 +533,10 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                 "train/grzos/sigma": float(self.sigma),
                 "train/grzos/lr": float(self.lr),
                 "train/grzos/rollout_temperature": self.rollout_temperature,
+                "cost/t_rollout_s": t_roll,
+                "cost/t_score_s": t_score,
+                "cost/t_update_s": t_upd,
+                "cost/t_step_s": t_step,
+                "cost/gens_total": int(self._gens_total),
+                "cost/score_tokens_total": int(self._score_tokens_total),
             }, commit=True)
