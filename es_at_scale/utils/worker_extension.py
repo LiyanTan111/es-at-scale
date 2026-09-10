@@ -259,6 +259,35 @@ class WorkerExtension:
         torch.cuda.empty_cache()
         return True
 
+    def direction_stats(self, seeds_a, coeffs_a, seeds_b, coeffs_b):
+        """E1.7 noise decomposition helper. For two seed/coefficient sets, form the
+        (unscaled) update directions u_a = sum_i c_i eps_i and u_b = sum_j c_j eps_j
+        with the SAME fp32 seed-regenerated noise as update_weights_from_seeds_fp32,
+        and return their inner product and squared norms accumulated over all
+        parameters (this TP rank's shard). cos(u_a, u_b) = dot / sqrt(na2 * nb2)
+        measures how much of an update estimate is signal vs. direction noise.
+        Never modifies weights."""
+        dot = 0.0; na2 = 0.0; nb2 = 0.0
+        for _, p in self.model_runner.model.named_parameters():
+            ua = torch.zeros_like(p.data, dtype=torch.float32)
+            for seed, c in zip(seeds_a, coeffs_a):
+                gen = torch.Generator(device=p.device); gen.manual_seed(int(seed))
+                noise = torch.randn(p.shape, dtype=torch.float32, device=p.device, generator=gen)
+                noise.mul_(float(c)); ua.add_(noise); del noise
+            ub = torch.zeros_like(p.data, dtype=torch.float32)
+            for seed, c in zip(seeds_b, coeffs_b):
+                gen = torch.Generator(device=p.device); gen.manual_seed(int(seed))
+                noise = torch.randn(p.shape, dtype=torch.float32, device=p.device, generator=gen)
+                noise.mul_(float(c)); ub.add_(noise); del noise
+            dot += float(torch.dot(ua.view(-1), ub.view(-1)).item())
+            na2 += float(torch.dot(ua.view(-1), ua.view(-1)).item())
+            nb2 += float(torch.dot(ub.view(-1), ub.view(-1)).item())
+            del ua, ub
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        torch.cuda.empty_cache()
+        return {"dot": dot, "na2": na2, "nb2": nb2}
+
     def _tp_rank_suffix(self):
         """Per-rank filename suffix under tensor parallelism.
 
