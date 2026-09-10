@@ -1,0 +1,8 @@
+[RELAY es-orig-math-1p5b-pop30-bs200] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 pop=30 B=200 iters=150 wall=04:00:00
+[RELAY es-orig-math-1p5b-pop30-bs200] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es-orig-math-1p5b-pop30-bs200] RUNNING jid=55987128 node=nid001488
+[RELAY es-orig-math-1p5b-pop30-bs200] srun returned; releasing 55987128
+[RELAY es-orig-math-1p5b-pop30-bs200] resume-from iter 79; allocating 04:00:00 node...
+[RELAY es-orig-math-1p5b-pop30-bs200] RUNNING jid=55999148 node=nid001144
+[RELAY es-orig-math-1p5b-pop30-bs200] srun returned; releasing 55999148
+[RELAY es-orig-math-1p5b-pop30-bs200] DONE at iter 150

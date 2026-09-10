@@ -1,0 +1,8 @@
+[RELAY forge-concise-7b-s42] start: model=Qwen/Qwen2.5-7B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=2 iters=3750 wall=04:00:00
+[RELAY forge-concise-7b-s42] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge-concise-7b-s42] RUNNING jid=56264234 node=nid001089
+[RELAY forge-concise-7b-s42] srun returned (finished or wall hit); releasing 56264234
+[RELAY forge-concise-7b-s42] resume-from iter 2849; allocating 04:00:00 node...
+[RELAY forge-concise-7b-s42] RUNNING jid=56270004 node=nid001089
+[RELAY forge-concise-7b-s42] srun returned (finished or wall hit); releasing 56270004
+[RELAY forge-concise-7b-s42] DONE at iter 3750

@@ -1,0 +1,123 @@
+2026-07-15 05:28:02,603	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/grzos-1p5b-bin-pdapo-zs-lr5e4-s43/wandb/run-20260715_052809-481171pi
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run grzos-1p5b-bin-pdapo-zs-lr5e4-s43
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/481171pi
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(ESNcclLLM pid=1972029)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=1972032)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=1972031)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1972034)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.23s/it]
+[36m(RayWorkerWrapper pid=1972034)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.23s/it]
+[36m(RayWorkerWrapper pid=1972034)[0m 
+[36m(RayWorkerWrapper pid=1972036)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1972033)[0m 
+[36m(RayWorkerWrapper pid=1972032)[0m 
+[36m(RayWorkerWrapper pid=1972036)[0m 
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1972036)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:04<00:00,  4.41s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:01, 34.67it/s]
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  96%|█████████▌| 64/67 [00:01<00:00, 36.05it/s]
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1972032)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  99%|█████████▊| 66/67 [00:01<00:00, 37.64it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 37.17it/s]
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (decode, FULL):   3%|▎         | 1/35 [00:00<00:03,  8.86it/s]
+[36m(RayWorkerWrapper pid=1972034)[0m Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:00<00:00, 37.23it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 33.75it/s]
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+wandb: 
+wandb: Run history:
+wandb:                      eval-iteration ▁▁▂▂▃▃▄▄▅▅▆▆▇▇██
+wandb:            eval/avg_answer_acc/mean ▃▃▃▃▃▃▃▁▁▂▂▄▅▅▅█
+wandb:                 eval/avgpass@1/mean ▃▃▃▃▃▃▃▁▁▂▂▄▅▅▅█
+wandb: eval/countdown_eval/answer_acc/mean ▃▃▃▃▃▃▃▁▁▂▂▄▅▅▅█
+wandb:     eval/countdown_eval/pass@1/mean ▃▃▃▃▃▃▃▁▁▂▂▄▅▅▅█
+wandb:                         global_step ▁▁▁▂▂▂▂▃▃▃▃▃▃▃▄▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▆▆▇▇▇▇█
+wandb:            train/grzos/active_pairs ███████████████████████▁████████████████
+wandb:              train/grzos/delta/mean ▁▄▆▄▆▅▄▄▄▂▃▂▄▅▅▂▂▂▇▆▅▇▁▅▅▃▅▆▇▇▅▃▂▅▆█▃▅▅▇
+wandb:               train/grzos/delta/std ▄▁▁█▃▂█▃▄▅▂▁▃▃▇▄▃▆▁▇▅▆▆▃▇▅▄▂▅▃▂▁▅▆▅▃▂█▄▆
+wandb:      train/grzos/frac_active_groups ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                                  +6 ...
+wandb: 
+wandb: Run summary:
+wandb:                      eval-iteration 149
+wandb:            eval/avg_answer_acc/mean 0.04
+wandb:                 eval/avgpass@1/mean 0.04
+wandb: eval/countdown_eval/answer_acc/mean 0.04
+wandb:     eval/countdown_eval/pass@1/mean 0.04
+wandb:                         global_step 150
+wandb:            train/grzos/active_pairs 64
+wandb:              train/grzos/delta/mean -0.00173
+wandb:               train/grzos/delta/std 0.01205
+wandb:      train/grzos/frac_active_groups 1
+wandb:                                  +6 ...
+wandb: 
+wandb: 🚀 View run grzos-1p5b-bin-pdapo-zs-lr5e4-s43 at: https://wandb.ai/liyan_tan/grzo-rlvr/runs/481171pi
+wandb: ⭐️ View project at: https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /pscratch/sd/l/liyantan/runs/grzo/grzos-1p5b-bin-pdapo-zs-lr5e4-s43/wandb/run-20260715_052809-481171pi/logs
+[36m(RayWorkerWrapper pid=1972036)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1972032)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  91%|█████████ | 61/67 [00:01<00:00, 36.32it/s][32m [repeated 51x across cluster][0m
+[36m(RayWorkerWrapper pid=1972036)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.35it/s][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1972036)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1972036)[0m Capturing CUDA graphs (decode, FULL):  86%|████████▌ | 30/35 [00:00<00:00, 36.16it/s][32m [repeated 30x across cluster][0m
+[36m(RayWorkerWrapper pid=1972036)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:00<00:00, 37.15it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 34.15it/s][32m [repeated 3x across cluster][0m
+Process ForkPoolWorker-2:
+Process ForkPoolWorker-5:
+Process ForkPoolWorker-7:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 317, in _bootstrap
+    util._exit_function()
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 337, in _exit_function
+    _run_finalizers(0)
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 317, in _bootstrap
+    util._exit_function()
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 295, in _run_finalizers
+    keys.sort(reverse=True)
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 363, in _exit_function
+    _run_finalizers()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 309, in _run_finalizers
+    _finalizer_registry.clear()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 317, in _bootstrap
+    util._exit_function()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 337, in _exit_function
+    _run_finalizers(0)
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 294, in _run_finalizers
+    keys = [key for key in list(_finalizer_registry) if f(key)]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'

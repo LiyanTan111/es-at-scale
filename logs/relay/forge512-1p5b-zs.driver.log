@@ -1,0 +1,5 @@
+[RELAY forge512-1p5b-zs] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=500 wall=04:00:00
+[RELAY forge512-1p5b-zs] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge512-1p5b-zs] RUNNING jid=56100069 node=nid001336
+[RELAY forge512-1p5b-zs] srun returned (finished or wall hit); releasing 56100069
+[RELAY forge512-1p5b-zs] DONE at iter 500

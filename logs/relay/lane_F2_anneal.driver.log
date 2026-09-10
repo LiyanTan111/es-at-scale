@@ -1,0 +1,14 @@
+[RELAY forge512-1p5b-anneal] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=4000 wall=04:00:00
+[RELAY forge512-1p5b-anneal] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge512-1p5b-anneal] RUNNING jid=56181884 node=nid001037
+[RELAY forge512-1p5b-anneal] srun returned (finished or wall hit); releasing 56181884
+[RELAY forge512-1p5b-anneal] resume-from iter 1199; allocating 04:00:00 node...
+[RELAY forge512-1p5b-anneal] RUNNING jid=56193170 node=nid001037
+[RELAY forge512-1p5b-anneal] srun returned (finished or wall hit); releasing 56193170
+[RELAY forge512-1p5b-anneal] resume-from iter 2424; allocating 04:00:00 node...
+[RELAY forge512-1p5b-anneal] RUNNING jid=56207051 node=nid001332
+[RELAY forge512-1p5b-anneal] srun returned (finished or wall hit); releasing 56207051
+[RELAY forge512-1p5b-anneal] resume-from iter 3599; allocating 04:00:00 node...
+[RELAY forge512-1p5b-anneal] RUNNING jid=56224096 node=nid001325
+[RELAY forge512-1p5b-anneal] srun returned (finished or wall hit); releasing 56224096
+[RELAY forge512-1p5b-anneal] DONE at iter 4000

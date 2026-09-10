@@ -1,0 +1,13 @@
+[LANE N] 1B slot free; starting ES-MATH relay
+[RELAY es-orig-math-1p5b-pop30-bs200] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es-orig-math-1p5b-pop30-bs200] resume-from iter 150; allocating 04:00:00 node...
+[RELAY es-orig-math-1p5b-pop30-bs200] RUNNING jid=56237905 node=nid001005
+[RELAY es-orig-math-1p5b-pop30-bs200] srun returned; releasing 56237905
+[RELAY es-orig-math-1p5b-pop30-bs200] resume-from iter 274; allocating 04:00:00 node...
+[RELAY es-orig-math-1p5b-pop30-bs200] RUNNING jid=56249535 node=nid001005
+[RELAY es-orig-math-1p5b-pop30-bs200] srun returned; releasing 56249535
+[RELAY es-orig-math-1p5b-pop30-bs200] resume-from iter 399; allocating 04:00:00 node...
+[RELAY es-orig-math-1p5b-pop30-bs200] RUNNING jid=56262633 node=nid001005
+[RELAY es-orig-math-1p5b-pop30-bs200] srun returned; releasing 56262633
+[RELAY es-orig-math-1p5b-pop30-bs200] DONE at iter 500
+[LANE N] ALL DONE

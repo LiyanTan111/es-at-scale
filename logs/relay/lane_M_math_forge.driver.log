@@ -1,0 +1,16 @@
+[LANE M] anneal slot free; starting FORGE-MATH mtb relay
+[RELAY grzos-math-mtb-tau05] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=3300 wall=04:00:00
+[RELAY grzos-math-mtb-tau05] resume-from iter 300; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-tau05] RUNNING jid=56231491 node=nid001377
+[RELAY grzos-math-mtb-tau05] srun returned (finished or wall hit); releasing 56231491
+[RELAY grzos-math-mtb-tau05] resume-from iter 1074; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-tau05] RUNNING jid=56241075 node=nid001669
+[RELAY grzos-math-mtb-tau05] srun returned (finished or wall hit); releasing 56241075
+[RELAY grzos-math-mtb-tau05] resume-from iter 1874; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-tau05] RUNNING jid=56255019 node=nid001088
+[RELAY grzos-math-mtb-tau05] srun returned (finished or wall hit); releasing 56255019
+[RELAY grzos-math-mtb-tau05] resume-from iter 2674; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-tau05] RUNNING jid=56263234 node=nid001088
+[RELAY grzos-math-mtb-tau05] srun returned (finished or wall hit); releasing 56263234
+[RELAY grzos-math-mtb-tau05] DONE at iter 3300
+[LANE M] ALL DONE

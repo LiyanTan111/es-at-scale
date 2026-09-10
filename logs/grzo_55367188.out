@@ -1,0 +1,4 @@
+INFO 07-01 16:12:10 [__init__.py:216] Automatically detected platform cuda.
+Namespace(model_name='Qwen/Qwen2.5-1.5B-Instruct', checkpoint=None, sigma=0.001, alpha=-1, grzo_mode='single_point', reward_mode='binary', group_size=32, batch_size=8, mini_batch_size=8, n_iterations=250, eval_freq=25, train_dataset='datasets/train/countdown', eval_dataset='datasets/evaluation_suite/countdown/', max_tokens=1024, n_vllm_engines=4, n_gpu_per_vllm_engine=1, logging='wandb', seed=42, use_gpus='0,1,2,3', reward_function_timeout=10, output_directory='/pscratch/sd/l/liyantan/runs/grzo', save_best_models=True, experiment_name='grzo-1p5b-sp-bin-G32-s1e3', wandb_project='grzo-rlvr', resume=True)
+-- Running: grzo-1p5b-sp-bin-G32-s1e3 --
+[RESUME] no latest checkpoint under /pscratch/sd/l/liyantan/runs/grzo/grzo-1p5b-sp-bin-G32-s1e3/latest; starting fresh

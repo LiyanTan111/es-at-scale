@@ -1,0 +1,29 @@
+[LANE G] smoke: smoke512b-qwen7b (TP2 x2 engines, util 0.6 — TP1 structurally impossible: 14.2 model + 14.2 master + 4.5 vLLM workspace + 2 noise + 1.8 ctx > 40G)
+[RELAY smoke512b-qwen7b] start: model=Qwen/Qwen2.5-7B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=3 wall=04:00:00
+[RELAY smoke512b-qwen7b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY smoke512b-qwen7b] RUNNING jid=56134865 node=nid001136
+[RELAY smoke512b-qwen7b] srun returned (finished or wall hit); releasing 56134865
+[RELAY smoke512b-qwen7b] DONE at iter 3
+[LANE G] smoke: smoke512b-llama8b (TP2 x2 engines, util 0.55)
+[RELAY smoke512b-llama8b] start: model=meta-llama/Llama-3.1-8B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=3 wall=04:00:00
+[RELAY smoke512b-llama8b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY smoke512b-llama8b] RUNNING jid=56134987 node=nid001136
+[RELAY smoke512b-llama8b] srun returned (finished or wall hit); releasing 56134987
+[RELAY smoke512b-llama8b] DONE at iter 3
+[LANE G] smokes done (check logs/relay/smoke512b-*.log before submitting 7B/8B chains)
+[LANE G] starting forge512-qwen0p5b full-budget relay
+[RELAY forge512-qwen0p5b] start: model=Qwen/Qwen2.5-0.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=4000 wall=04:00:00
+[RELAY forge512-qwen0p5b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge512-qwen0p5b] RUNNING jid=56135185 node=nid001037
+[RELAY forge512-qwen0p5b] srun returned (finished or wall hit); releasing 56135185
+[RELAY forge512-qwen0p5b] resume-from iter 1009; allocating 04:00:00 node...
+[RELAY forge512-qwen0p5b] RUNNING jid=56142509 node=nid001037
+[RELAY forge512-qwen0p5b] srun returned (finished or wall hit); releasing 56142509
+[RELAY forge512-qwen0p5b] resume-from iter 2019; allocating 04:00:00 node...
+[RELAY forge512-qwen0p5b] RUNNING jid=56149076 node=nid001037
+[RELAY forge512-qwen0p5b] srun returned (finished or wall hit); releasing 56149076
+[RELAY forge512-qwen0p5b] resume-from iter 3029; allocating 04:00:00 node...
+[RELAY forge512-qwen0p5b] RUNNING jid=56157247 node=nid001037
+[RELAY forge512-qwen0p5b] srun returned (finished or wall hit); releasing 56157247
+[RELAY forge512-qwen0p5b] DONE at iter 4000
+[LANE G] ALL DONE

@@ -1,0 +1,18 @@
+[LANE A] ==== starting es512-qwen3b (Qwen/Qwen2.5-3B-Instruct -> 500 iters) ====
+[RELAY es512-qwen3b] start: model=Qwen/Qwen2.5-3B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-qwen3b] resume-from iter 400; allocating 04:00:00 node...
+[RELAY es512-qwen3b] RUNNING jid=56110304 node=nid001036
+[RELAY es512-qwen3b] srun returned; releasing 56110304
+[RELAY es512-qwen3b] resume-from iter 400; allocating 04:00:00 node...
+[RELAY es512-qwen3b] RUNNING jid=56110464 node=nid001036
+[RELAY es512-qwen3b] srun returned; releasing 56110464
+[RELAY es512-qwen3b] DONE at iter 500
+[LANE A] ==== finished es512-qwen3b ====
+[LANE A] ==== starting es512-llama3b (meta-llama/Llama-3.2-3B-Instruct -> 500 iters) ====
+[RELAY es512-llama3b] start: model=meta-llama/Llama-3.2-3B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-llama3b] resume-from iter 400; allocating 04:00:00 node...
+[RELAY es512-llama3b] RUNNING jid=56114978 node=nid001036
+[RELAY es512-llama3b] srun returned; releasing 56114978
+[RELAY es512-llama3b] DONE at iter 500
+[LANE A] ==== finished es512-llama3b ====
+[LANE A] ALL DONE

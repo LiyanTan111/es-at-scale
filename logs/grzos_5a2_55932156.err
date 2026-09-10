@@ -1,0 +1,79 @@
+2026-07-15 03:48:49,039	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/grzos-1p5b-bin-pdapo-sum-lr1e7/wandb/run-20260715_034858-t99fwigt
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run grzos-1p5b-bin-pdapo-sum-lr1e7
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/t99fwigt
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(ESNcclLLM pid=1952750)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=1952752)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=1952753)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1952767)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.56s/it]
+[36m(RayWorkerWrapper pid=1952767)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.56s/it]
+[36m(RayWorkerWrapper pid=1952767)[0m 
+[36m(RayWorkerWrapper pid=1952756)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1952756)[0m 
+[36m(RayWorkerWrapper pid=1952752)[0m 
+[36m(RayWorkerWrapper pid=1952768)[0m 
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1952768)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.30s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:01, 36.15it/s]
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  96%|█████████▌| 64/67 [00:01<00:00, 37.15it/s]
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (decode, FULL):   3%|▎         | 1/35 [00:00<00:03,  9.95it/s]
+[36m(RayWorkerWrapper pid=1952767)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 36.90it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 33.63it/s]
+[36m(RayWorkerWrapper pid=1952768)[0m Capturing CUDA graphs (decode, FULL):  94%|█████████▍| 33/35 [00:01<00:00, 34.40it/s]
+[36m(RayWorkerWrapper pid=1952768)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 32.10it/s]
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  99%|█████████▊| 66/67 [00:01<00:00, 37.26it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.97it/s]
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+wandb: uploading history steps 166-166, summary, console lines 1084-1088
+wandb: uploading history steps 166-166, summary, console lines 1084-1088; uploading wandb-summary.json; uploading config.yaml; uploading output.log
+wandb: uploading history steps 166-166, summary, console lines 1084-1088
+wandb: 
+wandb: Run history:
+wandb:                      eval-iteration ▁▁▂▂▃▃▄▄▅▅▆▆▇▇██
+wandb:            eval/avg_answer_acc/mean ▂▂▁▃▂▂▇▃▆▇▇▇█▇▆▃
+wandb:                 eval/avgpass@1/mean ▂▂▁▃▂▂▇▃▆▇▇▇█▇▆▃
+wandb: eval/countdown_eval/answer_acc/mean ▂▂▁▃▂▂▇▃▆▇▇▇█▇▆▃
+wandb:     eval/countdown_eval/pass@1/mean ▂▂▁▃▂▂▇▃▆▇▇▇█▇▆▃
+wandb:                         global_step ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇▇▇██
+wandb:            train/grzos/active_pairs █████████████████████████████▅██████▅▅█▁
+wandb:              train/grzos/delta/mean ▃▅▃▄▃█▃▆▃▅▇▃▃▇▂▄▅▄▄▆▆▄▆▂▄▁▁▂▃▄▃▅▅▂▃▁▃▄▄▂
+wandb:               train/grzos/delta/std █▂▄▄▃▄▄▃▄▄▂▂▆▄▄▄▂▁▃▂▃▅▄▃▄█▃▅▃▃▂▄▅▃▃▁▇▄▃▄
+wandb:      train/grzos/frac_active_groups ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                                  +6 ...
+wandb: 
+wandb: Run summary:
+wandb:                      eval-iteration 149
+wandb:            eval/avg_answer_acc/mean 0.025
+wandb:                 eval/avgpass@1/mean 0.025
+wandb: eval/countdown_eval/answer_acc/mean 0.025
+wandb:     eval/countdown_eval/pass@1/mean 0.025
+wandb:                         global_step 150
+wandb:            train/grzos/active_pairs 64
+wandb:              train/grzos/delta/mean 2.33141
+wandb:               train/grzos/delta/std 18.12984
+wandb:      train/grzos/frac_active_groups 1
+wandb:                                  +6 ...
+wandb: 
+wandb: 🚀 View run grzos-1p5b-bin-pdapo-sum-lr1e7 at: https://wandb.ai/liyan_tan/grzo-rlvr/runs/t99fwigt
+wandb: ⭐️ View project at: https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /pscratch/sd/l/liyantan/runs/grzo/grzos-1p5b-bin-pdapo-sum-lr1e7/wandb/run-20260715_034858-t99fwigt/logs
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  91%|█████████ | 61/67 [00:01<00:00, 35.98it/s][32m [repeated 54x across cluster][0m
+[36m(RayWorkerWrapper pid=1952768)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.26it/s][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (decode, FULL):  80%|████████  | 28/35 [00:00<00:00, 35.76it/s][32m [repeated 30x across cluster][0m
+[36m(RayWorkerWrapper pid=1952752)[0m Capturing CUDA graphs (decode, FULL):  94%|█████████▍| 33/35 [00:01<00:00, 34.78it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 32.62it/s]
+[36m(RayWorkerWrapper pid=1952756)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 35.42it/s][32m [repeated 2x across cluster][0m

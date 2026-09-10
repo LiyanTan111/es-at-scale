@@ -1,0 +1,9 @@
+[RELAY forge2-math-hold] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=2000 wall=04:00:00
+[RELAY forge2-math-hold] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge2-math-hold] RUNNING jid=56305982 node=nid001149
+[RELAY forge2-math-hold] srun returned (finished or wall hit); releasing 56305982
+[RELAY forge2-math-hold] resume-from iter 799; allocating 04:00:00 node...
+[RELAY forge2-math-hold] salloc failed: salloc: Pending job allocation 56311269
+salloc: job 56311269 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge2-math-hold] resume-from iter 799; allocating 04:00:00 node...

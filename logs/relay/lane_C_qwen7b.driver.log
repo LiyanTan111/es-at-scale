@@ -1,0 +1,10 @@
+[LANE C] Lane A finished; starting qwen7b relay
+[RELAY es512-qwen7b] start: model=Qwen/Qwen2.5-7B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-qwen7b] resume-from iter 300; allocating 04:00:00 node...
+[RELAY es512-qwen7b] RUNNING jid=56118922 node=nid001104
+[RELAY es512-qwen7b] srun returned; releasing 56118922
+[RELAY es512-qwen7b] resume-from iter 429; allocating 04:00:00 node...
+[RELAY es512-qwen7b] RUNNING jid=56129711 node=nid001104
+[RELAY es512-qwen7b] srun returned; releasing 56129711
+[RELAY es512-qwen7b] DONE at iter 500
+[LANE C] ALL DONE

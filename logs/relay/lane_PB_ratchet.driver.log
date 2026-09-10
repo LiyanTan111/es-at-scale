@@ -1,0 +1,5 @@
+[RELAY probe-math-ratchet800] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=800 wall=04:00:00
+[RELAY probe-math-ratchet800] resume-from iter -1; allocating 04:00:00 node...
+[RELAY probe-math-ratchet800] RUNNING jid=56275088 node=nid002468
+[RELAY probe-math-ratchet800] srun returned (finished or wall hit); releasing 56275088
+[RELAY probe-math-ratchet800] DONE at iter 800

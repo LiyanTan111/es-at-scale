@@ -1,0 +1,11 @@
+[RELAY forge512-1p5b-mtb] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=4000 wall=04:00:00
+[RELAY forge512-1p5b-mtb] resume-from iter 1099; allocating 04:00:00 node...
+[RELAY forge512-1p5b-mtb] RUNNING jid=56153975 node=nid001096
+[RELAY forge512-1p5b-mtb] srun returned (finished or wall hit); releasing 56153975
+[RELAY forge512-1p5b-mtb] resume-from iter 2274; allocating 04:00:00 node...
+[RELAY forge512-1p5b-mtb] RUNNING jid=56160426 node=nid001096
+[RELAY forge512-1p5b-mtb] srun returned (finished or wall hit); releasing 56160426
+[RELAY forge512-1p5b-mtb] resume-from iter 3199; allocating 04:00:00 node...
+[RELAY forge512-1p5b-mtb] RUNNING jid=56172568 node=nid001037
+[RELAY forge512-1p5b-mtb] srun returned (finished or wall hit); releasing 56172568
+[RELAY forge512-1p5b-mtb] DONE at iter 4000

@@ -1,0 +1,2681 @@
+INFO 07-21 17:04:06 [__init__.py:216] Automatically detected platform cuda.
+Namespace(task='math', countdown_reward='binary', math_reward='margin-tiebreak', margin_tau_end=0.02, margin_tau=0.5, lr_schedule='const', eval_subsets='math500', model_name='Qwen/Qwen2.5-1.5B-Instruct', checkpoint=None, sigma=0.0005, lr=0.0005, rollout_temperature=1.0, group_size=8, batch_size=8, mini_batch_size=8, no_length_norm=False, delta_norm='zscore', min_directions=64, dapo_target_groups=8, dapo_max_rounds=4, dapo_draw=32, pairs_per_direction=1, directions_per_step=0, n_iterations=400, eval_freq=25, train_dataset='datasets/train/math_lvl3to5_8k', eval_dataset='datasets/evaluation_suite/math/', max_tokens=1024, n_vllm_engines=4, n_gpu_per_vllm_engine=1, logging='wandb', seed=42, use_gpus='0,1,2,3', reward_function_timeout=10, output_directory='/pscratch/sd/l/liyantan/runs/grzo', save_best_models=True, experiment_name='probe-math-sig5e4', wandb_project='grzo-rlvr', resume=True)
+eval subsets: ['math500']
+-- Running: probe-math-sig5e4 --
+[RESUME] no latest checkpoint under /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest; starting fresh
+2026-07-21 17:04:15,341	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/wandb/run-20260721_170422-12inpeit
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run probe-math-sig5e4
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/12inpeit
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(pid=1373172)[0m INFO 07-21 17:04:29 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:34 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-1.5B-Instruct'}
+[36m(ESNcclLLM pid=1373172)[0m WARNING 07-21 17:04:34 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=1373172)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:35 [model.py:547] Resolved architecture: Qwen2ForCausalLM
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:35 [model.py:1510] Using max model len 4096
+[36m(pid=1373176)[0m INFO 07-21 17:04:29 [__init__.py:216] Automatically detected platform cuda.[32m [repeated 3x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:35 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:35 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:36 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-1.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-1.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-1.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:36 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:36 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:36 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:34 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-1.5B-Instruct'}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m WARNING 07-21 17:04:34 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373179)[0m INFO 07-21 17:04:35 [model.py:547] Resolved architecture: Qwen2ForCausalLM[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373179)[0m INFO 07-21 17:04:35 [model.py:1510] Using max model len 4096[32m [repeated 3x across cluster][0m
+[36m(pid=1373171)[0m INFO 07-21 17:04:40 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:35 [arg_utils.py:1215] Using ray runtime env: {}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:35 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.[32m [repeated 3x across cluster][0m
+[36m(pid=1373177)[0m INFO 07-21 17:04:40 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:42 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:42 [ray_env.py:65] Copying the following environment variables to workers: ['LD_LIBRARY_PATH', 'VLLM_USE_RAY_SPMD_WORKER', 'VLLM_USE_RAY_COMPILED_DAG', 'CUDA_HOME', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1']
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:04:42 [ray_env.py:68] If certain env vars should NOT be copied, add them to /global/homes/l/liyantan/.config/vllm/ray_non_carry_over_env_vars.json file
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:04:36 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-1.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-1.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-1.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:04:36 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:04:36 [ray_utils.py:324] Using the existing placement group[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:04:36 [ray_distributed_executor.py:171] use_ray_spmd_worker: True[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:49 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', '_tp_rank_suffix', 'broadcast_all_weights', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32']
+[36m(pid=1373180)[0m INFO 07-21 17:04:40 [__init__.py:216] Automatically detected platform cuda.[32m [repeated 2x across cluster][0m
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:42 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:42 [ray_env.py:65] Copying the following environment variables to workers: ['LD_LIBRARY_PATH', 'VLLM_USE_RAY_SPMD_WORKER', 'VLLM_USE_RAY_COMPILED_DAG', 'CUDA_HOME', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1'][32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:04:42 [ray_env.py:68] If certain env vars should NOT be copied, add them to /global/homes/l/liyantan/.config/vllm/ray_non_carry_over_env_vars.json file[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:50 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[36m(RayWorkerWrapper pid=1373178)[0m WARNING 07-21 17:04:50 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:50 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen2.5-1.5B-Instruct...
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:04:51 [gpu_model_runner.py:2634] Loading model from scratch...
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:51 [cuda.py:366] Using Flash Attention backend on V1 engine.
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:51 [weight_utils.py:392] Using model weights format ['*.safetensors']
+[36m(RayWorkerWrapper pid=1373178)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=1373179)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:04:51 [weight_utils.py:450] No model.safetensors.index.json found in remote.
+[36m(RayWorkerWrapper pid=1373171)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.26s/it]
+[36m(RayWorkerWrapper pid=1373171)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.26s/it]
+[36m(RayWorkerWrapper pid=1373171)[0m 
+[36m(RayWorkerWrapper pid=1373171)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373177)[0m 
+[36m(RayWorkerWrapper pid=1373177)[0m INFO 07-21 17:05:00 [default_loader.py:267] Loading weights took 7.60 seconds
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:49 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', '_tp_rank_suffix', 'broadcast_all_weights', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32'][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0[32m [repeated 18x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:50 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373177)[0m WARNING 07-21 17:04:50 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:50 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen2.5-1.5B-Instruct...[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:51 [gpu_model_runner.py:2634] Loading model from scratch...[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:51 [cuda.py:366] Using Flash Attention backend on V1 engine.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:04:51 [weight_utils.py:392] Using model weights format ['*.safetensors'][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:04:52 [weight_utils.py:450] No model.safetensors.index.json found in remote.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373178)[0m 
+[36m(RayWorkerWrapper pid=1373180)[0m 
+[36m(RayWorkerWrapper pid=1373177)[0m INFO 07-21 17:05:00 [gpu_model_runner.py:2653] Model loading took 2.8876 GiB and 8.819313 seconds
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:05:07 [backends.py:548] Using cache directory: /global/homes/l/liyantan/.cache/vllm/torch_compile_cache/83878f8f8c/rank_0_0/backbone for vLLM's torch.compile
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:05:07 [backends.py:559] Dynamo bytecode transform time: 6.54 s
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:00 [default_loader.py:267] Loading weights took 8.12 seconds[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:00 [gpu_model_runner.py:2653] Model loading took 2.8876 GiB and 9.143513 seconds[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:05:09 [backends.py:164] Directly load the compiled graph(s) for dynamic shape from the cache, took 1.594 s
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:05:10 [monitor.py:34] torch.compile takes 6.54 s in total
+[36m(RayWorkerWrapper pid=1373171)[0m INFO 07-21 17:05:11 [gpu_worker.py:298] Available KV cache memory: 23.31 GiB
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:05:11 [kv_cache_utils.py:1087] GPU KV cache size: 872,928 tokens
+[36m(ESNcclLLM pid=1373174)[0m INFO 07-21 17:05:11 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 213.12x
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1373180)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.77s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:01, 35.53it/s]
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  96%|█████████▌| 64/67 [00:01<00:00, 37.13it/s]
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1373177)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 34.70it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.62it/s]
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (decode, FULL):   3%|▎         | 1/35 [00:00<00:03,  9.99it/s]
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:01<00:00, 24.13it/s]
+[36m(RayWorkerWrapper pid=1373177)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:01<00:00, 26.31it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 23.09it/s]
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:15 [core.py:210] init engine (profile, create kv cache, warmup model) took 14.85 seconds
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:07 [backends.py:548] Using cache directory: /global/homes/l/liyantan/.cache/vllm/torch_compile_cache/83878f8f8c/rank_0_0/backbone for vLLM's torch.compile[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:07 [backends.py:559] Dynamo bytecode transform time: 6.62 s[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:09 [backends.py:164] Directly load the compiled graph(s) for dynamic shape from the cache, took 1.562 s[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373177)[0m INFO 07-21 17:05:15 [gpu_model_runner.py:3480] Graph capturing finished in 4 secs, took 0.55 GiB
+[36m(RayWorkerWrapper pid=1373180)[0m INFO 07-21 17:05:10 [monitor.py:34] torch.compile takes 6.62 s in total[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:16 [llm.py:306] Supported_tasks: ('generate',)
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:05:11 [gpu_worker.py:298] Available KV cache memory: 23.31 GiB[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:05:16 [__init__.py:1384] Found nccl from library libnccl.so.2
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:05:16 [pynccl.py:103] vLLM is using nccl==2.27.3
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:11 [kv_cache_utils.py:1087] GPU KV cache size: 872,928 tokens[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:11 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 213.12x[32m [repeated 3x across cluster][0m
+[GRZO-S] master weights saved on all engines
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False
+[36m(ESNcclLLM pid=1373172)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.
+math500 -- eval pass@1 (shaped): 0.5412 -- answer_acc (0/1): 0.5320 -- -- spearman_gate: 0.954
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration1.json
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/checkpoints/probe-math-sig5e4-acc0.532/pytorch_model.pth.
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:15 [core.py:210] init engine (profile, create kv cache, warmup model) took 14.63 seconds[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373178)[0m INFO 07-21 17:05:15 [gpu_model_runner.py:3480] Graph capturing finished in 4 secs, took 0.55 GiB[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:16 [llm.py:306] Supported_tasks: ('generate',)[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373177)[0m INFO 07-21 17:05:16 [__init__.py:1384] Found nccl from library libnccl.so.2[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373177)[0m INFO 07-21 17:05:16 [pynccl.py:103] vLLM is using nccl==2.27.3[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=1373176)[0m INFO 07-21 17:05:17 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.[32m [repeated 3x across cluster][0m
+
+
+=== Epoch 1; Iteration 1 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/best/pytorch_model.pth.
+[GRZO-S] iter 0 | B=8 G=8 | reward mean=0.3017 | active_groups=1.00 pairs=64 | delta mean=+1.15e-03 std=1.09e-02 | len=542 rounds=1 | UPDATED n=64
+=== Iteration 1 finished in 10.80s ===
+
+
+
+=== Epoch 1; Iteration 2 ===
+[GRZO-S] iter 1 | B=8 G=8 | reward mean=0.4692 | active_groups=1.00 pairs=64 | delta mean=-5.75e-04 std=7.83e-03 | len=512 rounds=2 | UPDATED n=64
+=== Iteration 2 finished in 17.45s ===
+
+
+
+=== Epoch 1; Iteration 3 ===
+[GRZO-S] iter 2 | B=8 G=8 | reward mean=0.4522 | active_groups=1.00 pairs=64 | delta mean=+5.72e-04 std=1.10e-02 | len=429 rounds=2 | UPDATED n=64
+=== Iteration 3 finished in 17.71s ===
+
+
+
+=== Epoch 1; Iteration 4 ===
+[GRZO-S] iter 3 | B=8 G=8 | reward mean=0.3946 | active_groups=1.00 pairs=64 | delta mean=-7.95e-05 std=4.59e-03 | len=581 rounds=2 | UPDATED n=64
+=== Iteration 4 finished in 18.12s ===
+
+
+
+=== Epoch 1; Iteration 5 ===
+[GRZO-S] iter 4 | B=8 G=8 | reward mean=0.5661 | active_groups=1.00 pairs=64 | delta mean=+1.56e-04 std=4.40e-03 | len=621 rounds=2 | UPDATED n=64
+=== Iteration 5 finished in 17.98s ===
+
+
+
+=== Epoch 1; Iteration 6 ===
+[GRZO-S] iter 5 | B=8 G=8 | reward mean=0.3500 | active_groups=1.00 pairs=64 | delta mean=-2.96e-04 std=5.33e-03 | len=623 rounds=2 | UPDATED n=64
+=== Iteration 6 finished in 18.07s ===
+
+
+
+=== Epoch 1; Iteration 7 ===
+[GRZO-S] iter 6 | B=8 G=8 | reward mean=0.4177 | active_groups=1.00 pairs=64 | delta mean=+6.50e-04 std=6.49e-03 | len=559 rounds=2 | UPDATED n=64
+=== Iteration 7 finished in 18.26s ===
+
+
+
+=== Epoch 1; Iteration 8 ===
+[GRZO-S] iter 7 | B=8 G=8 | reward mean=0.5264 | active_groups=1.00 pairs=64 | delta mean=-1.42e-03 std=9.75e-03 | len=457 rounds=2 | UPDATED n=64
+=== Iteration 8 finished in 17.50s ===
+
+
+
+=== Epoch 1; Iteration 9 ===
+[GRZO-S] iter 8 | B=8 G=8 | reward mean=0.3125 | active_groups=1.00 pairs=64 | delta mean=-3.97e-04 std=5.38e-03 | len=640 rounds=1 | UPDATED n=64
+=== Iteration 9 finished in 10.54s ===
+
+
+
+=== Epoch 1; Iteration 10 ===
+[GRZO-S] iter 9 | B=8 G=8 | reward mean=0.4160 | active_groups=1.00 pairs=64 | delta mean=+1.09e-04 std=5.90e-03 | len=554 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 9 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 10 finished in 21.63s ===
+
+
+
+=== Epoch 1; Iteration 11 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 10 | B=8 G=8 | reward mean=0.4326 | active_groups=1.00 pairs=64 | delta mean=+4.43e-04 std=6.65e-03 | len=570 rounds=2 | UPDATED n=64
+=== Iteration 11 finished in 18.17s ===
+
+
+
+=== Epoch 1; Iteration 12 ===
+[GRZO-S] iter 11 | B=8 G=8 | reward mean=0.2427 | active_groups=1.00 pairs=64 | delta mean=+9.73e-05 std=6.52e-03 | len=601 rounds=2 | UPDATED n=64
+=== Iteration 12 finished in 17.98s ===
+
+
+
+=== Epoch 1; Iteration 13 ===
+[GRZO-S] iter 12 | B=8 G=8 | reward mean=0.2867 | active_groups=1.00 pairs=64 | delta mean=-6.35e-03 std=3.94e-02 | len=561 rounds=2 | UPDATED n=64
+=== Iteration 13 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 14 ===
+[GRZO-S] iter 13 | B=8 G=8 | reward mean=0.5879 | active_groups=1.00 pairs=64 | delta mean=+3.18e-04 std=6.26e-03 | len=423 rounds=1 | UPDATED n=64
+=== Iteration 14 finished in 10.05s ===
+
+
+
+=== Epoch 1; Iteration 15 ===
+[GRZO-S] iter 14 | B=8 G=8 | reward mean=0.4654 | active_groups=1.00 pairs=64 | delta mean=-2.23e-03 std=1.42e-02 | len=517 rounds=1 | UPDATED n=64
+=== Iteration 15 finished in 10.63s ===
+
+
+
+=== Epoch 1; Iteration 16 ===
+[GRZO-S] iter 15 | B=8 G=8 | reward mean=0.2602 | active_groups=1.00 pairs=64 | delta mean=-1.50e-04 std=6.02e-03 | len=584 rounds=2 | UPDATED n=64
+=== Iteration 16 finished in 17.83s ===
+
+
+
+=== Epoch 1; Iteration 17 ===
+[GRZO-S] iter 16 | B=8 G=8 | reward mean=0.4555 | active_groups=1.00 pairs=64 | delta mean=-9.73e-04 std=8.18e-03 | len=482 rounds=1 | UPDATED n=64
+=== Iteration 17 finished in 10.67s ===
+
+
+
+=== Epoch 1; Iteration 18 ===
+[GRZO-S] iter 17 | B=8 G=8 | reward mean=0.1901 | active_groups=1.00 pairs=64 | delta mean=+6.19e-04 std=5.34e-03 | len=602 rounds=1 | UPDATED n=64
+=== Iteration 18 finished in 10.63s ===
+
+
+
+=== Epoch 1; Iteration 19 ===
+[GRZO-S] iter 18 | B=8 G=8 | reward mean=0.3822 | active_groups=1.00 pairs=64 | delta mean=+7.49e-05 std=4.36e-03 | len=587 rounds=2 | UPDATED n=64
+=== Iteration 19 finished in 18.35s ===
+
+
+
+=== Epoch 1; Iteration 20 ===
+[GRZO-S] iter 19 | B=8 G=8 | reward mean=0.3801 | active_groups=1.00 pairs=64 | delta mean=+1.27e-03 std=6.75e-03 | len=540 rounds=2 | UPDATED n=64
+=== Iteration 20 finished in 17.98s ===
+
+
+
+=== Epoch 1; Iteration 21 ===
+[GRZO-S] iter 20 | B=8 G=8 | reward mean=0.3173 | active_groups=1.00 pairs=64 | delta mean=-3.96e-04 std=7.33e-03 | len=546 rounds=1 | UPDATED n=64
+=== Iteration 21 finished in 10.49s ===
+
+
+
+=== Epoch 1; Iteration 22 ===
+[GRZO-S] iter 21 | B=8 G=8 | reward mean=0.1241 | active_groups=1.00 pairs=64 | delta mean=-1.15e-03 std=4.42e-03 | len=625 rounds=2 | UPDATED n=64
+=== Iteration 22 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 23 ===
+[GRZO-S] iter 22 | B=8 G=8 | reward mean=0.4385 | active_groups=1.00 pairs=64 | delta mean=+1.02e-03 std=8.30e-03 | len=527 rounds=2 | UPDATED n=64
+=== Iteration 23 finished in 17.72s ===
+
+
+
+=== Epoch 1; Iteration 24 ===
+[GRZO-S] iter 23 | B=8 G=8 | reward mean=0.4086 | active_groups=1.00 pairs=64 | delta mean=+6.05e-06 std=1.03e-02 | len=573 rounds=2 | UPDATED n=64
+=== Iteration 24 finished in 18.40s ===
+
+
+
+=== Epoch 1; Iteration 25 ===
+[GRZO-S] iter 24 | B=8 G=8 | reward mean=0.3330 | active_groups=1.00 pairs=64 | delta mean=-7.96e-04 std=7.38e-03 | len=543 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5541 -- answer_acc (0/1): 0.5420 -- -- spearman_gate: 0.956
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration25.json
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/checkpoints/probe-math-sig5e4-acc0.542/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 24 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 25 finished in 40.64s ===
+
+
+
+=== Epoch 1; Iteration 26 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 25 | B=8 G=8 | reward mean=0.3504 | active_groups=1.00 pairs=64 | delta mean=-7.27e-05 std=6.19e-03 | len=533 rounds=2 | UPDATED n=64
+=== Iteration 26 finished in 17.86s ===
+
+
+
+=== Epoch 1; Iteration 27 ===
+[GRZO-S] iter 26 | B=8 G=8 | reward mean=0.5519 | active_groups=1.00 pairs=64 | delta mean=-1.88e-03 std=7.26e-03 | len=503 rounds=2 | UPDATED n=64
+=== Iteration 27 finished in 17.91s ===
+
+
+
+=== Epoch 1; Iteration 28 ===
+[GRZO-S] iter 27 | B=8 G=8 | reward mean=0.4821 | active_groups=1.00 pairs=64 | delta mean=-8.44e-04 std=3.50e-03 | len=623 rounds=2 | UPDATED n=64
+=== Iteration 28 finished in 18.48s ===
+
+
+
+=== Epoch 1; Iteration 29 ===
+[GRZO-S] iter 28 | B=8 G=8 | reward mean=0.3966 | active_groups=1.00 pairs=64 | delta mean=-9.68e-05 std=4.81e-03 | len=605 rounds=2 | UPDATED n=64
+=== Iteration 29 finished in 18.05s ===
+
+
+
+=== Epoch 1; Iteration 30 ===
+[GRZO-S] iter 29 | B=8 G=8 | reward mean=0.4187 | active_groups=1.00 pairs=64 | delta mean=-5.43e-04 std=9.55e-03 | len=418 rounds=2 | UPDATED n=64
+=== Iteration 30 finished in 16.36s ===
+
+
+
+=== Epoch 1; Iteration 31 ===
+[GRZO-S] iter 30 | B=8 G=8 | reward mean=0.2831 | active_groups=1.00 pairs=64 | delta mean=-2.42e-05 std=4.02e-03 | len=564 rounds=2 | UPDATED n=64
+=== Iteration 31 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 32 ===
+[GRZO-S] iter 31 | B=8 G=8 | reward mean=0.4931 | active_groups=1.00 pairs=64 | delta mean=+4.84e-04 std=3.85e-03 | len=602 rounds=2 | UPDATED n=64
+=== Iteration 32 finished in 17.83s ===
+
+
+
+=== Epoch 1; Iteration 33 ===
+[GRZO-S] iter 32 | B=8 G=8 | reward mean=0.4504 | active_groups=1.00 pairs=64 | delta mean=+6.24e-04 std=6.12e-03 | len=543 rounds=2 | UPDATED n=64
+=== Iteration 33 finished in 18.40s ===
+
+
+
+=== Epoch 1; Iteration 34 ===
+[GRZO-S] iter 33 | B=8 G=8 | reward mean=0.3690 | active_groups=1.00 pairs=64 | delta mean=+1.78e-03 std=6.28e-03 | len=663 rounds=2 | UPDATED n=64
+=== Iteration 34 finished in 17.93s ===
+
+
+
+=== Epoch 1; Iteration 35 ===
+[GRZO-S] iter 34 | B=8 G=8 | reward mean=0.4418 | active_groups=1.00 pairs=64 | delta mean=+2.01e-04 std=6.01e-03 | len=530 rounds=2 | UPDATED n=64
+=== Iteration 35 finished in 18.25s ===
+
+
+
+=== Epoch 1; Iteration 36 ===
+[GRZO-S] iter 35 | B=8 G=8 | reward mean=0.3898 | active_groups=1.00 pairs=64 | delta mean=+3.43e-04 std=6.40e-03 | len=637 rounds=1 | UPDATED n=64
+=== Iteration 36 finished in 10.81s ===
+
+
+
+=== Epoch 1; Iteration 37 ===
+[GRZO-S] iter 36 | B=8 G=8 | reward mean=0.3999 | active_groups=1.00 pairs=64 | delta mean=-2.05e-04 std=5.14e-03 | len=563 rounds=2 | UPDATED n=64
+=== Iteration 37 finished in 18.44s ===
+
+
+
+=== Epoch 1; Iteration 38 ===
+[GRZO-S] iter 37 | B=8 G=8 | reward mean=0.1752 | active_groups=1.00 pairs=64 | delta mean=-6.84e-04 std=5.92e-03 | len=655 rounds=2 | UPDATED n=64
+=== Iteration 38 finished in 18.20s ===
+
+
+
+=== Epoch 1; Iteration 39 ===
+[GRZO-S] iter 38 | B=8 G=8 | reward mean=0.2835 | active_groups=1.00 pairs=64 | delta mean=-1.05e-03 std=6.68e-03 | len=613 rounds=2 | UPDATED n=64
+=== Iteration 39 finished in 17.88s ===
+
+
+
+=== Epoch 1; Iteration 40 ===
+Timeout during comparison
+[GRZO-S] iter 39 | B=8 G=8 | reward mean=0.1622 | active_groups=1.00 pairs=64 | delta mean=-1.10e-03 std=4.68e-03 | len=622 rounds=2 | UPDATED n=64
+=== Iteration 40 finished in 18.86s ===
+
+
+
+=== Epoch 1; Iteration 41 ===
+[GRZO-S] iter 40 | B=8 G=8 | reward mean=0.3739 | active_groups=1.00 pairs=64 | delta mean=+4.58e-04 std=3.88e-03 | len=546 rounds=1 | UPDATED n=64
+=== Iteration 41 finished in 10.43s ===
+
+
+
+=== Epoch 1; Iteration 42 ===
+[GRZO-S] iter 41 | B=8 G=8 | reward mean=0.4939 | active_groups=1.00 pairs=64 | delta mean=+5.37e-04 std=7.44e-03 | len=419 rounds=2 | UPDATED n=64
+=== Iteration 42 finished in 17.33s ===
+
+
+
+=== Epoch 1; Iteration 43 ===
+[GRZO-S] iter 42 | B=8 G=8 | reward mean=0.3675 | active_groups=1.00 pairs=64 | delta mean=+1.28e-03 std=5.16e-03 | len=587 rounds=2 | UPDATED n=64
+=== Iteration 43 finished in 18.87s ===
+
+
+
+=== Epoch 1; Iteration 44 ===
+[GRZO-S] iter 43 | B=8 G=8 | reward mean=0.4769 | active_groups=1.00 pairs=64 | delta mean=+1.59e-05 std=4.73e-03 | len=592 rounds=2 | UPDATED n=64
+=== Iteration 44 finished in 18.66s ===
+
+
+
+=== Epoch 1; Iteration 45 ===
+[GRZO-S] iter 44 | B=8 G=8 | reward mean=0.5116 | active_groups=1.00 pairs=64 | delta mean=-1.02e-04 std=7.09e-03 | len=625 rounds=2 | UPDATED n=64
+=== Iteration 45 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 46 ===
+[GRZO-S] iter 45 | B=8 G=8 | reward mean=0.5688 | active_groups=1.00 pairs=64 | delta mean=+1.16e-03 std=9.01e-03 | len=502 rounds=2 | UPDATED n=64
+=== Iteration 46 finished in 17.80s ===
+
+
+
+=== Epoch 1; Iteration 47 ===
+[GRZO-S] iter 46 | B=8 G=8 | reward mean=0.4625 | active_groups=1.00 pairs=64 | delta mean=-5.77e-04 std=6.99e-03 | len=547 rounds=2 | UPDATED n=64
+=== Iteration 47 finished in 17.69s ===
+
+
+
+=== Epoch 1; Iteration 48 ===
+[GRZO-S] iter 47 | B=8 G=8 | reward mean=0.1728 | active_groups=1.00 pairs=64 | delta mean=-1.34e-03 std=6.88e-03 | len=756 rounds=2 | UPDATED n=64
+=== Iteration 48 finished in 18.77s ===
+
+
+
+=== Epoch 1; Iteration 49 ===
+[GRZO-S] iter 48 | B=8 G=8 | reward mean=0.4539 | active_groups=1.00 pairs=64 | delta mean=-6.28e-04 std=7.07e-03 | len=541 rounds=2 | UPDATED n=64
+=== Iteration 49 finished in 18.75s ===
+
+
+
+=== Epoch 1; Iteration 50 ===
+[GRZO-S] iter 49 | B=8 G=8 | reward mean=0.4806 | active_groups=1.00 pairs=64 | delta mean=-6.05e-04 std=1.39e-02 | len=567 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5440 -- answer_acc (0/1): 0.5320 -- -- spearman_gate: 0.950
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration50.json
+[CKPT] latest saved at iteration 49 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 50 finished in 33.76s ===
+
+
+
+=== Epoch 1; Iteration 51 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 50 | B=8 G=8 | reward mean=0.2217 | active_groups=1.00 pairs=64 | delta mean=+1.63e-03 std=5.12e-03 | len=614 rounds=1 | UPDATED n=64
+=== Iteration 51 finished in 10.75s ===
+
+
+
+=== Epoch 1; Iteration 52 ===
+[GRZO-S] iter 51 | B=8 G=8 | reward mean=0.5719 | active_groups=1.00 pairs=64 | delta mean=-6.80e-04 std=7.66e-03 | len=512 rounds=2 | UPDATED n=64
+=== Iteration 52 finished in 18.09s ===
+
+
+
+=== Epoch 1; Iteration 53 ===
+[GRZO-S] iter 52 | B=8 G=8 | reward mean=0.3091 | active_groups=1.00 pairs=64 | delta mean=+1.25e-04 std=7.33e-03 | len=600 rounds=1 | UPDATED n=64
+=== Iteration 53 finished in 10.58s ===
+
+
+
+=== Epoch 1; Iteration 54 ===
+[GRZO-S] iter 53 | B=8 G=8 | reward mean=0.2833 | active_groups=1.00 pairs=64 | delta mean=-5.06e-04 std=4.51e-03 | len=677 rounds=2 | UPDATED n=64
+=== Iteration 54 finished in 18.19s ===
+
+
+
+=== Epoch 1; Iteration 55 ===
+[GRZO-S] iter 54 | B=8 G=8 | reward mean=0.4028 | active_groups=1.00 pairs=64 | delta mean=-1.84e-05 std=5.64e-03 | len=514 rounds=2 | UPDATED n=64
+=== Iteration 55 finished in 18.50s ===
+
+
+
+=== Epoch 1; Iteration 56 ===
+[GRZO-S] iter 55 | B=8 G=8 | reward mean=0.4835 | active_groups=1.00 pairs=64 | delta mean=-1.40e-03 std=5.55e-03 | len=550 rounds=2 | UPDATED n=64
+=== Iteration 56 finished in 17.01s ===
+
+
+
+=== Epoch 1; Iteration 57 ===
+[GRZO-S] iter 56 | B=8 G=8 | reward mean=0.3398 | active_groups=1.00 pairs=64 | delta mean=+2.82e-05 std=3.74e-03 | len=609 rounds=1 | UPDATED n=64
+=== Iteration 57 finished in 10.60s ===
+
+
+
+=== Epoch 1; Iteration 58 ===
+[GRZO-S] iter 57 | B=8 G=8 | reward mean=0.3085 | active_groups=1.00 pairs=64 | delta mean=+3.02e-04 std=5.58e-03 | len=614 rounds=2 | UPDATED n=64
+=== Iteration 58 finished in 18.54s ===
+
+
+
+=== Epoch 1; Iteration 59 ===
+[GRZO-S] iter 58 | B=8 G=8 | reward mean=0.4054 | active_groups=1.00 pairs=64 | delta mean=+6.85e-05 std=6.78e-03 | len=476 rounds=1 | UPDATED n=64
+=== Iteration 59 finished in 10.50s ===
+
+
+
+=== Epoch 1; Iteration 60 ===
+[GRZO-S] iter 59 | B=8 G=8 | reward mean=0.3589 | active_groups=1.00 pairs=64 | delta mean=-5.67e-04 std=5.78e-03 | len=619 rounds=2 | UPDATED n=64
+=== Iteration 60 finished in 18.28s ===
+
+
+
+=== Epoch 1; Iteration 61 ===
+[GRZO-S] iter 60 | B=8 G=8 | reward mean=0.3859 | active_groups=1.00 pairs=64 | delta mean=-1.66e-04 std=5.35e-03 | len=654 rounds=2 | UPDATED n=64
+=== Iteration 61 finished in 17.98s ===
+
+
+
+=== Epoch 1; Iteration 62 ===
+[GRZO-S] iter 61 | B=8 G=8 | reward mean=0.3353 | active_groups=1.00 pairs=64 | delta mean=-7.79e-04 std=4.95e-03 | len=633 rounds=2 | UPDATED n=64
+=== Iteration 62 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 63 ===
+[GRZO-S] iter 62 | B=8 G=8 | reward mean=0.5325 | active_groups=1.00 pairs=64 | delta mean=+5.11e-04 std=6.68e-03 | len=503 rounds=2 | UPDATED n=64
+=== Iteration 63 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 64 ===
+[GRZO-S] iter 63 | B=8 G=8 | reward mean=0.1278 | active_groups=1.00 pairs=64 | delta mean=+3.33e-04 std=6.85e-03 | len=650 rounds=2 | UPDATED n=64
+=== Iteration 64 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 65 ===
+[GRZO-S] iter 64 | B=8 G=8 | reward mean=0.2720 | active_groups=1.00 pairs=64 | delta mean=+5.55e-04 std=5.19e-03 | len=744 rounds=1 | UPDATED n=64
+=== Iteration 65 finished in 11.36s ===
+
+
+
+=== Epoch 1; Iteration 66 ===
+[GRZO-S] iter 65 | B=8 G=8 | reward mean=0.3633 | active_groups=1.00 pairs=64 | delta mean=+3.84e-04 std=8.08e-03 | len=454 rounds=2 | UPDATED n=64
+=== Iteration 66 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 67 ===
+[GRZO-S] iter 66 | B=8 G=8 | reward mean=0.2786 | active_groups=1.00 pairs=64 | delta mean=-1.58e-03 std=5.75e-03 | len=626 rounds=2 | UPDATED n=64
+=== Iteration 67 finished in 17.93s ===
+
+
+
+=== Epoch 1; Iteration 68 ===
+[GRZO-S] iter 67 | B=8 G=8 | reward mean=0.3055 | active_groups=1.00 pairs=64 | delta mean=+3.20e-04 std=4.64e-03 | len=716 rounds=2 | UPDATED n=64
+=== Iteration 68 finished in 18.29s ===
+
+
+
+=== Epoch 1; Iteration 69 ===
+[GRZO-S] iter 68 | B=8 G=8 | reward mean=0.4523 | active_groups=1.00 pairs=64 | delta mean=+2.89e-04 std=8.36e-03 | len=456 rounds=2 | UPDATED n=64
+=== Iteration 69 finished in 17.92s ===
+
+
+
+=== Epoch 1; Iteration 70 ===
+[GRZO-S] iter 69 | B=8 G=8 | reward mean=0.4826 | active_groups=1.00 pairs=64 | delta mean=-9.34e-04 std=6.63e-03 | len=468 rounds=1 | UPDATED n=64
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[CKPT] latest saved at iteration 69 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 70 finished in 14.52s ===
+
+
+
+=== Epoch 1; Iteration 71 ===
+[GRZO-S] iter 70 | B=8 G=8 | reward mean=0.2558 | active_groups=1.00 pairs=64 | delta mean=+6.46e-04 std=6.59e-03 | len=663 rounds=2 | UPDATED n=64
+=== Iteration 71 finished in 17.92s ===
+
+
+
+=== Epoch 1; Iteration 72 ===
+[GRZO-S] iter 71 | B=8 G=8 | reward mean=0.5216 | active_groups=1.00 pairs=64 | delta mean=-1.08e-03 std=5.49e-03 | len=557 rounds=2 | UPDATED n=64
+=== Iteration 72 finished in 18.30s ===
+
+
+
+=== Epoch 1; Iteration 73 ===
+[GRZO-S] iter 72 | B=8 G=8 | reward mean=0.4044 | active_groups=1.00 pairs=64 | delta mean=-1.73e-04 std=1.00e-02 | len=575 rounds=2 | UPDATED n=64
+=== Iteration 73 finished in 17.90s ===
+
+
+
+=== Epoch 1; Iteration 74 ===
+[GRZO-S] iter 73 | B=8 G=8 | reward mean=0.3700 | active_groups=1.00 pairs=64 | delta mean=-1.00e-03 std=4.91e-03 | len=604 rounds=1 | UPDATED n=64
+=== Iteration 74 finished in 11.05s ===
+
+
+
+=== Epoch 1; Iteration 75 ===
+[GRZO-S] iter 74 | B=8 G=8 | reward mean=0.3805 | active_groups=1.00 pairs=64 | delta mean=-8.98e-04 std=7.59e-03 | len=633 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5449 -- answer_acc (0/1): 0.5320 -- -- spearman_gate: 0.951
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration75.json
+[CKPT] latest saved at iteration 74 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 75 finished in 33.67s ===
+
+
+
+=== Epoch 1; Iteration 76 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 75 | B=8 G=8 | reward mean=0.3510 | active_groups=1.00 pairs=64 | delta mean=-6.77e-04 std=6.17e-03 | len=577 rounds=1 | UPDATED n=64
+=== Iteration 76 finished in 10.48s ===
+
+
+
+=== Epoch 1; Iteration 77 ===
+[GRZO-S] iter 76 | B=8 G=8 | reward mean=0.3564 | active_groups=1.00 pairs=64 | delta mean=-1.02e-03 std=6.07e-03 | len=644 rounds=2 | UPDATED n=64
+=== Iteration 77 finished in 17.90s ===
+
+
+
+=== Epoch 1; Iteration 78 ===
+[GRZO-S] iter 77 | B=8 G=8 | reward mean=0.4520 | active_groups=1.00 pairs=64 | delta mean=-9.29e-04 std=1.04e-02 | len=489 rounds=2 | UPDATED n=64
+=== Iteration 78 finished in 17.73s ===
+
+
+
+=== Epoch 1; Iteration 79 ===
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+Timeout during comparison
+[GRZO-S] iter 78 | B=8 G=8 | reward mean=0.3958 | active_groups=1.00 pairs=64 | delta mean=+2.00e-03 std=1.16e-02 | len=592 rounds=2 | UPDATED n=64
+=== Iteration 79 finished in 18.08s ===
+
+
+
+=== Epoch 1; Iteration 80 ===
+[GRZO-S] iter 79 | B=8 G=8 | reward mean=0.2154 | active_groups=1.00 pairs=64 | delta mean=-2.05e-04 std=7.62e-03 | len=640 rounds=2 | UPDATED n=64
+=== Iteration 80 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 81 ===
+[GRZO-S] iter 80 | B=8 G=8 | reward mean=0.3594 | active_groups=1.00 pairs=64 | delta mean=-8.29e-04 std=4.71e-03 | len=619 rounds=2 | UPDATED n=64
+=== Iteration 81 finished in 17.98s ===
+
+
+
+=== Epoch 1; Iteration 82 ===
+[GRZO-S] iter 81 | B=8 G=8 | reward mean=0.2702 | active_groups=1.00 pairs=64 | delta mean=+9.37e-04 std=4.26e-03 | len=663 rounds=2 | UPDATED n=64
+=== Iteration 82 finished in 18.22s ===
+
+
+
+=== Epoch 1; Iteration 83 ===
+[GRZO-S] iter 82 | B=8 G=8 | reward mean=0.2732 | active_groups=1.00 pairs=64 | delta mean=-7.04e-04 std=7.10e-03 | len=562 rounds=2 | UPDATED n=64
+=== Iteration 83 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 84 ===
+[GRZO-S] iter 83 | B=8 G=8 | reward mean=0.5350 | active_groups=1.00 pairs=64 | delta mean=-1.71e-03 std=5.80e-03 | len=605 rounds=2 | UPDATED n=64
+=== Iteration 84 finished in 18.19s ===
+
+
+
+=== Epoch 1; Iteration 85 ===
+[GRZO-S] iter 84 | B=8 G=8 | reward mean=0.4198 | active_groups=1.00 pairs=64 | delta mean=-9.66e-05 std=4.65e-03 | len=608 rounds=2 | UPDATED n=64
+=== Iteration 85 finished in 18.24s ===
+
+
+
+=== Epoch 1; Iteration 86 ===
+[GRZO-S] iter 85 | B=8 G=8 | reward mean=0.1994 | active_groups=1.00 pairs=64 | delta mean=+1.07e-03 std=4.70e-03 | len=604 rounds=2 | UPDATED n=64
+=== Iteration 86 finished in 18.14s ===
+
+
+
+=== Epoch 1; Iteration 87 ===
+[GRZO-S] iter 86 | B=8 G=8 | reward mean=0.2210 | active_groups=1.00 pairs=64 | delta mean=-1.30e-04 std=4.49e-03 | len=602 rounds=1 | UPDATED n=64
+=== Iteration 87 finished in 11.01s ===
+
+
+
+=== Epoch 1; Iteration 88 ===
+[GRZO-S] iter 87 | B=8 G=8 | reward mean=0.4022 | active_groups=1.00 pairs=64 | delta mean=+3.12e-04 std=5.29e-03 | len=654 rounds=2 | UPDATED n=64
+=== Iteration 88 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 89 ===
+[GRZO-S] iter 88 | B=8 G=8 | reward mean=0.2782 | active_groups=1.00 pairs=64 | delta mean=-1.78e-03 std=1.11e-02 | len=637 rounds=2 | UPDATED n=64
+=== Iteration 89 finished in 18.81s ===
+
+
+
+=== Epoch 1; Iteration 90 ===
+[GRZO-S] iter 89 | B=8 G=8 | reward mean=0.4955 | active_groups=1.00 pairs=64 | delta mean=-9.30e-04 std=7.80e-03 | len=620 rounds=2 | UPDATED n=64
+=== Iteration 90 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 91 ===
+[GRZO-S] iter 90 | B=8 G=8 | reward mean=0.3911 | active_groups=1.00 pairs=64 | delta mean=+1.18e-03 std=5.53e-03 | len=616 rounds=1 | UPDATED n=64
+=== Iteration 91 finished in 10.36s ===
+
+
+
+=== Epoch 1; Iteration 92 ===
+[GRZO-S] iter 91 | B=8 G=8 | reward mean=0.4052 | active_groups=1.00 pairs=64 | delta mean=+3.08e-04 std=5.16e-03 | len=680 rounds=2 | UPDATED n=64
+=== Iteration 92 finished in 18.20s ===
+
+
+
+=== Epoch 1; Iteration 93 ===
+[GRZO-S] iter 92 | B=8 G=8 | reward mean=0.5165 | active_groups=1.00 pairs=64 | delta mean=-6.48e-05 std=5.31e-03 | len=507 rounds=1 | UPDATED n=64
+=== Iteration 93 finished in 10.87s ===
+
+
+
+=== Epoch 1; Iteration 94 ===
+[GRZO-S] iter 93 | B=8 G=8 | reward mean=0.4753 | active_groups=1.00 pairs=64 | delta mean=+7.48e-04 std=5.23e-03 | len=586 rounds=2 | UPDATED n=64
+=== Iteration 94 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 95 ===
+[GRZO-S] iter 94 | B=8 G=8 | reward mean=0.4310 | active_groups=1.00 pairs=64 | delta mean=-2.85e-04 std=4.71e-03 | len=500 rounds=2 | UPDATED n=64
+=== Iteration 95 finished in 17.99s ===
+
+
+
+=== Epoch 1; Iteration 96 ===
+[GRZO-S] iter 95 | B=8 G=8 | reward mean=0.4322 | active_groups=1.00 pairs=64 | delta mean=-4.87e-04 std=4.96e-03 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 96 finished in 17.82s ===
+
+
+
+=== Epoch 1; Iteration 97 ===
+[GRZO-S] iter 96 | B=8 G=8 | reward mean=0.3346 | active_groups=1.00 pairs=64 | delta mean=-1.92e-04 std=5.68e-03 | len=695 rounds=2 | UPDATED n=64
+=== Iteration 97 finished in 18.02s ===
+
+
+
+=== Epoch 1; Iteration 98 ===
+[GRZO-S] iter 97 | B=8 G=8 | reward mean=0.3844 | active_groups=1.00 pairs=64 | delta mean=-4.25e-04 std=1.04e-02 | len=499 rounds=2 | UPDATED n=64
+=== Iteration 98 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 99 ===
+[GRZO-S] iter 98 | B=8 G=8 | reward mean=0.3793 | active_groups=1.00 pairs=64 | delta mean=+2.30e-04 std=5.33e-03 | len=554 rounds=2 | UPDATED n=64
+=== Iteration 99 finished in 17.89s ===
+
+
+
+=== Epoch 1; Iteration 100 ===
+[GRZO-S] iter 99 | B=8 G=8 | reward mean=0.2768 | active_groups=1.00 pairs=64 | delta mean=+4.26e-04 std=3.81e-03 | len=614 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5422 -- answer_acc (0/1): 0.5300 -- -- spearman_gate: 0.949
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration100.json
+[CKPT] latest saved at iteration 99 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 100 finished in 33.32s ===
+
+
+
+=== Epoch 1; Iteration 101 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 100 | B=8 G=8 | reward mean=0.2673 | active_groups=1.00 pairs=64 | delta mean=-5.85e-04 std=5.43e-03 | len=699 rounds=2 | UPDATED n=64
+=== Iteration 101 finished in 18.51s ===
+
+
+
+=== Epoch 1; Iteration 102 ===
+[GRZO-S] iter 101 | B=8 G=8 | reward mean=0.2525 | active_groups=1.00 pairs=64 | delta mean=-3.95e-04 std=7.18e-03 | len=655 rounds=2 | UPDATED n=64
+=== Iteration 102 finished in 17.93s ===
+
+
+
+=== Epoch 1; Iteration 103 ===
+[GRZO-S] iter 102 | B=8 G=8 | reward mean=0.6036 | active_groups=1.00 pairs=64 | delta mean=+2.12e-03 std=8.23e-03 | len=472 rounds=1 | UPDATED n=64
+=== Iteration 103 finished in 10.44s ===
+
+
+
+=== Epoch 1; Iteration 104 ===
+[GRZO-S] iter 103 | B=8 G=8 | reward mean=0.4784 | active_groups=1.00 pairs=64 | delta mean=+8.78e-04 std=5.75e-03 | len=443 rounds=2 | UPDATED n=64
+=== Iteration 104 finished in 17.76s ===
+
+
+
+=== Epoch 1; Iteration 105 ===
+[GRZO-S] iter 104 | B=8 G=8 | reward mean=0.3629 | active_groups=1.00 pairs=64 | delta mean=+5.42e-04 std=5.67e-03 | len=611 rounds=2 | UPDATED n=64
+=== Iteration 105 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 106 ===
+[GRZO-S] iter 105 | B=8 G=8 | reward mean=0.2003 | active_groups=1.00 pairs=64 | delta mean=+1.89e-04 std=4.63e-03 | len=686 rounds=2 | UPDATED n=64
+=== Iteration 106 finished in 17.71s ===
+
+
+
+=== Epoch 1; Iteration 107 ===
+[GRZO-S] iter 106 | B=8 G=8 | reward mean=0.3836 | active_groups=1.00 pairs=64 | delta mean=+2.95e-03 std=2.90e-02 | len=508 rounds=2 | UPDATED n=64
+=== Iteration 107 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 108 ===
+[GRZO-S] iter 107 | B=8 G=8 | reward mean=0.4945 | active_groups=1.00 pairs=64 | delta mean=-2.02e-03 std=1.63e-02 | len=599 rounds=2 | UPDATED n=64
+=== Iteration 108 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 109 ===
+[GRZO-S] iter 108 | B=8 G=8 | reward mean=0.5584 | active_groups=1.00 pairs=64 | delta mean=+8.92e-04 std=6.47e-03 | len=564 rounds=2 | UPDATED n=64
+=== Iteration 109 finished in 18.21s ===
+
+
+
+=== Epoch 1; Iteration 110 ===
+[GRZO-S] iter 109 | B=8 G=8 | reward mean=0.3740 | active_groups=1.00 pairs=64 | delta mean=-1.18e-03 std=6.05e-03 | len=557 rounds=2 | UPDATED n=64
+=== Iteration 110 finished in 17.77s ===
+
+
+
+=== Epoch 1; Iteration 111 ===
+[GRZO-S] iter 110 | B=8 G=8 | reward mean=0.1991 | active_groups=1.00 pairs=64 | delta mean=-4.14e-04 std=6.02e-03 | len=650 rounds=2 | UPDATED n=64
+=== Iteration 111 finished in 18.00s ===
+
+
+
+=== Epoch 1; Iteration 112 ===
+[GRZO-S] iter 111 | B=8 G=8 | reward mean=0.7305 | active_groups=1.00 pairs=64 | delta mean=-1.35e-03 std=8.49e-03 | len=435 rounds=2 | UPDATED n=64
+=== Iteration 112 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 113 ===
+[GRZO-S] iter 112 | B=8 G=8 | reward mean=0.5392 | active_groups=1.00 pairs=64 | delta mean=-1.38e-04 std=8.45e-03 | len=547 rounds=2 | UPDATED n=64
+=== Iteration 113 finished in 17.63s ===
+
+
+
+=== Epoch 1; Iteration 114 ===
+[GRZO-S] iter 113 | B=8 G=8 | reward mean=0.5573 | active_groups=1.00 pairs=64 | delta mean=+6.23e-04 std=6.01e-03 | len=437 rounds=1 | UPDATED n=64
+=== Iteration 114 finished in 9.31s ===
+
+
+
+=== Epoch 1; Iteration 115 ===
+[GRZO-S] iter 114 | B=8 G=8 | reward mean=0.1799 | active_groups=1.00 pairs=64 | delta mean=-2.68e-04 std=5.79e-03 | len=603 rounds=2 | UPDATED n=64
+=== Iteration 115 finished in 17.62s ===
+
+
+
+=== Epoch 1; Iteration 116 ===
+[GRZO-S] iter 115 | B=8 G=8 | reward mean=0.1889 | active_groups=1.00 pairs=64 | delta mean=-1.49e-03 std=8.90e-03 | len=619 rounds=2 | UPDATED n=64
+=== Iteration 116 finished in 18.40s ===
+
+
+
+=== Epoch 1; Iteration 117 ===
+[GRZO-S] iter 116 | B=8 G=8 | reward mean=0.2127 | active_groups=1.00 pairs=64 | delta mean=+7.18e-04 std=5.34e-03 | len=706 rounds=2 | UPDATED n=64
+=== Iteration 117 finished in 18.73s ===
+
+
+
+=== Epoch 1; Iteration 118 ===
+[GRZO-S] iter 117 | B=8 G=8 | reward mean=0.5335 | active_groups=1.00 pairs=64 | delta mean=+4.42e-04 std=4.85e-03 | len=582 rounds=1 | UPDATED n=64
+=== Iteration 118 finished in 10.40s ===
+
+
+
+=== Epoch 1; Iteration 119 ===
+[GRZO-S] iter 118 | B=8 G=8 | reward mean=0.3418 | active_groups=1.00 pairs=64 | delta mean=+1.76e-04 std=1.01e-02 | len=514 rounds=2 | UPDATED n=64
+=== Iteration 119 finished in 17.47s ===
+
+
+
+=== Epoch 1; Iteration 120 ===
+[GRZO-S] iter 119 | B=8 G=8 | reward mean=0.4904 | active_groups=1.00 pairs=64 | delta mean=-3.72e-03 std=2.27e-02 | len=456 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 119 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 120 finished in 22.32s ===
+
+
+
+=== Epoch 1; Iteration 121 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 120 | B=8 G=8 | reward mean=0.2367 | active_groups=1.00 pairs=64 | delta mean=-4.63e-06 std=3.86e-03 | len=738 rounds=2 | UPDATED n=64
+=== Iteration 121 finished in 18.15s ===
+
+
+
+=== Epoch 1; Iteration 122 ===
+[GRZO-S] iter 121 | B=8 G=8 | reward mean=0.2350 | active_groups=1.00 pairs=64 | delta mean=+8.33e-04 std=5.77e-03 | len=692 rounds=1 | UPDATED n=64
+=== Iteration 122 finished in 11.09s ===
+
+
+
+=== Epoch 1; Iteration 123 ===
+[GRZO-S] iter 122 | B=8 G=8 | reward mean=0.1937 | active_groups=1.00 pairs=64 | delta mean=+2.89e-04 std=5.10e-03 | len=751 rounds=2 | UPDATED n=64
+=== Iteration 123 finished in 18.56s ===
+
+
+
+=== Epoch 1; Iteration 124 ===
+[GRZO-S] iter 123 | B=8 G=8 | reward mean=0.1914 | active_groups=1.00 pairs=64 | delta mean=+1.24e-03 std=8.55e-03 | len=665 rounds=1 | UPDATED n=64
+=== Iteration 124 finished in 11.19s ===
+
+
+
+=== Epoch 1; Iteration 125 ===
+[GRZO-S] iter 124 | B=8 G=8 | reward mean=0.3487 | active_groups=1.00 pairs=64 | delta mean=+7.62e-04 std=7.40e-03 | len=598 rounds=1 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5291 -- answer_acc (0/1): 0.5200 -- -- spearman_gate: 0.950
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration125.json
+[CKPT] latest saved at iteration 124 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 125 finished in 25.06s ===
+
+
+
+=== Epoch 1; Iteration 126 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 125 | B=8 G=8 | reward mean=0.3934 | active_groups=1.00 pairs=64 | delta mean=-1.33e-05 std=4.80e-03 | len=640 rounds=2 | UPDATED n=64
+=== Iteration 126 finished in 18.49s ===
+
+
+
+=== Epoch 1; Iteration 127 ===
+[GRZO-S] iter 126 | B=8 G=8 | reward mean=0.3546 | active_groups=1.00 pairs=64 | delta mean=+6.10e-04 std=5.16e-03 | len=540 rounds=2 | UPDATED n=64
+=== Iteration 127 finished in 17.93s ===
+
+
+
+=== Epoch 1; Iteration 128 ===
+[GRZO-S] iter 127 | B=8 G=8 | reward mean=0.2421 | active_groups=1.00 pairs=64 | delta mean=-1.69e-04 std=6.56e-03 | len=612 rounds=1 | UPDATED n=64
+=== Iteration 128 finished in 10.35s ===
+
+
+
+=== Epoch 1; Iteration 129 ===
+[GRZO-S] iter 128 | B=8 G=8 | reward mean=0.5165 | active_groups=1.00 pairs=64 | delta mean=+9.32e-05 std=3.56e-03 | len=643 rounds=2 | UPDATED n=64
+=== Iteration 129 finished in 18.67s ===
+
+
+
+=== Epoch 1; Iteration 130 ===
+[GRZO-S] iter 129 | B=8 G=8 | reward mean=0.4499 | active_groups=1.00 pairs=64 | delta mean=-3.51e-04 std=7.27e-03 | len=565 rounds=2 | UPDATED n=64
+=== Iteration 130 finished in 17.38s ===
+
+
+
+=== Epoch 1; Iteration 131 ===
+[GRZO-S] iter 130 | B=8 G=8 | reward mean=0.3945 | active_groups=1.00 pairs=64 | delta mean=+4.93e-04 std=5.41e-03 | len=627 rounds=2 | UPDATED n=64
+=== Iteration 131 finished in 17.91s ===
+
+
+
+=== Epoch 1; Iteration 132 ===
+[GRZO-S] iter 131 | B=8 G=8 | reward mean=0.3735 | active_groups=1.00 pairs=64 | delta mean=+2.17e-03 std=5.80e-03 | len=538 rounds=2 | UPDATED n=64
+=== Iteration 132 finished in 16.88s ===
+
+
+
+=== Epoch 1; Iteration 133 ===
+[GRZO-S] iter 132 | B=8 G=8 | reward mean=0.3509 | active_groups=1.00 pairs=64 | delta mean=+6.32e-04 std=4.55e-03 | len=612 rounds=2 | UPDATED n=64
+=== Iteration 133 finished in 18.18s ===
+
+
+
+=== Epoch 1; Iteration 134 ===
+[GRZO-S] iter 133 | B=8 G=8 | reward mean=0.2385 | active_groups=1.00 pairs=64 | delta mean=+5.63e-04 std=7.78e-03 | len=632 rounds=2 | UPDATED n=64
+=== Iteration 134 finished in 18.20s ===
+
+
+
+=== Epoch 1; Iteration 135 ===
+[GRZO-S] iter 134 | B=8 G=8 | reward mean=0.3661 | active_groups=1.00 pairs=64 | delta mean=+6.43e-04 std=5.16e-03 | len=556 rounds=2 | UPDATED n=64
+=== Iteration 135 finished in 17.50s ===
+
+
+
+=== Epoch 1; Iteration 136 ===
+[GRZO-S] iter 135 | B=8 G=8 | reward mean=0.2816 | active_groups=1.00 pairs=64 | delta mean=-3.57e-04 std=6.66e-03 | len=634 rounds=2 | UPDATED n=64
+=== Iteration 136 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 137 ===
+[GRZO-S] iter 136 | B=8 G=8 | reward mean=0.4940 | active_groups=1.00 pairs=64 | delta mean=-1.52e-04 std=4.90e-03 | len=643 rounds=2 | UPDATED n=64
+=== Iteration 137 finished in 18.22s ===
+
+
+
+=== Epoch 1; Iteration 138 ===
+[GRZO-S] iter 137 | B=8 G=8 | reward mean=0.2545 | active_groups=1.00 pairs=64 | delta mean=+5.49e-04 std=4.72e-03 | len=662 rounds=2 | UPDATED n=64
+=== Iteration 138 finished in 18.00s ===
+
+
+
+=== Epoch 1; Iteration 139 ===
+[GRZO-S] iter 138 | B=8 G=8 | reward mean=0.3307 | active_groups=1.00 pairs=64 | delta mean=+2.65e-04 std=6.48e-03 | len=602 rounds=2 | UPDATED n=64
+=== Iteration 139 finished in 18.17s ===
+
+
+
+=== Epoch 1; Iteration 140 ===
+[GRZO-S] iter 139 | B=8 G=8 | reward mean=0.3140 | active_groups=1.00 pairs=64 | delta mean=+9.94e-04 std=5.99e-03 | len=551 rounds=2 | UPDATED n=64
+=== Iteration 140 finished in 17.59s ===
+
+
+
+=== Epoch 1; Iteration 141 ===
+[GRZO-S] iter 140 | B=8 G=8 | reward mean=0.3579 | active_groups=1.00 pairs=64 | delta mean=+1.43e-03 std=7.00e-03 | len=621 rounds=2 | UPDATED n=64
+=== Iteration 141 finished in 18.23s ===
+
+
+
+=== Epoch 1; Iteration 142 ===
+[GRZO-S] iter 141 | B=8 G=8 | reward mean=0.3961 | active_groups=1.00 pairs=64 | delta mean=+4.47e-04 std=7.47e-03 | len=610 rounds=2 | UPDATED n=64
+=== Iteration 142 finished in 17.61s ===
+
+
+
+=== Epoch 1; Iteration 143 ===
+[GRZO-S] iter 142 | B=8 G=8 | reward mean=0.3877 | active_groups=1.00 pairs=64 | delta mean=+3.07e-04 std=8.01e-03 | len=695 rounds=2 | UPDATED n=64
+=== Iteration 143 finished in 17.82s ===
+
+
+
+=== Epoch 1; Iteration 144 ===
+[GRZO-S] iter 143 | B=8 G=8 | reward mean=0.1837 | active_groups=1.00 pairs=64 | delta mean=-9.48e-04 std=1.41e-02 | len=764 rounds=2 | UPDATED n=64
+=== Iteration 144 finished in 18.68s ===
+
+
+
+=== Epoch 1; Iteration 145 ===
+[GRZO-S] iter 144 | B=8 G=8 | reward mean=0.4714 | active_groups=1.00 pairs=64 | delta mean=+1.47e-04 std=4.33e-03 | len=557 rounds=2 | UPDATED n=64
+=== Iteration 145 finished in 17.60s ===
+
+
+
+=== Epoch 1; Iteration 146 ===
+[GRZO-S] iter 145 | B=8 G=8 | reward mean=0.1957 | active_groups=1.00 pairs=64 | delta mean=+6.34e-04 std=6.24e-03 | len=634 rounds=2 | UPDATED n=64
+=== Iteration 146 finished in 18.12s ===
+
+
+
+=== Epoch 1; Iteration 147 ===
+[GRZO-S] iter 146 | B=8 G=8 | reward mean=0.4566 | active_groups=1.00 pairs=64 | delta mean=-4.64e-04 std=6.83e-03 | len=551 rounds=2 | UPDATED n=64
+=== Iteration 147 finished in 18.32s ===
+
+
+
+=== Epoch 1; Iteration 148 ===
+[GRZO-S] iter 147 | B=8 G=8 | reward mean=0.4270 | active_groups=1.00 pairs=64 | delta mean=+2.59e-04 std=4.58e-03 | len=607 rounds=2 | UPDATED n=64
+=== Iteration 148 finished in 18.16s ===
+
+
+
+=== Epoch 1; Iteration 149 ===
+[GRZO-S] iter 148 | B=8 G=8 | reward mean=0.3477 | active_groups=1.00 pairs=64 | delta mean=+1.48e-03 std=8.78e-03 | len=674 rounds=2 | UPDATED n=64
+=== Iteration 149 finished in 18.25s ===
+
+
+
+=== Epoch 1; Iteration 150 ===
+Timeout during comparison
+[GRZO-S] iter 149 | B=8 G=8 | reward mean=0.1696 | active_groups=1.00 pairs=64 | delta mean=+6.45e-04 std=5.89e-03 | len=705 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5259 -- answer_acc (0/1): 0.5160 -- -- spearman_gate: 0.949
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration150.json
+[CKPT] latest saved at iteration 149 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 150 finished in 33.98s ===
+
+
+
+=== Epoch 1; Iteration 151 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 150 | B=8 G=8 | reward mean=0.3101 | active_groups=1.00 pairs=64 | delta mean=+4.62e-04 std=4.62e-03 | len=570 rounds=1 | UPDATED n=64
+=== Iteration 151 finished in 10.45s ===
+
+
+
+=== Epoch 1; Iteration 152 ===
+[GRZO-S] iter 151 | B=8 G=8 | reward mean=0.3514 | active_groups=1.00 pairs=64 | delta mean=-9.00e-04 std=5.04e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 152 finished in 18.07s ===
+
+
+
+=== Epoch 1; Iteration 153 ===
+[GRZO-S] iter 152 | B=8 G=8 | reward mean=0.5249 | active_groups=1.00 pairs=64 | delta mean=-7.74e-04 std=1.01e-02 | len=530 rounds=2 | UPDATED n=64
+=== Iteration 153 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 154 ===
+[GRZO-S] iter 153 | B=8 G=8 | reward mean=0.5188 | active_groups=1.00 pairs=64 | delta mean=-4.56e-04 std=6.94e-03 | len=469 rounds=2 | UPDATED n=64
+=== Iteration 154 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 155 ===
+[GRZO-S] iter 154 | B=8 G=8 | reward mean=0.5823 | active_groups=1.00 pairs=64 | delta mean=-5.97e-04 std=6.21e-03 | len=534 rounds=2 | UPDATED n=64
+=== Iteration 155 finished in 17.71s ===
+
+
+
+=== Epoch 1; Iteration 156 ===
+[GRZO-S] iter 155 | B=8 G=8 | reward mean=0.4308 | active_groups=1.00 pairs=64 | delta mean=+6.10e-04 std=7.18e-03 | len=524 rounds=2 | UPDATED n=64
+=== Iteration 156 finished in 17.77s ===
+
+
+
+=== Epoch 1; Iteration 157 ===
+[GRZO-S] iter 156 | B=8 G=8 | reward mean=0.3909 | active_groups=1.00 pairs=64 | delta mean=-6.66e-04 std=4.78e-03 | len=652 rounds=1 | UPDATED n=64
+=== Iteration 157 finished in 10.53s ===
+
+
+
+=== Epoch 1; Iteration 158 ===
+[GRZO-S] iter 157 | B=8 G=8 | reward mean=0.2650 | active_groups=1.00 pairs=64 | delta mean=-2.48e-04 std=5.14e-03 | len=569 rounds=1 | UPDATED n=64
+=== Iteration 158 finished in 10.68s ===
+
+
+
+=== Epoch 1; Iteration 159 ===
+[GRZO-S] iter 158 | B=8 G=8 | reward mean=0.4668 | active_groups=1.00 pairs=64 | delta mean=+9.34e-04 std=5.04e-03 | len=638 rounds=2 | UPDATED n=64
+=== Iteration 159 finished in 18.34s ===
+
+
+
+=== Epoch 1; Iteration 160 ===
+[GRZO-S] iter 159 | B=8 G=8 | reward mean=0.2927 | active_groups=1.00 pairs=64 | delta mean=+7.77e-04 std=4.34e-03 | len=675 rounds=2 | UPDATED n=64
+=== Iteration 160 finished in 17.69s ===
+
+
+
+=== Epoch 1; Iteration 161 ===
+[GRZO-S] iter 160 | B=8 G=8 | reward mean=0.4044 | active_groups=1.00 pairs=64 | delta mean=+4.34e-04 std=5.72e-03 | len=601 rounds=2 | UPDATED n=64
+=== Iteration 161 finished in 18.09s ===
+
+
+
+=== Epoch 1; Iteration 162 ===
+[GRZO-S] iter 161 | B=8 G=8 | reward mean=0.3746 | active_groups=1.00 pairs=64 | delta mean=-7.25e-04 std=1.38e-02 | len=571 rounds=2 | UPDATED n=64
+=== Iteration 162 finished in 18.01s ===
+
+
+
+=== Epoch 1; Iteration 163 ===
+[GRZO-S] iter 162 | B=8 G=8 | reward mean=0.4181 | active_groups=1.00 pairs=64 | delta mean=+3.32e-04 std=5.30e-03 | len=637 rounds=2 | UPDATED n=64
+=== Iteration 163 finished in 18.16s ===
+
+
+
+=== Epoch 1; Iteration 164 ===
+[GRZO-S] iter 163 | B=8 G=8 | reward mean=0.2346 | active_groups=1.00 pairs=64 | delta mean=+1.14e-04 std=5.07e-03 | len=683 rounds=2 | UPDATED n=64
+=== Iteration 164 finished in 18.16s ===
+
+
+
+=== Epoch 1; Iteration 165 ===
+[GRZO-S] iter 164 | B=8 G=8 | reward mean=0.3937 | active_groups=1.00 pairs=64 | delta mean=+6.57e-04 std=7.57e-03 | len=581 rounds=2 | UPDATED n=64
+=== Iteration 165 finished in 17.70s ===
+
+
+
+=== Epoch 1; Iteration 166 ===
+[GRZO-S] iter 165 | B=8 G=8 | reward mean=0.4222 | active_groups=1.00 pairs=64 | delta mean=-8.38e-04 std=4.46e-03 | len=619 rounds=2 | UPDATED n=64
+=== Iteration 166 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 167 ===
+[GRZO-S] iter 166 | B=8 G=8 | reward mean=0.4575 | active_groups=1.00 pairs=64 | delta mean=-3.70e-04 std=4.62e-03 | len=541 rounds=2 | UPDATED n=64
+=== Iteration 167 finished in 17.74s ===
+
+
+
+=== Epoch 1; Iteration 168 ===
+[GRZO-S] iter 167 | B=8 G=8 | reward mean=0.5022 | active_groups=1.00 pairs=64 | delta mean=+9.69e-04 std=5.67e-03 | len=528 rounds=2 | UPDATED n=64
+=== Iteration 168 finished in 18.19s ===
+
+
+
+=== Epoch 1; Iteration 169 ===
+[GRZO-S] iter 168 | B=8 G=8 | reward mean=0.5402 | active_groups=1.00 pairs=64 | delta mean=+7.22e-04 std=5.40e-03 | len=657 rounds=2 | UPDATED n=64
+=== Iteration 169 finished in 18.10s ===
+
+
+
+=== Epoch 1; Iteration 170 ===
+[GRZO-S] iter 169 | B=8 G=8 | reward mean=0.2449 | active_groups=1.00 pairs=64 | delta mean=-8.09e-04 std=4.84e-03 | len=592 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 169 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 170 finished in 22.40s ===
+
+
+
+=== Epoch 1; Iteration 171 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 170 | B=8 G=8 | reward mean=0.3532 | active_groups=1.00 pairs=64 | delta mean=+1.04e-03 std=8.08e-03 | len=545 rounds=2 | UPDATED n=64
+=== Iteration 171 finished in 18.32s ===
+
+
+
+=== Epoch 1; Iteration 172 ===
+[GRZO-S] iter 171 | B=8 G=8 | reward mean=0.3962 | active_groups=1.00 pairs=64 | delta mean=-7.58e-04 std=3.76e-03 | len=630 rounds=2 | UPDATED n=64
+=== Iteration 172 finished in 17.72s ===
+
+
+
+=== Epoch 1; Iteration 173 ===
+[GRZO-S] iter 172 | B=8 G=8 | reward mean=0.5390 | active_groups=1.00 pairs=64 | delta mean=-2.64e-04 std=5.62e-03 | len=484 rounds=2 | UPDATED n=64
+=== Iteration 173 finished in 17.54s ===
+
+
+
+=== Epoch 1; Iteration 174 ===
+[GRZO-S] iter 173 | B=8 G=8 | reward mean=0.5090 | active_groups=1.00 pairs=64 | delta mean=+1.23e-04 std=5.86e-03 | len=470 rounds=1 | UPDATED n=64
+=== Iteration 174 finished in 10.17s ===
+
+
+
+=== Epoch 1; Iteration 175 ===
+[GRZO-S] iter 174 | B=8 G=8 | reward mean=0.3116 | active_groups=1.00 pairs=64 | delta mean=+8.51e-04 std=7.53e-03 | len=580 rounds=1 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5397 -- answer_acc (0/1): 0.5280 -- -- spearman_gate: 0.949
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration175.json
+[CKPT] latest saved at iteration 174 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 175 finished in 25.29s ===
+
+
+
+=== Epoch 1; Iteration 176 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 175 | B=8 G=8 | reward mean=0.3531 | active_groups=1.00 pairs=64 | delta mean=-1.03e-03 std=7.93e-03 | len=606 rounds=2 | UPDATED n=64
+=== Iteration 176 finished in 17.93s ===
+
+
+
+=== Epoch 1; Iteration 177 ===
+[GRZO-S] iter 176 | B=8 G=8 | reward mean=0.4466 | active_groups=1.00 pairs=64 | delta mean=-4.95e-04 std=6.89e-03 | len=434 rounds=2 | UPDATED n=64
+=== Iteration 177 finished in 16.44s ===
+
+
+
+=== Epoch 1; Iteration 178 ===
+[GRZO-S] iter 177 | B=8 G=8 | reward mean=0.2998 | active_groups=1.00 pairs=64 | delta mean=-1.57e-04 std=6.60e-03 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 178 finished in 17.53s ===
+
+
+
+=== Epoch 1; Iteration 179 ===
+[GRZO-S] iter 178 | B=8 G=8 | reward mean=0.2937 | active_groups=1.00 pairs=64 | delta mean=-1.19e-04 std=5.94e-03 | len=685 rounds=1 | UPDATED n=64
+=== Iteration 179 finished in 10.95s ===
+
+
+
+=== Epoch 1; Iteration 180 ===
+[GRZO-S] iter 179 | B=8 G=8 | reward mean=0.3409 | active_groups=1.00 pairs=64 | delta mean=-3.39e-04 std=4.35e-03 | len=584 rounds=1 | UPDATED n=64
+=== Iteration 180 finished in 10.32s ===
+
+
+
+=== Epoch 1; Iteration 181 ===
+[GRZO-S] iter 180 | B=8 G=8 | reward mean=0.2960 | active_groups=1.00 pairs=64 | delta mean=-7.15e-04 std=8.60e-03 | len=588 rounds=1 | UPDATED n=64
+=== Iteration 181 finished in 10.80s ===
+
+
+
+=== Epoch 1; Iteration 182 ===
+[GRZO-S] iter 181 | B=8 G=8 | reward mean=0.2169 | active_groups=1.00 pairs=64 | delta mean=-5.95e-04 std=6.22e-03 | len=687 rounds=1 | UPDATED n=64
+=== Iteration 182 finished in 10.47s ===
+
+
+
+=== Epoch 1; Iteration 183 ===
+[GRZO-S] iter 182 | B=8 G=8 | reward mean=0.2535 | active_groups=1.00 pairs=64 | delta mean=+3.37e-05 std=3.82e-03 | len=584 rounds=2 | UPDATED n=64
+=== Iteration 183 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 184 ===
+[GRZO-S] iter 183 | B=8 G=8 | reward mean=0.4383 | active_groups=1.00 pairs=64 | delta mean=-3.73e-04 std=5.83e-03 | len=526 rounds=1 | UPDATED n=64
+=== Iteration 184 finished in 10.48s ===
+
+
+
+=== Epoch 1; Iteration 185 ===
+[GRZO-S] iter 184 | B=8 G=8 | reward mean=0.5989 | active_groups=1.00 pairs=64 | delta mean=+8.77e-04 std=7.44e-03 | len=511 rounds=2 | UPDATED n=64
+=== Iteration 185 finished in 17.92s ===
+
+
+
+=== Epoch 1; Iteration 186 ===
+[GRZO-S] iter 185 | B=8 G=8 | reward mean=0.5248 | active_groups=1.00 pairs=64 | delta mean=-2.43e-04 std=5.22e-03 | len=549 rounds=2 | UPDATED n=64
+=== Iteration 186 finished in 17.75s ===
+
+
+
+=== Epoch 1; Iteration 187 ===
+[GRZO-S] iter 186 | B=8 G=8 | reward mean=0.3622 | active_groups=1.00 pairs=64 | delta mean=-2.60e-04 std=5.73e-03 | len=543 rounds=2 | UPDATED n=64
+=== Iteration 187 finished in 17.73s ===
+
+
+
+=== Epoch 1; Iteration 188 ===
+[GRZO-S] iter 187 | B=8 G=8 | reward mean=0.3363 | active_groups=1.00 pairs=64 | delta mean=+1.76e-03 std=7.45e-03 | len=625 rounds=2 | UPDATED n=64
+=== Iteration 188 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 189 ===
+[GRZO-S] iter 188 | B=8 G=8 | reward mean=0.3131 | active_groups=1.00 pairs=64 | delta mean=+9.88e-04 std=5.89e-03 | len=633 rounds=2 | UPDATED n=64
+=== Iteration 189 finished in 18.10s ===
+
+
+
+=== Epoch 1; Iteration 190 ===
+[GRZO-S] iter 189 | B=8 G=8 | reward mean=0.4402 | active_groups=1.00 pairs=64 | delta mean=-7.14e-04 std=4.08e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 190 finished in 18.05s ===
+
+
+
+=== Epoch 1; Iteration 191 ===
+[GRZO-S] iter 190 | B=8 G=8 | reward mean=0.4174 | active_groups=1.00 pairs=64 | delta mean=-8.33e-05 std=7.24e-03 | len=592 rounds=2 | UPDATED n=64
+=== Iteration 191 finished in 17.58s ===
+
+
+
+=== Epoch 1; Iteration 192 ===
+[GRZO-S] iter 191 | B=8 G=8 | reward mean=0.4990 | active_groups=1.00 pairs=64 | delta mean=+3.24e-04 std=4.94e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 192 finished in 18.15s ===
+
+
+
+=== Epoch 1; Iteration 193 ===
+[GRZO-S] iter 192 | B=8 G=8 | reward mean=0.4376 | active_groups=1.00 pairs=64 | delta mean=-7.02e-05 std=6.73e-03 | len=611 rounds=2 | UPDATED n=64
+=== Iteration 193 finished in 17.61s ===
+
+
+
+=== Epoch 1; Iteration 194 ===
+[GRZO-S] iter 193 | B=8 G=8 | reward mean=0.4589 | active_groups=1.00 pairs=64 | delta mean=+3.61e-04 std=9.59e-03 | len=536 rounds=2 | UPDATED n=64
+=== Iteration 194 finished in 17.83s ===
+
+
+
+=== Epoch 1; Iteration 195 ===
+[GRZO-S] iter 194 | B=8 G=8 | reward mean=0.2352 | active_groups=1.00 pairs=64 | delta mean=-9.28e-04 std=5.13e-03 | len=675 rounds=2 | UPDATED n=64
+=== Iteration 195 finished in 18.52s ===
+
+
+
+=== Epoch 1; Iteration 196 ===
+[GRZO-S] iter 195 | B=8 G=8 | reward mean=0.1952 | active_groups=1.00 pairs=64 | delta mean=+1.46e-04 std=5.64e-03 | len=641 rounds=2 | UPDATED n=64
+=== Iteration 196 finished in 18.42s ===
+
+
+
+=== Epoch 1; Iteration 197 ===
+[GRZO-S] iter 196 | B=8 G=8 | reward mean=0.3110 | active_groups=1.00 pairs=64 | delta mean=+9.31e-04 std=4.20e-03 | len=611 rounds=2 | UPDATED n=64
+=== Iteration 197 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 198 ===
+[GRZO-S] iter 197 | B=8 G=8 | reward mean=0.3413 | active_groups=1.00 pairs=64 | delta mean=-2.22e-04 std=5.48e-03 | len=586 rounds=2 | UPDATED n=64
+=== Iteration 198 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 199 ===
+[GRZO-S] iter 198 | B=8 G=8 | reward mean=0.2557 | active_groups=1.00 pairs=64 | delta mean=-8.60e-04 std=5.03e-03 | len=692 rounds=2 | UPDATED n=64
+=== Iteration 199 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 200 ===
+[GRZO-S] iter 199 | B=8 G=8 | reward mean=0.2393 | active_groups=1.00 pairs=64 | delta mean=-8.02e-04 std=6.34e-03 | len=643 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5495 -- answer_acc (0/1): 0.5380 -- -- spearman_gate: 0.953
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration200.json
+[CKPT] latest saved at iteration 199 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 200 finished in 32.74s ===
+
+
+
+=== Epoch 1; Iteration 201 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 200 | B=8 G=8 | reward mean=0.4799 | active_groups=1.00 pairs=64 | delta mean=-7.71e-04 std=7.13e-03 | len=492 rounds=2 | UPDATED n=64
+=== Iteration 201 finished in 17.60s ===
+
+
+
+=== Epoch 1; Iteration 202 ===
+[GRZO-S] iter 201 | B=8 G=8 | reward mean=0.3976 | active_groups=1.00 pairs=64 | delta mean=-3.90e-04 std=5.57e-03 | len=581 rounds=2 | UPDATED n=64
+=== Iteration 202 finished in 18.36s ===
+
+
+
+=== Epoch 1; Iteration 203 ===
+[GRZO-S] iter 202 | B=8 G=8 | reward mean=0.3327 | active_groups=1.00 pairs=64 | delta mean=-1.24e-03 std=6.88e-03 | len=562 rounds=2 | UPDATED n=64
+=== Iteration 203 finished in 18.11s ===
+
+
+
+=== Epoch 1; Iteration 204 ===
+[GRZO-S] iter 203 | B=8 G=8 | reward mean=0.2792 | active_groups=1.00 pairs=64 | delta mean=-8.60e-04 std=8.86e-03 | len=638 rounds=2 | UPDATED n=64
+=== Iteration 204 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 205 ===
+[GRZO-S] iter 204 | B=8 G=8 | reward mean=0.2429 | active_groups=1.00 pairs=64 | delta mean=-2.58e-04 std=4.68e-03 | len=626 rounds=2 | UPDATED n=64
+=== Iteration 205 finished in 18.40s ===
+
+
+
+=== Epoch 1; Iteration 206 ===
+[GRZO-S] iter 205 | B=8 G=8 | reward mean=0.4210 | active_groups=1.00 pairs=64 | delta mean=+6.07e-04 std=5.38e-03 | len=560 rounds=1 | UPDATED n=64
+=== Iteration 206 finished in 10.61s ===
+
+
+
+=== Epoch 1; Iteration 207 ===
+Timeout during comparison
+Timeout during comparison
+[GRZO-S] iter 206 | B=8 G=8 | reward mean=0.3383 | active_groups=1.00 pairs=64 | delta mean=+2.75e-04 std=5.62e-03 | len=590 rounds=2 | UPDATED n=64
+=== Iteration 207 finished in 18.71s ===
+
+
+
+=== Epoch 1; Iteration 208 ===
+[GRZO-S] iter 207 | B=8 G=8 | reward mean=0.2676 | active_groups=1.00 pairs=64 | delta mean=+9.07e-04 std=8.11e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 208 finished in 18.11s ===
+
+
+
+=== Epoch 1; Iteration 209 ===
+[GRZO-S] iter 208 | B=8 G=8 | reward mean=0.2933 | active_groups=1.00 pairs=64 | delta mean=-6.35e-04 std=8.54e-03 | len=577 rounds=2 | UPDATED n=64
+=== Iteration 209 finished in 17.62s ===
+
+
+
+=== Epoch 1; Iteration 210 ===
+[GRZO-S] iter 209 | B=8 G=8 | reward mean=0.4381 | active_groups=1.00 pairs=64 | delta mean=+9.38e-04 std=5.19e-03 | len=548 rounds=2 | UPDATED n=64
+=== Iteration 210 finished in 18.47s ===
+
+
+
+=== Epoch 1; Iteration 211 ===
+[GRZO-S] iter 210 | B=8 G=8 | reward mean=0.3722 | active_groups=1.00 pairs=64 | delta mean=+6.20e-04 std=5.50e-03 | len=604 rounds=1 | UPDATED n=64
+=== Iteration 211 finished in 10.71s ===
+
+
+
+=== Epoch 1; Iteration 212 ===
+[GRZO-S] iter 211 | B=8 G=8 | reward mean=0.4478 | active_groups=1.00 pairs=64 | delta mean=-1.24e-04 std=5.28e-03 | len=574 rounds=2 | UPDATED n=64
+=== Iteration 212 finished in 18.31s ===
+
+
+
+=== Epoch 1; Iteration 213 ===
+[GRZO-S] iter 212 | B=8 G=8 | reward mean=0.4344 | active_groups=1.00 pairs=64 | delta mean=-6.67e-04 std=6.73e-03 | len=592 rounds=2 | UPDATED n=64
+=== Iteration 213 finished in 18.35s ===
+
+
+
+=== Epoch 1; Iteration 214 ===
+[GRZO-S] iter 213 | B=8 G=8 | reward mean=0.4249 | active_groups=1.00 pairs=64 | delta mean=+1.33e-03 std=7.91e-03 | len=573 rounds=2 | UPDATED n=64
+=== Iteration 214 finished in 18.53s ===
+
+
+
+=== Epoch 1; Iteration 215 ===
+[GRZO-S] iter 214 | B=8 G=8 | reward mean=0.2919 | active_groups=1.00 pairs=64 | delta mean=+2.22e-04 std=5.71e-03 | len=638 rounds=2 | UPDATED n=64
+=== Iteration 215 finished in 18.32s ===
+
+
+
+=== Epoch 1; Iteration 216 ===
+[GRZO-S] iter 215 | B=8 G=8 | reward mean=0.4487 | active_groups=1.00 pairs=64 | delta mean=+2.64e-05 std=7.44e-03 | len=481 rounds=1 | UPDATED n=64
+=== Iteration 216 finished in 10.13s ===
+
+
+
+=== Epoch 1; Iteration 217 ===
+[GRZO-S] iter 216 | B=8 G=8 | reward mean=0.2775 | active_groups=1.00 pairs=64 | delta mean=-1.32e-04 std=6.87e-03 | len=695 rounds=2 | UPDATED n=64
+=== Iteration 217 finished in 18.27s ===
+
+
+
+=== Epoch 1; Iteration 218 ===
+[GRZO-S] iter 217 | B=8 G=8 | reward mean=0.2269 | active_groups=1.00 pairs=64 | delta mean=+8.21e-04 std=5.11e-03 | len=732 rounds=2 | UPDATED n=64
+=== Iteration 218 finished in 18.21s ===
+
+
+
+=== Epoch 1; Iteration 219 ===
+[GRZO-S] iter 218 | B=8 G=8 | reward mean=0.1561 | active_groups=1.00 pairs=64 | delta mean=-7.03e-04 std=5.70e-03 | len=635 rounds=2 | UPDATED n=64
+=== Iteration 219 finished in 18.29s ===
+
+
+
+=== Epoch 1; Iteration 220 ===
+[GRZO-S] iter 219 | B=8 G=8 | reward mean=0.2987 | active_groups=1.00 pairs=64 | delta mean=-1.62e-03 std=4.95e-03 | len=609 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 219 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 220 finished in 22.77s ===
+
+
+
+=== Epoch 1; Iteration 221 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 220 | B=8 G=8 | reward mean=0.1961 | active_groups=1.00 pairs=64 | delta mean=-1.45e-04 std=5.84e-03 | len=626 rounds=2 | UPDATED n=64
+=== Iteration 221 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 222 ===
+[GRZO-S] iter 221 | B=8 G=8 | reward mean=0.3482 | active_groups=1.00 pairs=64 | delta mean=-3.26e-05 std=4.36e-03 | len=711 rounds=2 | UPDATED n=64
+=== Iteration 222 finished in 18.04s ===
+
+
+
+=== Epoch 1; Iteration 223 ===
+[GRZO-S] iter 222 | B=8 G=8 | reward mean=0.4092 | active_groups=1.00 pairs=64 | delta mean=+3.04e-04 std=5.09e-03 | len=624 rounds=2 | UPDATED n=64
+=== Iteration 223 finished in 18.62s ===
+
+
+
+=== Epoch 1; Iteration 224 ===
+[GRZO-S] iter 223 | B=8 G=8 | reward mean=0.3153 | active_groups=1.00 pairs=64 | delta mean=+3.01e-04 std=7.79e-03 | len=544 rounds=2 | UPDATED n=64
+=== Iteration 224 finished in 16.81s ===
+
+
+
+=== Epoch 1; Iteration 225 ===
+[GRZO-S] iter 224 | B=8 G=8 | reward mean=0.3744 | active_groups=1.00 pairs=64 | delta mean=-1.31e-03 std=6.27e-03 | len=588 rounds=1 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5350 -- answer_acc (0/1): 0.5220 -- -- spearman_gate: 0.948
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration225.json
+[CKPT] latest saved at iteration 224 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 225 finished in 25.43s ===
+
+
+
+=== Epoch 1; Iteration 226 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 225 | B=8 G=8 | reward mean=0.4216 | active_groups=1.00 pairs=64 | delta mean=-7.86e-04 std=4.89e-03 | len=670 rounds=1 | UPDATED n=64
+=== Iteration 226 finished in 10.57s ===
+
+
+
+=== Epoch 1; Iteration 227 ===
+[GRZO-S] iter 226 | B=8 G=8 | reward mean=0.2535 | active_groups=1.00 pairs=64 | delta mean=+1.59e-03 std=5.78e-03 | len=640 rounds=2 | UPDATED n=64
+=== Iteration 227 finished in 18.37s ===
+
+
+
+=== Epoch 1; Iteration 228 ===
+[GRZO-S] iter 227 | B=8 G=8 | reward mean=0.4751 | active_groups=1.00 pairs=64 | delta mean=-3.48e-04 std=5.56e-03 | len=613 rounds=2 | UPDATED n=64
+=== Iteration 228 finished in 18.26s ===
+
+
+
+=== Epoch 1; Iteration 229 ===
+[GRZO-S] iter 228 | B=8 G=8 | reward mean=0.3341 | active_groups=1.00 pairs=64 | delta mean=-1.66e-03 std=7.30e-03 | len=632 rounds=2 | UPDATED n=64
+=== Iteration 229 finished in 18.22s ===
+
+
+
+=== Epoch 1; Iteration 230 ===
+[GRZO-S] iter 229 | B=8 G=8 | reward mean=0.2195 | active_groups=1.00 pairs=64 | delta mean=+1.16e-03 std=6.45e-03 | len=771 rounds=2 | UPDATED n=64
+=== Iteration 230 finished in 18.90s ===
+
+
+
+=== Epoch 1; Iteration 231 ===
+[GRZO-S] iter 230 | B=8 G=8 | reward mean=0.5564 | active_groups=1.00 pairs=64 | delta mean=+1.15e-03 std=6.71e-03 | len=464 rounds=2 | UPDATED n=64
+=== Iteration 231 finished in 17.56s ===
+
+
+
+=== Epoch 1; Iteration 232 ===
+[GRZO-S] iter 231 | B=8 G=8 | reward mean=0.4756 | active_groups=1.00 pairs=64 | delta mean=-1.64e-04 std=5.24e-03 | len=576 rounds=2 | UPDATED n=64
+=== Iteration 232 finished in 18.01s ===
+
+
+
+=== Epoch 1; Iteration 233 ===
+[GRZO-S] iter 232 | B=8 G=8 | reward mean=0.5137 | active_groups=1.00 pairs=64 | delta mean=-1.11e-03 std=5.19e-03 | len=565 rounds=2 | UPDATED n=64
+=== Iteration 233 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 234 ===
+[GRZO-S] iter 233 | B=8 G=8 | reward mean=0.5187 | active_groups=1.00 pairs=64 | delta mean=+5.50e-04 std=4.97e-03 | len=512 rounds=2 | UPDATED n=64
+=== Iteration 234 finished in 17.81s ===
+
+
+
+=== Epoch 1; Iteration 235 ===
+[GRZO-S] iter 234 | B=8 G=8 | reward mean=0.3860 | active_groups=1.00 pairs=64 | delta mean=+8.53e-04 std=7.48e-03 | len=566 rounds=2 | UPDATED n=64
+=== Iteration 235 finished in 17.72s ===
+
+
+
+=== Epoch 1; Iteration 236 ===
+[GRZO-S] iter 235 | B=8 G=8 | reward mean=0.2689 | active_groups=1.00 pairs=64 | delta mean=-1.46e-04 std=7.49e-03 | len=639 rounds=2 | UPDATED n=64
+=== Iteration 236 finished in 18.00s ===
+
+
+
+=== Epoch 1; Iteration 237 ===
+[GRZO-S] iter 236 | B=8 G=8 | reward mean=0.3550 | active_groups=1.00 pairs=64 | delta mean=-1.28e-04 std=4.94e-03 | len=656 rounds=2 | UPDATED n=64
+=== Iteration 237 finished in 18.08s ===
+
+
+
+=== Epoch 1; Iteration 238 ===
+[GRZO-S] iter 237 | B=8 G=8 | reward mean=0.2952 | active_groups=1.00 pairs=64 | delta mean=+2.51e-04 std=6.44e-03 | len=584 rounds=2 | UPDATED n=64
+=== Iteration 238 finished in 18.54s ===
+
+
+
+=== Epoch 1; Iteration 239 ===
+[GRZO-S] iter 238 | B=8 G=8 | reward mean=0.3318 | active_groups=1.00 pairs=64 | delta mean=-1.02e-03 std=4.40e-03 | len=587 rounds=2 | UPDATED n=64
+=== Iteration 239 finished in 17.67s ===
+
+
+
+=== Epoch 1; Iteration 240 ===
+[GRZO-S] iter 239 | B=8 G=8 | reward mean=0.3764 | active_groups=1.00 pairs=64 | delta mean=+1.21e-03 std=6.13e-03 | len=579 rounds=2 | UPDATED n=64
+=== Iteration 240 finished in 17.80s ===
+
+
+
+=== Epoch 1; Iteration 241 ===
+[GRZO-S] iter 240 | B=8 G=8 | reward mean=0.4534 | active_groups=1.00 pairs=64 | delta mean=+5.93e-04 std=6.66e-03 | len=505 rounds=2 | UPDATED n=64
+=== Iteration 241 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 242 ===
+[GRZO-S] iter 241 | B=8 G=8 | reward mean=0.3790 | active_groups=1.00 pairs=64 | delta mean=-3.90e-05 std=3.34e-03 | len=530 rounds=2 | UPDATED n=64
+=== Iteration 242 finished in 17.77s ===
+
+
+
+=== Epoch 1; Iteration 243 ===
+[GRZO-S] iter 242 | B=8 G=8 | reward mean=0.2098 | active_groups=1.00 pairs=64 | delta mean=-1.89e-04 std=6.38e-03 | len=501 rounds=2 | UPDATED n=64
+=== Iteration 243 finished in 18.46s ===
+
+
+
+=== Epoch 1; Iteration 244 ===
+[GRZO-S] iter 243 | B=8 G=8 | reward mean=0.4572 | active_groups=1.00 pairs=64 | delta mean=+3.05e-04 std=5.85e-03 | len=601 rounds=2 | UPDATED n=64
+=== Iteration 244 finished in 17.62s ===
+
+
+
+=== Epoch 1; Iteration 245 ===
+[GRZO-S] iter 244 | B=8 G=8 | reward mean=0.1880 | active_groups=1.00 pairs=64 | delta mean=-1.59e-05 std=7.05e-03 | len=576 rounds=2 | UPDATED n=64
+=== Iteration 245 finished in 17.70s ===
+
+
+
+=== Epoch 1; Iteration 246 ===
+[GRZO-S] iter 245 | B=8 G=8 | reward mean=0.6164 | active_groups=1.00 pairs=64 | delta mean=+2.10e-04 std=6.13e-03 | len=512 rounds=2 | UPDATED n=64
+=== Iteration 246 finished in 17.85s ===
+
+
+
+=== Epoch 1; Iteration 247 ===
+[GRZO-S] iter 246 | B=8 G=8 | reward mean=0.3922 | active_groups=1.00 pairs=64 | delta mean=-1.19e-04 std=4.87e-03 | len=561 rounds=2 | UPDATED n=64
+=== Iteration 247 finished in 18.16s ===
+
+
+
+=== Epoch 1; Iteration 248 ===
+[GRZO-S] iter 247 | B=8 G=8 | reward mean=0.4790 | active_groups=1.00 pairs=64 | delta mean=-4.18e-05 std=5.28e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 248 finished in 17.49s ===
+
+
+
+=== Epoch 1; Iteration 249 ===
+[GRZO-S] iter 248 | B=8 G=8 | reward mean=0.3218 | active_groups=1.00 pairs=64 | delta mean=-4.88e-04 std=5.97e-03 | len=605 rounds=1 | UPDATED n=64
+=== Iteration 249 finished in 10.77s ===
+
+
+
+=== Epoch 1; Iteration 250 ===
+[GRZO-S] iter 249 | B=8 G=8 | reward mean=0.3157 | active_groups=1.00 pairs=64 | delta mean=+2.62e-05 std=5.91e-03 | len=546 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5439 -- answer_acc (0/1): 0.5320 -- -- spearman_gate: 0.951
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration250.json
+[CKPT] latest saved at iteration 249 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 250 finished in 32.55s ===
+
+
+
+=== Epoch 1; Iteration 251 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 250 | B=8 G=8 | reward mean=0.3074 | active_groups=1.00 pairs=64 | delta mean=+2.36e-03 std=1.38e-02 | len=624 rounds=2 | UPDATED n=64
+=== Iteration 251 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 252 ===
+[GRZO-S] iter 251 | B=8 G=8 | reward mean=0.5595 | active_groups=1.00 pairs=64 | delta mean=-2.65e-04 std=8.05e-03 | len=467 rounds=1 | UPDATED n=64
+=== Iteration 252 finished in 10.26s ===
+
+
+
+=== Epoch 1; Iteration 253 ===
+[GRZO-S] iter 252 | B=8 G=8 | reward mean=0.4830 | active_groups=1.00 pairs=64 | delta mean=-4.94e-04 std=5.59e-03 | len=551 rounds=2 | UPDATED n=64
+=== Iteration 253 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 254 ===
+[GRZO-S] iter 253 | B=8 G=8 | reward mean=0.3716 | active_groups=1.00 pairs=64 | delta mean=+7.15e-05 std=5.12e-03 | len=480 rounds=2 | UPDATED n=64
+=== Iteration 254 finished in 17.13s ===
+
+
+
+=== Epoch 1; Iteration 255 ===
+[GRZO-S] iter 254 | B=8 G=8 | reward mean=0.3326 | active_groups=1.00 pairs=64 | delta mean=+9.99e-04 std=8.57e-03 | len=536 rounds=1 | UPDATED n=64
+=== Iteration 255 finished in 10.90s ===
+
+
+
+=== Epoch 1; Iteration 256 ===
+[GRZO-S] iter 255 | B=8 G=8 | reward mean=0.2254 | active_groups=1.00 pairs=64 | delta mean=+3.28e-04 std=5.32e-03 | len=546 rounds=2 | UPDATED n=64
+=== Iteration 256 finished in 16.62s ===
+
+
+
+=== Epoch 1; Iteration 257 ===
+[GRZO-S] iter 256 | B=8 G=8 | reward mean=0.1891 | active_groups=1.00 pairs=64 | delta mean=+1.52e-03 std=6.26e-03 | len=616 rounds=2 | UPDATED n=64
+=== Iteration 257 finished in 18.48s ===
+
+
+
+=== Epoch 1; Iteration 258 ===
+[GRZO-S] iter 257 | B=8 G=8 | reward mean=0.3768 | active_groups=1.00 pairs=64 | delta mean=-3.38e-04 std=5.01e-03 | len=610 rounds=1 | UPDATED n=64
+=== Iteration 258 finished in 10.63s ===
+
+
+
+=== Epoch 1; Iteration 259 ===
+[GRZO-S] iter 258 | B=8 G=8 | reward mean=0.3895 | active_groups=1.00 pairs=64 | delta mean=+1.22e-03 std=1.41e-02 | len=656 rounds=1 | UPDATED n=64
+=== Iteration 259 finished in 10.77s ===
+
+
+
+=== Epoch 1; Iteration 260 ===
+[GRZO-S] iter 259 | B=8 G=8 | reward mean=0.2803 | active_groups=1.00 pairs=64 | delta mean=+1.11e-04 std=5.18e-03 | len=691 rounds=2 | UPDATED n=64
+=== Iteration 260 finished in 18.42s ===
+
+
+
+=== Epoch 1; Iteration 261 ===
+[GRZO-S] iter 260 | B=8 G=8 | reward mean=0.3961 | active_groups=1.00 pairs=64 | delta mean=+3.66e-04 std=6.70e-03 | len=557 rounds=2 | UPDATED n=64
+=== Iteration 261 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 262 ===
+[GRZO-S] iter 261 | B=8 G=8 | reward mean=0.3926 | active_groups=1.00 pairs=64 | delta mean=+9.03e-04 std=7.87e-03 | len=471 rounds=2 | UPDATED n=64
+=== Iteration 262 finished in 17.63s ===
+
+
+
+=== Epoch 1; Iteration 263 ===
+[GRZO-S] iter 262 | B=8 G=8 | reward mean=0.3170 | active_groups=1.00 pairs=64 | delta mean=-6.94e-04 std=5.41e-03 | len=574 rounds=2 | UPDATED n=64
+=== Iteration 263 finished in 17.63s ===
+
+
+
+=== Epoch 1; Iteration 264 ===
+[GRZO-S] iter 263 | B=8 G=8 | reward mean=0.2222 | active_groups=1.00 pairs=64 | delta mean=-9.43e-04 std=4.93e-03 | len=566 rounds=2 | UPDATED n=64
+=== Iteration 264 finished in 18.34s ===
+
+
+
+=== Epoch 1; Iteration 265 ===
+[GRZO-S] iter 264 | B=8 G=8 | reward mean=0.3480 | active_groups=1.00 pairs=64 | delta mean=-9.17e-05 std=6.56e-03 | len=568 rounds=2 | UPDATED n=64
+=== Iteration 265 finished in 18.25s ===
+
+
+
+=== Epoch 1; Iteration 266 ===
+[GRZO-S] iter 265 | B=8 G=8 | reward mean=0.2889 | active_groups=1.00 pairs=64 | delta mean=+4.06e-05 std=5.28e-03 | len=572 rounds=1 | UPDATED n=64
+=== Iteration 266 finished in 10.41s ===
+
+
+
+=== Epoch 1; Iteration 267 ===
+[GRZO-S] iter 266 | B=8 G=8 | reward mean=0.3612 | active_groups=1.00 pairs=64 | delta mean=-3.37e-04 std=4.81e-03 | len=548 rounds=1 | UPDATED n=64
+=== Iteration 267 finished in 10.49s ===
+
+
+
+=== Epoch 1; Iteration 268 ===
+[GRZO-S] iter 267 | B=8 G=8 | reward mean=0.3402 | active_groups=1.00 pairs=64 | delta mean=-4.58e-04 std=6.20e-03 | len=606 rounds=2 | UPDATED n=64
+=== Iteration 268 finished in 18.36s ===
+
+
+
+=== Epoch 1; Iteration 269 ===
+[GRZO-S] iter 268 | B=8 G=8 | reward mean=0.2041 | active_groups=1.00 pairs=64 | delta mean=+9.30e-05 std=6.21e-03 | len=670 rounds=2 | UPDATED n=64
+=== Iteration 269 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 270 ===
+[GRZO-S] iter 269 | B=8 G=8 | reward mean=0.4635 | active_groups=1.00 pairs=64 | delta mean=+2.55e-03 std=1.43e-02 | len=518 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 269 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 270 finished in 22.27s ===
+
+
+
+=== Epoch 1; Iteration 271 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 270 | B=8 G=8 | reward mean=0.3504 | active_groups=1.00 pairs=64 | delta mean=-1.60e-03 std=1.46e-02 | len=610 rounds=2 | UPDATED n=64
+=== Iteration 271 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 272 ===
+[GRZO-S] iter 271 | B=8 G=8 | reward mean=0.3375 | active_groups=1.00 pairs=64 | delta mean=-3.86e-04 std=4.34e-03 | len=629 rounds=2 | UPDATED n=64
+=== Iteration 272 finished in 17.80s ===
+
+
+
+=== Epoch 1; Iteration 273 ===
+[GRZO-S] iter 272 | B=8 G=8 | reward mean=0.1612 | active_groups=1.00 pairs=64 | delta mean=-5.13e-04 std=5.63e-03 | len=648 rounds=2 | UPDATED n=64
+=== Iteration 273 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 274 ===
+[GRZO-S] iter 273 | B=8 G=8 | reward mean=0.3182 | active_groups=1.00 pairs=64 | delta mean=+1.47e-04 std=5.68e-03 | len=588 rounds=2 | UPDATED n=64
+=== Iteration 274 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 275 ===
+[GRZO-S] iter 274 | B=8 G=8 | reward mean=0.4216 | active_groups=1.00 pairs=64 | delta mean=+6.66e-04 std=6.89e-03 | len=510 rounds=1 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5597 -- answer_acc (0/1): 0.5480 -- -- spearman_gate: 0.955
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration275.json
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/checkpoints/probe-math-sig5e4-acc0.548/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 274 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 275 finished in 34.04s ===
+
+
+
+=== Epoch 1; Iteration 276 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 275 | B=8 G=8 | reward mean=0.2542 | active_groups=1.00 pairs=64 | delta mean=-3.70e-04 std=6.78e-03 | len=620 rounds=2 | UPDATED n=64
+=== Iteration 276 finished in 18.00s ===
+
+
+
+=== Epoch 1; Iteration 277 ===
+[GRZO-S] iter 276 | B=8 G=8 | reward mean=0.3619 | active_groups=1.00 pairs=64 | delta mean=-2.93e-04 std=5.89e-03 | len=591 rounds=2 | UPDATED n=64
+=== Iteration 277 finished in 18.20s ===
+
+
+
+=== Epoch 1; Iteration 278 ===
+[GRZO-S] iter 277 | B=8 G=8 | reward mean=0.4640 | active_groups=1.00 pairs=64 | delta mean=+1.00e-05 std=4.84e-03 | len=616 rounds=2 | UPDATED n=64
+=== Iteration 278 finished in 17.84s ===
+
+
+
+=== Epoch 1; Iteration 279 ===
+[GRZO-S] iter 278 | B=8 G=8 | reward mean=0.3813 | active_groups=1.00 pairs=64 | delta mean=-9.14e-04 std=4.89e-03 | len=629 rounds=2 | UPDATED n=64
+=== Iteration 279 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 280 ===
+[GRZO-S] iter 279 | B=8 G=8 | reward mean=0.3289 | active_groups=1.00 pairs=64 | delta mean=-1.81e-04 std=5.31e-03 | len=672 rounds=2 | UPDATED n=64
+=== Iteration 280 finished in 17.94s ===
+
+
+
+=== Epoch 1; Iteration 281 ===
+[GRZO-S] iter 280 | B=8 G=8 | reward mean=0.2786 | active_groups=1.00 pairs=64 | delta mean=+1.99e-04 std=6.18e-03 | len=594 rounds=1 | UPDATED n=64
+=== Iteration 281 finished in 10.39s ===
+
+
+
+=== Epoch 1; Iteration 282 ===
+[GRZO-S] iter 281 | B=8 G=8 | reward mean=0.3401 | active_groups=1.00 pairs=64 | delta mean=-1.21e-03 std=6.22e-03 | len=592 rounds=2 | UPDATED n=64
+=== Iteration 282 finished in 17.84s ===
+
+
+
+=== Epoch 1; Iteration 283 ===
+Timeout during comparison
+[GRZO-S] iter 282 | B=8 G=8 | reward mean=0.4053 | active_groups=1.00 pairs=64 | delta mean=+1.15e-03 std=1.27e-02 | len=586 rounds=2 | UPDATED n=64
+=== Iteration 283 finished in 18.72s ===
+
+
+
+=== Epoch 1; Iteration 284 ===
+[GRZO-S] iter 283 | B=8 G=8 | reward mean=0.3621 | active_groups=1.00 pairs=64 | delta mean=+1.39e-03 std=6.54e-03 | len=497 rounds=2 | UPDATED n=64
+=== Iteration 284 finished in 18.13s ===
+
+
+
+=== Epoch 1; Iteration 285 ===
+[GRZO-S] iter 284 | B=8 G=8 | reward mean=0.3346 | active_groups=1.00 pairs=64 | delta mean=-2.73e-04 std=4.86e-03 | len=645 rounds=2 | UPDATED n=64
+=== Iteration 285 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 286 ===
+[GRZO-S] iter 285 | B=8 G=8 | reward mean=0.2090 | active_groups=1.00 pairs=64 | delta mean=+8.00e-05 std=5.98e-03 | len=624 rounds=2 | UPDATED n=64
+=== Iteration 286 finished in 18.48s ===
+
+
+
+=== Epoch 1; Iteration 287 ===
+[GRZO-S] iter 286 | B=8 G=8 | reward mean=0.2575 | active_groups=1.00 pairs=64 | delta mean=-1.27e-04 std=4.46e-03 | len=563 rounds=2 | UPDATED n=64
+=== Iteration 287 finished in 17.77s ===
+
+
+
+=== Epoch 1; Iteration 288 ===
+[GRZO-S] iter 287 | B=8 G=8 | reward mean=0.4441 | active_groups=1.00 pairs=64 | delta mean=+4.83e-04 std=6.61e-03 | len=574 rounds=2 | UPDATED n=64
+=== Iteration 288 finished in 17.61s ===
+
+
+
+=== Epoch 1; Iteration 289 ===
+[GRZO-S] iter 288 | B=8 G=8 | reward mean=0.4256 | active_groups=1.00 pairs=64 | delta mean=+1.44e-03 std=6.74e-03 | len=587 rounds=1 | UPDATED n=64
+=== Iteration 289 finished in 10.54s ===
+
+
+
+=== Epoch 1; Iteration 290 ===
+[GRZO-S] iter 289 | B=8 G=8 | reward mean=0.3521 | active_groups=1.00 pairs=64 | delta mean=-1.87e-06 std=4.60e-03 | len=615 rounds=2 | UPDATED n=64
+=== Iteration 290 finished in 18.05s ===
+
+
+
+=== Epoch 1; Iteration 291 ===
+[GRZO-S] iter 290 | B=8 G=8 | reward mean=0.3347 | active_groups=1.00 pairs=64 | delta mean=-2.18e-04 std=5.06e-03 | len=547 rounds=2 | UPDATED n=64
+=== Iteration 291 finished in 17.58s ===
+
+
+
+=== Epoch 1; Iteration 292 ===
+[GRZO-S] iter 291 | B=8 G=8 | reward mean=0.3493 | active_groups=1.00 pairs=64 | delta mean=-1.02e-03 std=4.97e-03 | len=506 rounds=2 | UPDATED n=64
+=== Iteration 292 finished in 17.81s ===
+
+
+
+=== Epoch 1; Iteration 293 ===
+[GRZO-S] iter 292 | B=8 G=8 | reward mean=0.3002 | active_groups=1.00 pairs=64 | delta mean=-8.09e-04 std=8.58e-03 | len=645 rounds=2 | UPDATED n=64
+=== Iteration 293 finished in 18.10s ===
+
+
+
+=== Epoch 1; Iteration 294 ===
+[GRZO-S] iter 293 | B=8 G=8 | reward mean=0.2144 | active_groups=1.00 pairs=64 | delta mean=+1.01e-03 std=7.10e-03 | len=657 rounds=2 | UPDATED n=64
+=== Iteration 294 finished in 17.76s ===
+
+
+
+=== Epoch 1; Iteration 295 ===
+[GRZO-S] iter 294 | B=8 G=8 | reward mean=0.2567 | active_groups=1.00 pairs=64 | delta mean=-9.10e-04 std=6.20e-03 | len=595 rounds=2 | UPDATED n=64
+=== Iteration 295 finished in 18.09s ===
+
+
+
+=== Epoch 1; Iteration 296 ===
+[GRZO-S] iter 295 | B=8 G=8 | reward mean=0.3513 | active_groups=1.00 pairs=64 | delta mean=+8.50e-05 std=5.59e-03 | len=656 rounds=1 | UPDATED n=64
+=== Iteration 296 finished in 10.49s ===
+
+
+
+=== Epoch 1; Iteration 297 ===
+[GRZO-S] iter 296 | B=8 G=8 | reward mean=0.2966 | active_groups=1.00 pairs=64 | delta mean=+5.43e-04 std=7.16e-03 | len=549 rounds=2 | UPDATED n=64
+=== Iteration 297 finished in 17.70s ===
+
+
+
+=== Epoch 1; Iteration 298 ===
+[GRZO-S] iter 297 | B=8 G=8 | reward mean=0.1828 | active_groups=1.00 pairs=64 | delta mean=+3.53e-04 std=5.91e-03 | len=691 rounds=2 | UPDATED n=64
+=== Iteration 298 finished in 18.44s ===
+
+
+
+=== Epoch 1; Iteration 299 ===
+[GRZO-S] iter 298 | B=8 G=8 | reward mean=0.5468 | active_groups=1.00 pairs=64 | delta mean=+1.78e-03 std=4.73e-03 | len=508 rounds=2 | UPDATED n=64
+=== Iteration 299 finished in 17.54s ===
+
+
+
+=== Epoch 1; Iteration 300 ===
+[GRZO-S] iter 299 | B=8 G=8 | reward mean=0.3851 | active_groups=1.00 pairs=64 | delta mean=-4.70e-04 std=4.57e-03 | len=680 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5595 -- answer_acc (0/1): 0.5480 -- -- spearman_gate: 0.954
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration300.json
+[CKPT] latest saved at iteration 299 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 300 finished in 33.40s ===
+
+
+
+=== Epoch 1; Iteration 301 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 300 | B=8 G=8 | reward mean=0.2806 | active_groups=1.00 pairs=64 | delta mean=+1.43e-04 std=6.01e-03 | len=566 rounds=2 | UPDATED n=64
+=== Iteration 301 finished in 17.80s ===
+
+
+
+=== Epoch 1; Iteration 302 ===
+[GRZO-S] iter 301 | B=8 G=8 | reward mean=0.2612 | active_groups=1.00 pairs=64 | delta mean=+2.03e-04 std=4.13e-03 | len=582 rounds=2 | UPDATED n=64
+=== Iteration 302 finished in 17.63s ===
+
+
+
+=== Epoch 1; Iteration 303 ===
+[GRZO-S] iter 302 | B=8 G=8 | reward mean=0.5462 | active_groups=1.00 pairs=64 | delta mean=-5.21e-05 std=6.09e-03 | len=566 rounds=2 | UPDATED n=64
+=== Iteration 303 finished in 18.30s ===
+
+
+
+=== Epoch 1; Iteration 304 ===
+[GRZO-S] iter 303 | B=8 G=8 | reward mean=0.4089 | active_groups=1.00 pairs=64 | delta mean=-1.10e-03 std=4.97e-03 | len=546 rounds=2 | UPDATED n=64
+=== Iteration 304 finished in 18.61s ===
+
+
+
+=== Epoch 1; Iteration 305 ===
+[GRZO-S] iter 304 | B=8 G=8 | reward mean=0.4811 | active_groups=1.00 pairs=64 | delta mean=-1.20e-04 std=4.52e-03 | len=570 rounds=2 | UPDATED n=64
+=== Iteration 305 finished in 17.52s ===
+
+
+
+=== Epoch 1; Iteration 306 ===
+[GRZO-S] iter 305 | B=8 G=8 | reward mean=0.2851 | active_groups=1.00 pairs=64 | delta mean=+5.03e-04 std=6.95e-03 | len=586 rounds=2 | UPDATED n=64
+=== Iteration 306 finished in 18.01s ===
+
+
+
+=== Epoch 1; Iteration 307 ===
+[GRZO-S] iter 306 | B=8 G=8 | reward mean=0.4090 | active_groups=1.00 pairs=64 | delta mean=+1.09e-04 std=5.84e-03 | len=499 rounds=2 | UPDATED n=64
+=== Iteration 307 finished in 17.21s ===
+
+
+
+=== Epoch 1; Iteration 308 ===
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+[GRZO-S] iter 307 | B=8 G=8 | reward mean=0.4139 | active_groups=1.00 pairs=64 | delta mean=+2.28e-04 std=5.42e-03 | len=518 rounds=2 | UPDATED n=64
+=== Iteration 308 finished in 18.47s ===
+
+
+
+=== Epoch 1; Iteration 309 ===
+[GRZO-S] iter 308 | B=8 G=8 | reward mean=0.4407 | active_groups=1.00 pairs=64 | delta mean=-1.17e-03 std=5.89e-03 | len=660 rounds=2 | UPDATED n=64
+=== Iteration 309 finished in 17.71s ===
+
+
+
+=== Epoch 1; Iteration 310 ===
+[GRZO-S] iter 309 | B=8 G=8 | reward mean=0.3759 | active_groups=1.00 pairs=64 | delta mean=+3.73e-05 std=5.27e-03 | len=608 rounds=2 | UPDATED n=64
+=== Iteration 310 finished in 17.89s ===
+
+
+
+=== Epoch 1; Iteration 311 ===
+[GRZO-S] iter 310 | B=8 G=8 | reward mean=0.4035 | active_groups=1.00 pairs=64 | delta mean=+1.51e-03 std=6.34e-03 | len=614 rounds=2 | UPDATED n=64
+=== Iteration 311 finished in 17.91s ===
+
+
+
+=== Epoch 1; Iteration 312 ===
+[GRZO-S] iter 311 | B=8 G=8 | reward mean=0.3155 | active_groups=1.00 pairs=64 | delta mean=+3.62e-04 std=4.19e-03 | len=631 rounds=2 | UPDATED n=64
+=== Iteration 312 finished in 18.41s ===
+
+
+
+=== Epoch 1; Iteration 313 ===
+[GRZO-S] iter 312 | B=8 G=8 | reward mean=0.3938 | active_groups=1.00 pairs=64 | delta mean=-5.91e-04 std=5.45e-03 | len=622 rounds=2 | UPDATED n=64
+=== Iteration 313 finished in 18.12s ===
+
+
+
+=== Epoch 1; Iteration 314 ===
+[GRZO-S] iter 313 | B=8 G=8 | reward mean=0.5065 | active_groups=1.00 pairs=64 | delta mean=+2.89e-04 std=5.06e-03 | len=589 rounds=2 | UPDATED n=64
+=== Iteration 314 finished in 17.94s ===
+
+
+
+=== Epoch 1; Iteration 315 ===
+[GRZO-S] iter 314 | B=8 G=8 | reward mean=0.3280 | active_groups=1.00 pairs=64 | delta mean=-3.54e-04 std=4.46e-03 | len=677 rounds=1 | UPDATED n=64
+=== Iteration 315 finished in 10.92s ===
+
+
+
+=== Epoch 1; Iteration 316 ===
+[GRZO-S] iter 315 | B=8 G=8 | reward mean=0.2519 | active_groups=1.00 pairs=64 | delta mean=-5.71e-04 std=5.95e-03 | len=604 rounds=2 | UPDATED n=64
+=== Iteration 316 finished in 17.66s ===
+
+
+
+=== Epoch 1; Iteration 317 ===
+[GRZO-S] iter 316 | B=8 G=8 | reward mean=0.5675 | active_groups=1.00 pairs=64 | delta mean=+1.27e-03 std=7.53e-03 | len=513 rounds=2 | UPDATED n=64
+=== Iteration 317 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 318 ===
+[GRZO-S] iter 317 | B=8 G=8 | reward mean=0.2170 | active_groups=1.00 pairs=64 | delta mean=-6.86e-04 std=4.43e-03 | len=623 rounds=2 | UPDATED n=64
+=== Iteration 318 finished in 17.95s ===
+
+
+
+=== Epoch 1; Iteration 319 ===
+[GRZO-S] iter 318 | B=8 G=8 | reward mean=0.3322 | active_groups=1.00 pairs=64 | delta mean=-5.98e-04 std=1.27e-02 | len=570 rounds=2 | UPDATED n=64
+=== Iteration 319 finished in 17.19s ===
+
+
+
+=== Epoch 1; Iteration 320 ===
+[GRZO-S] iter 319 | B=8 G=8 | reward mean=0.2686 | active_groups=1.00 pairs=64 | delta mean=+7.80e-04 std=4.58e-03 | len=703 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 319 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 320 finished in 23.40s ===
+
+
+
+=== Epoch 1; Iteration 321 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 320 | B=8 G=8 | reward mean=0.3506 | active_groups=1.00 pairs=64 | delta mean=-6.87e-04 std=5.75e-03 | len=479 rounds=2 | UPDATED n=64
+=== Iteration 321 finished in 18.18s ===
+
+
+
+=== Epoch 1; Iteration 322 ===
+[GRZO-S] iter 321 | B=8 G=8 | reward mean=0.3612 | active_groups=1.00 pairs=64 | delta mean=-2.06e-04 std=6.39e-03 | len=640 rounds=2 | UPDATED n=64
+=== Iteration 322 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 323 ===
+[GRZO-S] iter 322 | B=8 G=8 | reward mean=0.2327 | active_groups=1.00 pairs=64 | delta mean=-8.61e-04 std=4.06e-03 | len=610 rounds=2 | UPDATED n=64
+=== Iteration 323 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 324 ===
+[GRZO-S] iter 323 | B=8 G=8 | reward mean=0.4360 | active_groups=1.00 pairs=64 | delta mean=-3.36e-05 std=5.16e-03 | len=555 rounds=2 | UPDATED n=64
+=== Iteration 324 finished in 17.51s ===
+
+
+
+=== Epoch 1; Iteration 325 ===
+[GRZO-S] iter 324 | B=8 G=8 | reward mean=0.2039 | active_groups=1.00 pairs=64 | delta mean=-2.26e-04 std=7.07e-03 | len=631 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5180 -- answer_acc (0/1): 0.5060 -- -- spearman_gate: 0.943
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration325.json
+[CKPT] latest saved at iteration 324 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 325 finished in 32.20s ===
+
+
+
+=== Epoch 1; Iteration 326 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 325 | B=8 G=8 | reward mean=0.6108 | active_groups=1.00 pairs=64 | delta mean=-8.90e-04 std=7.82e-03 | len=596 rounds=1 | UPDATED n=64
+=== Iteration 326 finished in 10.45s ===
+
+
+
+=== Epoch 1; Iteration 327 ===
+[GRZO-S] iter 326 | B=8 G=8 | reward mean=0.3348 | active_groups=1.00 pairs=64 | delta mean=+6.79e-04 std=6.06e-03 | len=527 rounds=2 | UPDATED n=64
+=== Iteration 327 finished in 17.67s ===
+
+
+
+=== Epoch 1; Iteration 328 ===
+[GRZO-S] iter 327 | B=8 G=8 | reward mean=0.3771 | active_groups=1.00 pairs=64 | delta mean=-1.04e-04 std=4.30e-03 | len=602 rounds=2 | UPDATED n=64
+=== Iteration 328 finished in 18.17s ===
+
+
+
+=== Epoch 1; Iteration 329 ===
+[GRZO-S] iter 328 | B=8 G=8 | reward mean=0.3999 | active_groups=1.00 pairs=64 | delta mean=-1.99e-04 std=4.19e-03 | len=550 rounds=2 | UPDATED n=64
+=== Iteration 329 finished in 18.18s ===
+
+
+
+=== Epoch 1; Iteration 330 ===
+[GRZO-S] iter 329 | B=8 G=8 | reward mean=0.5083 | active_groups=1.00 pairs=64 | delta mean=+5.68e-04 std=1.34e-02 | len=534 rounds=2 | UPDATED n=64
+=== Iteration 330 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 331 ===
+[GRZO-S] iter 330 | B=8 G=8 | reward mean=0.3420 | active_groups=1.00 pairs=64 | delta mean=+1.27e-03 std=9.39e-03 | len=634 rounds=2 | UPDATED n=64
+=== Iteration 331 finished in 17.89s ===
+
+
+
+=== Epoch 1; Iteration 332 ===
+[GRZO-S] iter 331 | B=8 G=8 | reward mean=0.3072 | active_groups=1.00 pairs=64 | delta mean=-1.42e-04 std=4.55e-03 | len=700 rounds=1 | UPDATED n=64
+=== Iteration 332 finished in 10.77s ===
+
+
+
+=== Epoch 1; Iteration 333 ===
+[GRZO-S] iter 332 | B=8 G=8 | reward mean=0.3336 | active_groups=1.00 pairs=64 | delta mean=+7.23e-04 std=4.64e-03 | len=706 rounds=2 | UPDATED n=64
+=== Iteration 333 finished in 18.64s ===
+
+
+
+=== Epoch 1; Iteration 334 ===
+[GRZO-S] iter 333 | B=8 G=8 | reward mean=0.2448 | active_groups=1.00 pairs=64 | delta mean=-2.06e-04 std=6.25e-03 | len=697 rounds=2 | UPDATED n=64
+=== Iteration 334 finished in 17.97s ===
+
+
+
+=== Epoch 1; Iteration 335 ===
+[GRZO-S] iter 334 | B=8 G=8 | reward mean=0.4681 | active_groups=1.00 pairs=64 | delta mean=+5.04e-05 std=4.20e-03 | len=689 rounds=2 | UPDATED n=64
+=== Iteration 335 finished in 18.88s ===
+
+
+
+=== Epoch 1; Iteration 336 ===
+[GRZO-S] iter 335 | B=8 G=8 | reward mean=0.4092 | active_groups=1.00 pairs=64 | delta mean=-4.46e-04 std=4.58e-03 | len=575 rounds=2 | UPDATED n=64
+=== Iteration 336 finished in 17.94s ===
+
+
+
+=== Epoch 1; Iteration 337 ===
+[GRZO-S] iter 336 | B=8 G=8 | reward mean=0.2071 | active_groups=1.00 pairs=64 | delta mean=-4.79e-04 std=4.41e-03 | len=688 rounds=2 | UPDATED n=64
+=== Iteration 337 finished in 17.76s ===
+
+
+
+=== Epoch 1; Iteration 338 ===
+[GRZO-S] iter 337 | B=8 G=8 | reward mean=0.3877 | active_groups=1.00 pairs=64 | delta mean=-1.54e-04 std=7.41e-03 | len=539 rounds=1 | UPDATED n=64
+=== Iteration 338 finished in 10.45s ===
+
+
+
+=== Epoch 1; Iteration 339 ===
+[GRZO-S] iter 338 | B=8 G=8 | reward mean=0.4177 | active_groups=1.00 pairs=64 | delta mean=-1.65e-03 std=4.61e-03 | len=552 rounds=2 | UPDATED n=64
+=== Iteration 339 finished in 17.64s ===
+
+
+
+=== Epoch 1; Iteration 340 ===
+[GRZO-S] iter 339 | B=8 G=8 | reward mean=0.2879 | active_groups=1.00 pairs=64 | delta mean=+1.11e-03 std=5.47e-03 | len=701 rounds=2 | UPDATED n=64
+=== Iteration 340 finished in 18.35s ===
+
+
+
+=== Epoch 1; Iteration 341 ===
+[GRZO-S] iter 340 | B=8 G=8 | reward mean=0.4863 | active_groups=1.00 pairs=64 | delta mean=-8.09e-04 std=5.97e-03 | len=479 rounds=2 | UPDATED n=64
+=== Iteration 341 finished in 17.88s ===
+
+
+
+=== Epoch 1; Iteration 342 ===
+[GRZO-S] iter 341 | B=8 G=8 | reward mean=0.3713 | active_groups=1.00 pairs=64 | delta mean=+2.97e-04 std=3.05e-03 | len=747 rounds=2 | UPDATED n=64
+=== Iteration 342 finished in 18.21s ===
+
+
+
+=== Epoch 1; Iteration 343 ===
+[GRZO-S] iter 342 | B=8 G=8 | reward mean=0.5677 | active_groups=1.00 pairs=64 | delta mean=+4.43e-04 std=8.83e-03 | len=550 rounds=2 | UPDATED n=64
+=== Iteration 343 finished in 17.58s ===
+
+
+
+=== Epoch 1; Iteration 344 ===
+[GRZO-S] iter 343 | B=8 G=8 | reward mean=0.4660 | active_groups=1.00 pairs=64 | delta mean=-7.10e-04 std=6.38e-03 | len=481 rounds=2 | UPDATED n=64
+=== Iteration 344 finished in 17.65s ===
+
+
+
+=== Epoch 1; Iteration 345 ===
+[GRZO-S] iter 344 | B=8 G=8 | reward mean=0.3245 | active_groups=1.00 pairs=64 | delta mean=-1.32e-03 std=6.09e-03 | len=617 rounds=2 | UPDATED n=64
+=== Iteration 345 finished in 17.90s ===
+
+
+
+=== Epoch 1; Iteration 346 ===
+[GRZO-S] iter 345 | B=8 G=8 | reward mean=0.4419 | active_groups=1.00 pairs=64 | delta mean=-1.09e-03 std=5.53e-03 | len=539 rounds=2 | UPDATED n=64
+=== Iteration 346 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 347 ===
+[GRZO-S] iter 346 | B=8 G=8 | reward mean=0.2976 | active_groups=1.00 pairs=64 | delta mean=-5.73e-04 std=6.23e-03 | len=648 rounds=2 | UPDATED n=64
+=== Iteration 347 finished in 17.62s ===
+
+
+
+=== Epoch 1; Iteration 348 ===
+[GRZO-S] iter 347 | B=8 G=8 | reward mean=0.3501 | active_groups=1.00 pairs=64 | delta mean=+9.89e-04 std=5.41e-03 | len=615 rounds=2 | UPDATED n=64
+=== Iteration 348 finished in 18.20s ===
+
+
+
+=== Epoch 1; Iteration 349 ===
+[GRZO-S] iter 348 | B=8 G=8 | reward mean=0.4622 | active_groups=1.00 pairs=64 | delta mean=-1.75e-03 std=6.36e-03 | len=637 rounds=2 | UPDATED n=64
+=== Iteration 349 finished in 18.73s ===
+
+
+
+=== Epoch 1; Iteration 350 ===
+[GRZO-S] iter 349 | B=8 G=8 | reward mean=0.2282 | active_groups=1.00 pairs=64 | delta mean=+1.23e-03 std=8.05e-03 | len=597 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5463 -- answer_acc (0/1): 0.5340 -- -- spearman_gate: 0.951
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration350.json
+[CKPT] latest saved at iteration 349 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 350 finished in 32.31s ===
+
+
+
+=== Epoch 1; Iteration 351 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+WARNING: Error in configuration: macro '\frac' failed its substitution!
+[GRZO-S] iter 350 | B=8 G=8 | reward mean=0.3461 | active_groups=1.00 pairs=64 | delta mean=+1.95e-03 std=7.11e-03 | len=499 rounds=2 | UPDATED n=64
+=== Iteration 351 finished in 17.63s ===
+
+
+
+=== Epoch 1; Iteration 352 ===
+[GRZO-S] iter 351 | B=8 G=8 | reward mean=0.3841 | active_groups=1.00 pairs=64 | delta mean=-8.93e-04 std=4.56e-03 | len=545 rounds=2 | UPDATED n=64
+=== Iteration 352 finished in 17.89s ===
+
+
+
+=== Epoch 1; Iteration 353 ===
+[GRZO-S] iter 352 | B=8 G=8 | reward mean=0.2954 | active_groups=1.00 pairs=64 | delta mean=-5.11e-05 std=6.76e-03 | len=595 rounds=2 | UPDATED n=64
+=== Iteration 353 finished in 17.66s ===
+
+
+
+=== Epoch 1; Iteration 354 ===
+[GRZO-S] iter 353 | B=8 G=8 | reward mean=0.2911 | active_groups=1.00 pairs=64 | delta mean=+7.94e-04 std=5.92e-03 | len=550 rounds=2 | UPDATED n=64
+=== Iteration 354 finished in 17.79s ===
+
+
+
+=== Epoch 1; Iteration 355 ===
+[GRZO-S] iter 354 | B=8 G=8 | reward mean=0.3426 | active_groups=1.00 pairs=64 | delta mean=+2.21e-04 std=9.70e-03 | len=600 rounds=2 | UPDATED n=64
+=== Iteration 355 finished in 18.42s ===
+
+
+
+=== Epoch 1; Iteration 356 ===
+[GRZO-S] iter 355 | B=8 G=8 | reward mean=0.4256 | active_groups=1.00 pairs=64 | delta mean=+6.12e-06 std=4.99e-03 | len=599 rounds=2 | UPDATED n=64
+=== Iteration 356 finished in 18.09s ===
+
+
+
+=== Epoch 1; Iteration 357 ===
+[GRZO-S] iter 356 | B=8 G=8 | reward mean=0.2817 | active_groups=1.00 pairs=64 | delta mean=-5.65e-04 std=1.09e-02 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 357 finished in 18.01s ===
+
+
+
+=== Epoch 1; Iteration 358 ===
+[GRZO-S] iter 357 | B=8 G=8 | reward mean=0.3153 | active_groups=1.00 pairs=64 | delta mean=+3.67e-04 std=4.85e-03 | len=704 rounds=2 | UPDATED n=64
+=== Iteration 358 finished in 18.03s ===
+
+
+
+=== Epoch 1; Iteration 359 ===
+[GRZO-S] iter 358 | B=8 G=8 | reward mean=0.4204 | active_groups=1.00 pairs=64 | delta mean=+7.20e-04 std=7.33e-03 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 359 finished in 17.91s ===
+
+
+
+=== Epoch 1; Iteration 360 ===
+[GRZO-S] iter 359 | B=8 G=8 | reward mean=0.3328 | active_groups=1.00 pairs=64 | delta mean=-5.55e-04 std=6.71e-03 | len=667 rounds=2 | UPDATED n=64
+=== Iteration 360 finished in 17.86s ===
+
+
+
+=== Epoch 1; Iteration 361 ===
+[GRZO-S] iter 360 | B=8 G=8 | reward mean=0.4547 | active_groups=1.00 pairs=64 | delta mean=-7.15e-05 std=4.67e-03 | len=591 rounds=2 | UPDATED n=64
+=== Iteration 361 finished in 17.57s ===
+
+
+
+=== Epoch 1; Iteration 362 ===
+[GRZO-S] iter 361 | B=8 G=8 | reward mean=0.5241 | active_groups=1.00 pairs=64 | delta mean=-7.01e-04 std=7.27e-03 | len=544 rounds=2 | UPDATED n=64
+=== Iteration 362 finished in 17.65s ===
+
+
+
+=== Epoch 1; Iteration 363 ===
+[GRZO-S] iter 362 | B=8 G=8 | reward mean=0.5130 | active_groups=1.00 pairs=64 | delta mean=+1.96e-03 std=6.86e-03 | len=486 rounds=2 | UPDATED n=64
+=== Iteration 363 finished in 17.64s ===
+
+
+
+=== Epoch 1; Iteration 364 ===
+[GRZO-S] iter 363 | B=8 G=8 | reward mean=0.4325 | active_groups=1.00 pairs=64 | delta mean=+1.23e-03 std=6.42e-03 | len=547 rounds=1 | UPDATED n=64
+=== Iteration 364 finished in 10.49s ===
+
+
+
+=== Epoch 1; Iteration 365 ===
+[GRZO-S] iter 364 | B=8 G=8 | reward mean=0.2146 | active_groups=1.00 pairs=64 | delta mean=-5.82e-04 std=5.51e-03 | len=642 rounds=2 | UPDATED n=64
+=== Iteration 365 finished in 18.38s ===
+
+
+
+=== Epoch 1; Iteration 366 ===
+[GRZO-S] iter 365 | B=8 G=8 | reward mean=0.4177 | active_groups=1.00 pairs=64 | delta mean=+1.89e-04 std=4.46e-03 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 366 finished in 17.85s ===
+
+
+
+=== Epoch 1; Iteration 367 ===
+[GRZO-S] iter 366 | B=8 G=8 | reward mean=0.3810 | active_groups=1.00 pairs=64 | delta mean=-5.48e-04 std=8.19e-03 | len=504 rounds=1 | UPDATED n=64
+=== Iteration 367 finished in 10.78s ===
+
+
+
+=== Epoch 1; Iteration 368 ===
+[GRZO-S] iter 367 | B=8 G=8 | reward mean=0.2035 | active_groups=1.00 pairs=64 | delta mean=+4.06e-04 std=4.35e-03 | len=632 rounds=2 | UPDATED n=64
+=== Iteration 368 finished in 18.33s ===
+
+
+
+=== Epoch 1; Iteration 369 ===
+[GRZO-S] iter 368 | B=8 G=8 | reward mean=0.3522 | active_groups=1.00 pairs=64 | delta mean=+3.30e-04 std=4.88e-03 | len=668 rounds=2 | UPDATED n=64
+=== Iteration 369 finished in 18.17s ===
+
+
+
+=== Epoch 1; Iteration 370 ===
+[GRZO-S] iter 369 | B=8 G=8 | reward mean=0.3700 | active_groups=1.00 pairs=64 | delta mean=+1.82e-04 std=4.59e-03 | len=657 rounds=2 | UPDATED n=64
+[CKPT] latest saved at iteration 369 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 370 finished in 22.31s ===
+
+
+
+=== Epoch 1; Iteration 371 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 370 | B=8 G=8 | reward mean=0.4109 | active_groups=1.00 pairs=64 | delta mean=+6.93e-05 std=4.24e-03 | len=525 rounds=2 | UPDATED n=64
+=== Iteration 371 finished in 17.96s ===
+
+
+
+=== Epoch 1; Iteration 372 ===
+[GRZO-S] iter 371 | B=8 G=8 | reward mean=0.3662 | active_groups=1.00 pairs=64 | delta mean=-3.43e-04 std=5.78e-03 | len=589 rounds=2 | UPDATED n=64
+=== Iteration 372 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 373 ===
+[GRZO-S] iter 372 | B=8 G=8 | reward mean=0.3632 | active_groups=1.00 pairs=64 | delta mean=-4.71e-04 std=6.01e-03 | len=536 rounds=2 | UPDATED n=64
+=== Iteration 373 finished in 17.40s ===
+
+
+
+=== Epoch 1; Iteration 374 ===
+[GRZO-S] iter 373 | B=8 G=8 | reward mean=0.4767 | active_groups=1.00 pairs=64 | delta mean=+2.53e-03 std=7.02e-03 | len=437 rounds=2 | UPDATED n=64
+=== Iteration 374 finished in 17.69s ===
+
+
+
+=== Epoch 1; Iteration 375 ===
+[GRZO-S] iter 374 | B=8 G=8 | reward mean=0.3062 | active_groups=1.00 pairs=64 | delta mean=-2.13e-05 std=5.47e-03 | len=659 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5383 -- answer_acc (0/1): 0.5260 -- -- spearman_gate: 0.950
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration375.json
+[CKPT] latest saved at iteration 374 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 375 finished in 32.41s ===
+
+
+
+=== Epoch 1; Iteration 376 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 375 | B=8 G=8 | reward mean=0.4451 | active_groups=1.00 pairs=64 | delta mean=-6.30e-04 std=6.98e-03 | len=612 rounds=2 | UPDATED n=64
+=== Iteration 376 finished in 18.50s ===
+
+
+
+=== Epoch 1; Iteration 377 ===
+[GRZO-S] iter 376 | B=8 G=8 | reward mean=0.2901 | active_groups=1.00 pairs=64 | delta mean=-6.39e-04 std=4.63e-03 | len=642 rounds=2 | UPDATED n=64
+=== Iteration 377 finished in 18.13s ===
+
+
+
+=== Epoch 1; Iteration 378 ===
+[GRZO-S] iter 377 | B=8 G=8 | reward mean=0.4176 | active_groups=1.00 pairs=64 | delta mean=-5.74e-04 std=6.03e-03 | len=572 rounds=2 | UPDATED n=64
+=== Iteration 378 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 379 ===
+[GRZO-S] iter 378 | B=8 G=8 | reward mean=0.4421 | active_groups=1.00 pairs=64 | delta mean=-3.57e-04 std=6.30e-03 | len=523 rounds=2 | UPDATED n=64
+=== Iteration 379 finished in 18.40s ===
+
+
+
+=== Epoch 1; Iteration 380 ===
+[GRZO-S] iter 379 | B=8 G=8 | reward mean=0.3945 | active_groups=1.00 pairs=64 | delta mean=+5.96e-04 std=7.22e-03 | len=556 rounds=2 | UPDATED n=64
+=== Iteration 380 finished in 17.77s ===
+
+
+
+=== Epoch 1; Iteration 381 ===
+[GRZO-S] iter 380 | B=8 G=8 | reward mean=0.2418 | active_groups=1.00 pairs=64 | delta mean=+1.42e-03 std=7.32e-03 | len=659 rounds=2 | UPDATED n=64
+=== Iteration 381 finished in 18.29s ===
+
+
+
+=== Epoch 1; Iteration 382 ===
+[GRZO-S] iter 381 | B=8 G=8 | reward mean=0.3293 | active_groups=1.00 pairs=64 | delta mean=+6.17e-04 std=5.57e-03 | len=628 rounds=2 | UPDATED n=64
+=== Iteration 382 finished in 18.47s ===
+
+
+
+=== Epoch 1; Iteration 383 ===
+[GRZO-S] iter 382 | B=8 G=8 | reward mean=0.2842 | active_groups=1.00 pairs=64 | delta mean=-5.03e-04 std=6.81e-03 | len=560 rounds=2 | UPDATED n=64
+=== Iteration 383 finished in 17.73s ===
+
+
+
+=== Epoch 1; Iteration 384 ===
+[GRZO-S] iter 383 | B=8 G=8 | reward mean=0.4598 | active_groups=1.00 pairs=64 | delta mean=+5.59e-04 std=4.83e-03 | len=584 rounds=2 | UPDATED n=64
+=== Iteration 384 finished in 18.06s ===
+
+
+
+=== Epoch 1; Iteration 385 ===
+[GRZO-S] iter 384 | B=8 G=8 | reward mean=0.3370 | active_groups=1.00 pairs=64 | delta mean=+5.81e-04 std=6.26e-03 | len=594 rounds=2 | UPDATED n=64
+=== Iteration 385 finished in 17.78s ===
+
+
+
+=== Epoch 1; Iteration 386 ===
+[GRZO-S] iter 385 | B=8 G=8 | reward mean=0.3644 | active_groups=1.00 pairs=64 | delta mean=-1.49e-03 std=1.11e-02 | len=584 rounds=1 | UPDATED n=64
+=== Iteration 386 finished in 11.18s ===
+
+
+
+=== Epoch 1; Iteration 387 ===
+[GRZO-S] iter 386 | B=8 G=8 | reward mean=0.3763 | active_groups=1.00 pairs=64 | delta mean=+6.67e-04 std=7.45e-03 | len=574 rounds=2 | UPDATED n=64
+=== Iteration 387 finished in 18.11s ===
+
+
+
+=== Epoch 1; Iteration 388 ===
+[GRZO-S] iter 387 | B=8 G=8 | reward mean=0.3709 | active_groups=1.00 pairs=64 | delta mean=+2.50e-03 std=1.80e-02 | len=562 rounds=2 | UPDATED n=64
+=== Iteration 388 finished in 18.33s ===
+
+
+
+=== Epoch 1; Iteration 389 ===
+[GRZO-S] iter 388 | B=8 G=8 | reward mean=0.4499 | active_groups=1.00 pairs=64 | delta mean=-1.92e-04 std=6.77e-03 | len=524 rounds=2 | UPDATED n=64
+=== Iteration 389 finished in 17.62s ===
+
+
+
+=== Epoch 1; Iteration 390 ===
+[GRZO-S] iter 389 | B=8 G=8 | reward mean=0.3792 | active_groups=1.00 pairs=64 | delta mean=-9.26e-04 std=6.22e-03 | len=578 rounds=2 | UPDATED n=64
+=== Iteration 390 finished in 17.95s ===
+
+
+
+=== Epoch 1; Iteration 391 ===
+[GRZO-S] iter 390 | B=8 G=8 | reward mean=0.4092 | active_groups=1.00 pairs=64 | delta mean=+8.05e-04 std=5.53e-03 | len=594 rounds=2 | UPDATED n=64
+=== Iteration 391 finished in 18.22s ===
+
+
+
+=== Epoch 1; Iteration 392 ===
+[GRZO-S] iter 391 | B=8 G=8 | reward mean=0.4477 | active_groups=1.00 pairs=64 | delta mean=-1.22e-03 std=1.25e-02 | len=569 rounds=2 | UPDATED n=64
+=== Iteration 392 finished in 17.46s ===
+
+
+
+=== Epoch 1; Iteration 393 ===
+[GRZO-S] iter 392 | B=8 G=8 | reward mean=0.4101 | active_groups=1.00 pairs=64 | delta mean=+4.79e-04 std=5.55e-03 | len=513 rounds=2 | UPDATED n=64
+=== Iteration 393 finished in 18.55s ===
+
+
+
+=== Epoch 1; Iteration 394 ===
+[GRZO-S] iter 393 | B=8 G=8 | reward mean=0.3183 | active_groups=1.00 pairs=64 | delta mean=+2.23e-04 std=6.73e-03 | len=606 rounds=2 | UPDATED n=64
+=== Iteration 394 finished in 17.68s ===
+
+
+
+=== Epoch 1; Iteration 395 ===
+[GRZO-S] iter 394 | B=8 G=8 | reward mean=0.3273 | active_groups=1.00 pairs=64 | delta mean=-4.17e-04 std=5.76e-03 | len=616 rounds=2 | UPDATED n=64
+=== Iteration 395 finished in 18.47s ===
+
+
+
+=== Epoch 1; Iteration 396 ===
+[GRZO-S] iter 395 | B=8 G=8 | reward mean=0.4396 | active_groups=1.00 pairs=64 | delta mean=-5.11e-04 std=5.40e-03 | len=537 rounds=2 | UPDATED n=64
+=== Iteration 396 finished in 17.08s ===
+
+
+
+=== Epoch 1; Iteration 397 ===
+[GRZO-S] iter 396 | B=8 G=8 | reward mean=0.4219 | active_groups=1.00 pairs=64 | delta mean=-2.66e-04 std=5.75e-03 | len=498 rounds=1 | UPDATED n=64
+=== Iteration 397 finished in 10.64s ===
+
+
+
+=== Epoch 1; Iteration 398 ===
+[GRZO-S] iter 397 | B=8 G=8 | reward mean=0.3984 | active_groups=1.00 pairs=64 | delta mean=-5.00e-04 std=5.40e-03 | len=586 rounds=1 | UPDATED n=64
+=== Iteration 398 finished in 10.19s ===
+
+
+
+=== Epoch 1; Iteration 399 ===
+[GRZO-S] iter 398 | B=8 G=8 | reward mean=0.2403 | active_groups=1.00 pairs=64 | delta mean=+1.32e-03 std=6.72e-03 | len=554 rounds=1 | UPDATED n=64
+=== Iteration 399 finished in 10.56s ===
+
+
+
+=== Epoch 1; Iteration 400 ===
+[GRZO-S] iter 399 | B=8 G=8 | reward mean=0.3313 | active_groups=1.00 pairs=64 | delta mean=+1.86e-04 std=7.46e-03 | len=544 rounds=2 | UPDATED n=64
+math500 -- eval pass@1 (shaped): 0.5354 -- answer_acc (0/1): 0.5240 -- -- spearman_gate: 0.949
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/eval-output/model_eval_taskmath500_iteration400.json
+[CKPT] latest saved at iteration 399 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+=== Iteration 400 finished in 32.34s ===
+
+
+
+=== Epoch 1; Iteration 401 ===
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+[GRZO-S] iter 400 | B=8 G=8 | reward mean=0.3552 | active_groups=1.00 pairs=64 | delta mean=+6.12e-04 std=4.30e-03 | len=705 rounds=1 | UPDATED n=64
+=== Iteration 401 finished in 11.03s ===
+
+[CKPT] latest saved at iteration 400 -> /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/latest/pytorch_model.pth.
+Final model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/checkpoint-grzo_iteration_400.
+[INFO] Cleanup complete.
+[36m(RayWorkerWrapper pid=1373177)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/checkpoint-grzo_iteration_400/pytorch_model.pth.
+wandb: uploading output.log
+wandb: uploading history steps 417-417, summary, console lines 2604-2611
+wandb: 
+wandb: Run history:
+wandb:               eval-iteration ▁▁▂▂▃▃▄▄▄▅▅▆▆▇▇██
+wandb:     eval/avg_answer_acc/mean ▅▇▅▅▅▃▃▅▆▄▅██▁▆▄▄
+wandb:          eval/avgpass@1/mean ▅▇▅▆▅▃▂▅▆▄▅██▁▆▄▄
+wandb: eval/math500/answer_acc/mean ▅▇▅▅▅▃▃▅▆▄▅██▁▆▄▄
+wandb:     eval/math500/pass@1/mean ▅▇▅▆▅▃▂▅▆▄▅██▁▆▄▄
+wandb:   eval/math500/spearman_gate ▇█▅▅▄▅▄▄▆▄▅▇▇▁▅▅▄
+wandb:                  global_step ▁▁▁▁▁▂▂▂▂▂▂▃▃▃▃▄▄▄▄▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇██
+wandb:     train/grzos/active_pairs ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:       train/grzos/delta/mean ▅▁▅▄▃▃▅▄▁▆▆▅▆█▆▆▅▆▇▅▇▅▅▇█▆▅▄▇▅▅▄▄▇▃▇▆▇▅▆
+wandb:        train/grzos/delta/std ▂▂▂▁▁▂▁▁▁▃▁▁█▁▂▂▅▁▁▁▃▁▁▂▂▁▂▂▄▂▁▄▁▁▂▂▁▂▂▂
+wandb:                           +9 ...
+wandb: 
+wandb: Run summary:
+wandb:               eval-iteration 399
+wandb:     eval/avg_answer_acc/mean 0.524
+wandb:          eval/avgpass@1/mean 0.53536
+wandb: eval/math500/answer_acc/mean 0.524
+wandb:     eval/math500/pass@1/mean 0.53536
+wandb:   eval/math500/spearman_gate 0.94939
+wandb:                  global_step 400
+wandb:     train/grzos/active_pairs 64
+wandb:       train/grzos/delta/mean 0.00061
+wandb:        train/grzos/delta/std 0.0043
+wandb:                           +9 ...
+wandb: 
+wandb: 🚀 View run probe-math-sig5e4 at: https://wandb.ai/liyan_tan/grzo-rlvr/runs/12inpeit
+wandb: ⭐️ View project at: https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /pscratch/sd/l/liyantan/runs/grzo/probe-math-sig5e4/wandb/run-20260721_170422-12inpeit/logs
+-- Training completed! --
+[36m(RayWorkerWrapper pid=1373178)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  87%|████████▋ | 58/67 [00:01<00:00, 39.17it/s][32m [repeated 50x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.85it/s][32m [repeated 4x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 34.78it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.03it/s][32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m Capturing CUDA graphs (decode, FULL):  83%|████████▎ | 29/35 [00:01<00:00, 23.65it/s][32m [repeated 39x across cluster][0m
+[36m(RayWorkerWrapper pid=1373180)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 22.54it/s][32m [repeated 4x across cluster][0m
+[36m(RayWorkerWrapper pid=1373171)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 24.86it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 22.53it/s]

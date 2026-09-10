@@ -1,0 +1,7 @@
+[LANE B] ==== starting es512-llama8b (meta-llama/Llama-3.1-8B-Instruct -> 500 iters) ====
+[RELAY es512-llama8b] start: model=meta-llama/Llama-3.1-8B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-llama8b] resume-from iter 99; allocating 04:00:00 node...
+[RELAY es512-llama8b] RUNNING jid=56110305 node=nid001140
+[RELAY es512-llama8b] srun returned; releasing 56110305
+[RELAY es512-llama8b] resume-from iter 99; allocating 04:00:00 node...
+[RELAY es512-llama8b] RUNNING jid=56110465 node=nid001105

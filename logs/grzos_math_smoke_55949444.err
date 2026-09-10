@@ -1,0 +1,65 @@
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:23: SyntaxWarning: invalid escape sequence '\{'
+  m = re.search("^\\\\text\{(?P<text>.+?)\}$", answer)
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:298: SyntaxWarning: invalid escape sequence '\%'
+  string = string.replace("\%", "")
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:651: SyntaxWarning: invalid escape sequence '\^'
+  BAD_REGEXES = ["\^[0-9]+\^", "\^[0-9][0-9]+"]
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:651: SyntaxWarning: invalid escape sequence '\^'
+  BAD_REGEXES = ["\^[0-9]+\^", "\^[0-9][0-9]+"]
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:731: SyntaxWarning: invalid escape sequence '\d'
+  p1 = re.compile("(\d)(,)(\d\d\d)($|\D)")
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:746: SyntaxWarning: invalid escape sequence '\{'
+  m = re.search("^\\\\text\{(?P<text>.+?)\}$", expr)
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:779: SyntaxWarning: invalid escape sequence '\^'
+  expr = re.sub(f"{unit}(es)?(s)? *(\^[0-9]+)?", "", expr)
+/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/reward_function/math_grader.py:780: SyntaxWarning: invalid escape sequence '\^'
+  expr = re.sub(f"\^ *\\\\circ", "", expr)
+2026-07-15 12:05:18,865	INFO worker.py:2024 -- Started a local Ray instance.
+[36m(ESNcclLLM pid=602508)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=602509)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=602505)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=602510)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=602505)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:08<00:00,  8.96s/it]
+[36m(RayWorkerWrapper pid=602505)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:08<00:00,  8.96s/it]
+[36m(RayWorkerWrapper pid=602505)[0m 
+[36m(RayWorkerWrapper pid=602518)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=602515)[0m 
+[36m(RayWorkerWrapper pid=602518)[0m 
+[36m(RayWorkerWrapper pid=602522)[0m 
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=602522)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:08<00:00,  8.45s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:02, 31.43it/s]
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  94%|█████████▍| 63/67 [00:01<00:00, 34.20it/s]
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 32.45it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.31it/s]
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:01, 18.07it/s]
+[36m(RayWorkerWrapper pid=602505)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:00<00:00, 37.57it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 33.94it/s]
+[36m(RayWorkerWrapper pid=602518)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 35.21it/s]
+[36m(RayWorkerWrapper pid=602522)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=602518)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  91%|█████████ | 61/67 [00:01<00:00, 35.97it/s][32m [repeated 52x across cluster][0m
+[36m(RayWorkerWrapper pid=602518)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.70it/s][32m [repeated 5x across cluster][0m
+[36m(RayWorkerWrapper pid=602515)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 34.36it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.29it/s]
+[36m(RayWorkerWrapper pid=602518)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=602518)[0m Capturing CUDA graphs (decode, FULL):  89%|████████▊ | 31/35 [00:00<00:00, 34.84it/s][32m [repeated 31x across cluster][0m
+[36m(RayWorkerWrapper pid=602522)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 36.77it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 35.08it/s][32m [repeated 2x across cluster][0m
+Process ForkPoolWorker-1:
+Traceback (most recent call last):
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 317, in _bootstrap
+    util._exit_function()
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/util.py", line 353, in _exit_function
+    for p in active_children():
+             ^^^^^^^^^^^^^^^^^
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 47, in active_children
+    _cleanup()
+  File "/global/common/software/nersc/pe/conda-envs/26.1.0/python-3.12/nersc-python/lib/python3.12/multiprocessing/process.py", line 63, in _cleanup
+    for p in list(_children):
+             ^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'

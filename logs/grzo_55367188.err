@@ -1,0 +1,37 @@
+2026-07-01 16:12:18,133	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/grzo-1p5b-sp-bin-G32-s1e3/wandb/run-20260701_161224-uo6n0zlm
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run grzo-1p5b-sp-bin-G32-s1e3
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/uo6n0zlm
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(ESNcclLLM pid=599817)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=599820)[0m [W701 16:12:51.203659045 socket.cpp:755] [c10d] The client socket cannot be initialized to connect to [localhost]:58801 (errno: 97 - Address family not supported by protocol).
+[36m(ESNcclLLM pid=599818)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=599816)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.35s/it]
+[36m(RayWorkerWrapper pid=599820)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.35s/it]
+[36m(RayWorkerWrapper pid=599820)[0m 
+[36m(RayWorkerWrapper pid=599816)[0m [W701 16:12:51.203664055 socket.cpp:755] [c10d] The client socket cannot be initialized to connect to [localhost]:50859 (errno: 97 - Address family not supported by protocol).[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=599820)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=599819)[0m 
+[36m(RayWorkerWrapper pid=599808)[0m 
+[36m(RayWorkerWrapper pid=599816)[0m 
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=599816)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:08<00:00,  8.04s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   4%|▍         | 3/67 [00:00<00:02, 28.97it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  93%|█████████▎| 62/67 [00:01<00:00, 36.22it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  99%|█████████▊| 66/67 [00:01<00:00, 37.11it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.07it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:01, 18.06it/s]
+[36m(RayWorkerWrapper pid=599816)[0m Capturing CUDA graphs (decode, FULL):  26%|██▌       | 9/35 [00:00<00:00, 29.60it/s]Capturing CUDA graphs (decode, FULL):  37%|███▋      | 13/35 [00:00<00:00, 33.40it/s]
+[36m(RayWorkerWrapper pid=599816)[0m Capturing CUDA graphs (decode, FULL):  94%|█████████▍| 33/35 [00:00<00:00, 36.89it/s]
+[36m(RayWorkerWrapper pid=599820)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:01<00:00, 35.43it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 33.38it/s]
+[36m(RayWorkerWrapper pid=599820)[0m [rank0]:[W701 16:13:16.413060872 socket.cpp:755] [c10d] The client socket cannot be initialized to connect to [nid001541-hsn0]:40511 (errno: 97 - Address family not supported by protocol).
+[2026-07-01T23:48:54.989] error: *** JOB 55367188 ON nid001541 CANCELLED AT 2026-07-01T23:48:54 DUE to SIGNAL Terminated ***

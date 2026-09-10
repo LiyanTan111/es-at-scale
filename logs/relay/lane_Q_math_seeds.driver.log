@@ -1,0 +1,13 @@
+[LANE Q] math-mtb seed 43
+[RELAY grzos-math-mtb-s43] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=500 wall=04:00:00
+[RELAY grzos-math-mtb-s43] resume-from iter -1; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-s43] RUNNING jid=56265698 node=nid001225
+[RELAY grzos-math-mtb-s43] srun returned (finished or wall hit); releasing 56265698
+[RELAY grzos-math-mtb-s43] DONE at iter 500
+[LANE Q] math-mtb seed 44
+[RELAY grzos-math-mtb-s44] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=500 wall=04:00:00
+[RELAY grzos-math-mtb-s44] resume-from iter -1; allocating 04:00:00 node...
+[RELAY grzos-math-mtb-s44] RUNNING jid=56269700 node=nid001169
+[RELAY grzos-math-mtb-s44] srun returned (finished or wall hit); releasing 56269700
+[RELAY grzos-math-mtb-s44] DONE at iter 500
+[LANE Q] ALL DONE

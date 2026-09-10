@@ -1,0 +1,27 @@
+[LANE A] ==== starting es-cd-qwen0p5b (Qwen/Qwen2.5-0.5B-Instruct, 500 iters) ====
+[RELAY es-cd-qwen0p5b] start: model=Qwen/Qwen2.5-0.5B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es-cd-qwen0p5b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es-cd-qwen0p5b] RUNNING jid=56011678 node=nid001049
+[RELAY es-cd-qwen0p5b] srun returned; releasing 56011678
+[RELAY es-cd-qwen0p5b] resume-from iter 424; allocating 04:00:00 node...
+[RELAY es-cd-qwen0p5b] RUNNING jid=56018294 node=nid001169
+[RELAY es-cd-qwen0p5b] srun returned; releasing 56018294
+[RELAY es-cd-qwen0p5b] DONE at iter 500
+[LANE A] ==== finished es-cd-qwen0p5b ====
+[LANE A] ==== starting es-cd-llama1b (meta-llama/Llama-3.2-1B-Instruct, 500 iters) ====
+[RELAY es-cd-llama1b] start: model=meta-llama/Llama-3.2-1B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es-cd-llama1b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es-cd-llama1b] RUNNING jid=56019226 node=nid001169
+[RELAY es-cd-llama1b] srun returned; releasing 56019226
+[RELAY es-cd-llama1b] DONE at iter 500
+[LANE A] ==== finished es-cd-llama1b ====
+[LANE A] ==== starting es-cd-qwen3b (Qwen/Qwen2.5-3B-Instruct, 400 iters) ====
+[RELAY es-cd-qwen3b] start: model=Qwen/Qwen2.5-3B-Instruct sigma=1e-3 pop=30 B=200 iters=400 wall=04:00:00
+[RELAY es-cd-qwen3b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es-cd-qwen3b] RUNNING jid=56025403 node=nid001081
+[RELAY es-cd-qwen3b] srun returned; releasing 56025403
+[RELAY es-cd-qwen3b] resume-from iter 99; allocating 04:00:00 node...
+[RELAY es-cd-qwen3b] RUNNING jid=56034393 node=nid001081
+[RELAY es-cd-qwen3b] srun returned; releasing 56034393
+[RELAY es-cd-qwen3b] resume-from iter 199; allocating 04:00:00 node...
+[RELAY es-cd-qwen3b] RUNNING jid=56047712 node=nid001081

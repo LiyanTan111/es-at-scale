@@ -1,0 +1,38 @@
+INFO 07-15 00:02:49 [__init__.py:216] Automatically detected platform cuda.
+INFO 07-15 00:03:03 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.6, 'disable_log_stats': True, 'enforce_eager': True, 'model': 'Qwen/Qwen2.5-1.5B-Instruct'}
+WARNING 07-15 00:03:04 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+INFO 07-15 00:03:04 [model.py:547] Resolved architecture: Qwen2ForCausalLM
+INFO 07-15 00:03:04 [model.py:1510] Using max model len 32768
+INFO 07-15 00:03:06 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 07-15 00:03:06 [__init__.py:381] Cudagraph is disabled under eager mode
+INFO 07-15 00:03:07 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-1.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-1.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-1.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 07-15 00:03:22 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 07-15 00:03:22 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 07-15 00:03:22 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen2.5-1.5B-Instruct...
+INFO 07-15 00:03:23 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 07-15 00:03:23 [cuda.py:366] Using Flash Attention backend on V1 engine.
+INFO 07-15 00:03:23 [weight_utils.py:392] Using model weights format ['*.safetensors']
+INFO 07-15 00:03:23 [weight_utils.py:450] No model.safetensors.index.json found in remote.
+INFO 07-15 00:03:26 [default_loader.py:267] Loading weights took 2.42 seconds
+INFO 07-15 00:03:26 [gpu_model_runner.py:2653] Model loading took 2.8876 GiB and 3.104153 seconds
+INFO 07-15 00:03:27 [gpu_worker.py:298] Available KV cache memory: 19.36 GiB
+INFO 07-15 00:03:27 [kv_cache_utils.py:1087] GPU KV cache size: 725,024 tokens
+INFO 07-15 00:03:27 [kv_cache_utils.py:1091] Maximum concurrency for 32,768 tokens per request: 22.13x
+WARNING 07-15 00:03:28 [cudagraph_dispatcher.py:106] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+INFO 07-15 00:03:28 [core.py:210] init engine (profile, create kv cache, warmup model) took 1.49 seconds
+INFO 07-15 00:03:28 [llm.py:306] Supported_tasks: ('generate',)
+=== 1) teacher-forcing scores (higher = more likely) ===
+  good: sum_logp=-31.134  n_tok=32  per_tok_nll=0.973
+  bad: sum_logp=-85.769  n_tok=22  per_tok_nll=3.899
+=== 2) perturbation sensitivity (delta should be nonzero) ===
+  [model found via] llm.llm_engine.model_executor.driver_worker.model_runner.model
+  base=-31.1342  theta+=-31.1301  theta-=-30.2203  restored=-30.6726
+  two-point delta (l+ - l-) on -logp = +0.90974
+  restore error vs base = 4.62e-01 (should be ~0)
+DONE

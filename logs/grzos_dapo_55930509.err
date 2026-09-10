@@ -1,0 +1,34 @@
+2026-07-15 01:52:01,174	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/grzos-1p5b-bin-dapo8-none-N64-lr1e4/wandb/run-20260715_015220-9pfmbndg
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run grzos-1p5b-bin-dapo8-none-N64-lr1e4
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/9pfmbndg
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(ESNcclLLM pid=178186)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=178189)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=178187)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=178203)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=178187)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.47s/it]
+[36m(RayWorkerWrapper pid=178187)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:02<00:00,  2.47s/it]
+[36m(RayWorkerWrapper pid=178187)[0m 
+[36m(RayWorkerWrapper pid=178192)[0m 
+[36m(RayWorkerWrapper pid=178212)[0m 
+[36m(RayWorkerWrapper pid=178199)[0m 
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=178199)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=178199)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:01<00:00,  1.88s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:01, 39.78it/s]
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  97%|█████████▋| 65/67 [00:01<00:00, 35.24it/s]
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:01, 19.07it/s]
+[36m(RayWorkerWrapper pid=178192)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 34/35 [00:01<00:00, 35.29it/s]
+[36m(RayWorkerWrapper pid=178199)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 34.53it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.10it/s]
+[36m(RayWorkerWrapper pid=178187)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 37.27it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 35.42it/s]
+[2026-07-15T08:57:06.777] error: *** JOB 55930509 ON nid001296 CANCELLED AT 2026-07-15T08:57:06 DUE to SIGNAL Terminated ***

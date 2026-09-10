@@ -1,0 +1,213 @@
+INFO 07-19 06:37:12 [__init__.py:216] Automatically detected platform cuda.
+Namespace(task='countdown', countdown_reward='binary', math_reward='binary', margin_tau_end=0.02, margin_tau=0.1, lr_schedule='const', eval_subsets='', model_name='meta-llama/Llama-3.1-8B-Instruct', checkpoint=None, sigma=0.001, lr=0.0005, rollout_temperature=1.0, group_size=8, batch_size=8, mini_batch_size=8, no_length_norm=False, delta_norm='zscore', min_directions=64, dapo_target_groups=8, dapo_max_rounds=4, dapo_draw=32, pairs_per_direction=1, directions_per_step=0, n_iterations=3, eval_freq=25, train_dataset='datasets/train/countdown', eval_dataset='datasets/evaluation_suite/countdown/', max_tokens=512, n_vllm_engines=2, n_gpu_per_vllm_engine=2, logging='wandb', seed=42, use_gpus='0,1,2,3', reward_function_timeout=10, output_directory='/pscratch/sd/l/liyantan/runs/grzo', save_best_models=True, experiment_name='smoke512b-llama8b', wandb_project='grzo-rlvr', resume=True)
+eval subsets: ['countdown_eval']
+-- Running: smoke512b-llama8b --
+[RESUME] no latest checkpoint under /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/latest; starting fresh
+2026-07-19 06:37:19,835	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/l/liyantan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/wandb/run-20260719_063725-vi0tw888
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run smoke512b-llama8b
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/vi0tw888
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[36m(pid=265331)[0m INFO 07-19 06:37:32 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:36 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'tensor_parallel_size': 2, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.55, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'meta-llama/Llama-3.1-8B-Instruct'}
+[36m(ESNcclLLM pid=265331)[0m WARNING 07-19 06:37:37 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=265329)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:37 [model.py:547] Resolved architecture: LlamaForCausalLM
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:37 [model.py:1510] Using max model len 4096
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:37 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:37 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[36m(pid=265329)[0m INFO 07-19 06:37:32 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:38 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='meta-llama/Llama-3.1-8B-Instruct', speculative_config=None, tokenizer='meta-llama/Llama-3.1-8B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=meta-llama/Llama-3.1-8B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:38 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:38 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:38 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[36m(pid=265330)[0m INFO 07-19 06:37:43 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:36 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'tensor_parallel_size': 2, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.55, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'meta-llama/Llama-3.1-8B-Instruct'}
+[36m(ESNcclLLM pid=265329)[0m WARNING 07-19 06:37:37 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:37 [model.py:547] Resolved architecture: LlamaForCausalLM
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:37 [model.py:1510] Using max model len 4096
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:37 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:37 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:45 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:45 [ray_env.py:65] Copying the following environment variables to workers: ['LD_LIBRARY_PATH', 'VLLM_USE_RAY_SPMD_WORKER', 'VLLM_USE_RAY_COMPILED_DAG', 'CUDA_HOME', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1']
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:45 [ray_env.py:68] If certain env vars should NOT be copied, add them to /global/homes/l/liyantan/.config/vllm/ray_non_carry_over_env_vars.json file
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:38 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='meta-llama/Llama-3.1-8B-Instruct', speculative_config=None, tokenizer='meta-llama/Llama-3.1-8B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=meta-llama/Llama-3.1-8B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:38 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:38 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:37:38 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:52 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', 'broadcast_all_weights', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32']
+[36m(pid=265337)[0m INFO 07-19 06:37:43 [__init__.py:216] Automatically detected platform cuda.[32m [repeated 3x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:45 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:45 [ray_env.py:65] Copying the following environment variables to workers: ['LD_LIBRARY_PATH', 'VLLM_USE_RAY_SPMD_WORKER', 'VLLM_USE_RAY_COMPILED_DAG', 'CUDA_HOME', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1']
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:37:45 [ray_env.py:68] If certain env vars should NOT be copied, add them to /global/homes/l/liyantan/.config/vllm/ray_non_carry_over_env_vars.json file
+[36m(RayWorkerWrapper pid=265343)[0m [Gloo] Rank 0 is connected to 1 peer ranks. Expected number of connected peer ranks is : 1
+[36m(RayWorkerWrapper pid=265343)[0m [Gloo] Rank 0 is connected to 1 peer ranks. Expected number of connected peer ranks is : 1
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:53 [__init__.py:1384] Found nccl from library libnccl.so.2
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:53 [pynccl.py:103] vLLM is using nccl==2.27.3
+[36m(RayWorkerWrapper pid=265343)[0m WARNING 07-19 06:37:53 [symm_mem.py:58] SymmMemCommunicator: Device capability 8.0 not supported, communicator is not available.
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:53 [custom_all_reduce.py:35] Skipping P2P check and trusting the driver's P2P report.
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:53 [shm_broadcast.py:289] vLLM message queue communication handle: Handle(local_reader_ranks=[1], buffer_handle=(1, 4194304, 6, 'psm_c9263b66'), local_subscribe_addr='ipc:///tmp/92a309f9-87a0-4760-bb56-3512a4e518ed', remote_subscribe_addr=None, remote_addr_ipv6=False)
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:54 [parallel_state.py:1208] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[36m(RayWorkerWrapper pid=265343)[0m WARNING 07-19 06:37:54 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:37:54 [gpu_model_runner.py:2602] Starting to load model meta-llama/Llama-3.1-8B-Instruct...
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:37:54 [gpu_model_runner.py:2634] Loading model from scratch...
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:54 [cuda.py:366] Using Flash Attention backend on V1 engine.
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:37:55 [weight_utils.py:392] Using model weights format ['*.safetensors']
+[36m(RayWorkerWrapper pid=265343)[0m Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=265331)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=265343)[0m Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:07<00:23,  7.67s/it]
+[36m(RayWorkerWrapper pid=265330)[0m Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:15<00:15,  7.71s/it][32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=265343)[0m Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:22<00:07,  7.43s/it][32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=265343)[0m 
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:38:19 [default_loader.py:267] Loading weights took 23.26 seconds
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:52 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', 'broadcast_all_weights', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32'][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m [Gloo] Rank 0 is connected to 1 peer ranks. Expected number of connected peer ranks is : 1[32m [repeated 22x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:54 [__init__.py:1384] Found nccl from library libnccl.so.2[32m [repeated 7x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:54 [pynccl.py:103] vLLM is using nccl==2.27.3[32m [repeated 7x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m WARNING 07-19 06:37:53 [symm_mem.py:58] SymmMemCommunicator: Device capability 8.0 not supported, communicator is not available.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:53 [custom_all_reduce.py:35] Skipping P2P check and trusting the driver's P2P report.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:53 [shm_broadcast.py:289] vLLM message queue communication handle: Handle(local_reader_ranks=[1], buffer_handle=(1, 4194304, 6, 'psm_2bc89fd5'), local_subscribe_addr='ipc:///tmp/48372cb4-d154-4edc-a741-c46b3fa69688', remote_subscribe_addr=None, remote_addr_ipv6=False)
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:54 [parallel_state.py:1208] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m WARNING 07-19 06:37:54 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:37:54 [gpu_model_runner.py:2602] Starting to load model meta-llama/Llama-3.1-8B-Instruct...[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:37:54 [gpu_model_runner.py:2634] Loading model from scratch...[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:54 [cuda.py:366] Using Flash Attention backend on V1 engine.[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:37:55 [weight_utils.py:392] Using model weights format ['*.safetensors'][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m 
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:38:19 [gpu_model_runner.py:2653] Model loading took 7.5123 GiB and 24.707206 seconds
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:38:27 [backends.py:548] Using cache directory: /global/homes/l/liyantan/.cache/vllm/torch_compile_cache/3fe45e487c/rank_0_0/backbone for vLLM's torch.compile
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:38:27 [backends.py:559] Dynamo bytecode transform time: 7.22 s
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:38:19 [default_loader.py:267] Loading weights took 23.03 seconds[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:38:19 [gpu_model_runner.py:2653] Model loading took 7.5123 GiB and 24.703021 seconds[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:38:31 [backends.py:197] Cache the graph for dynamic shape for later use
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:38:49 [backends.py:218] Compiling a graph for dynamic shape takes 22.15 s
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:38:27 [backends.py:548] Using cache directory: /global/homes/l/liyantan/.cache/vllm/torch_compile_cache/3fe45e487c/rank_0_0/backbone for vLLM's torch.compile[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:38:27 [backends.py:559] Dynamo bytecode transform time: 7.34 s[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:38:31 [backends.py:197] Cache the graph for dynamic shape for later use[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:38:56 [monitor.py:34] torch.compile takes 29.47 s in total
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:38:50 [backends.py:218] Compiling a graph for dynamic shape takes 22.58 s[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265337)[0m INFO 07-19 06:38:56 [gpu_worker.py:298] Available KV cache memory: 12.79 GiB
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1087] GPU KV cache size: 209,520 tokens
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 51.15x
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1087] GPU KV cache size: 209,520 tokens
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 51.15x
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=265330)[0m Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:23<00:00,  5.87s/it][32m [repeated 5x across cluster][0m
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   3%|▎         | 2/67 [00:00<00:04, 15.92it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  93%|█████████▎| 62/67 [00:02<00:00, 23.63it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (decode, FULL):   3%|▎         | 1/35 [00:00<00:03,  9.10it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:01<00:00, 22.45it/s]
+[36m(RayWorkerWrapper pid=265343)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 22.90it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 21.00it/s]
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:39:02 [custom_all_reduce.py:203] Registering 6630 cuda graph addresses
+[36m(RayWorkerWrapper pid=265333)[0m INFO 07-19 06:38:56 [monitor.py:34] torch.compile takes 29.37 s in total[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:38:57 [gpu_worker.py:298] Available KV cache memory: 12.79 GiB[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1087] GPU KV cache size: 209,520 tokens[32m [repeated 2x across cluster][0m
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:38:57 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 51.15x[32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:39:02 [gpu_model_runner.py:3480] Graph capturing finished in 5 secs, took 0.67 GiB
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:02 [core.py:210] init engine (profile, create kv cache, warmup model) took 43.12 seconds
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:03 [llm.py:306] Supported_tasks: ('generate',)
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:39:03 [__init__.py:1384] Found nccl from library libnccl.so.2
+[36m(RayWorkerWrapper pid=265343)[0m INFO 07-19 06:39:03 [pynccl.py:103] vLLM is using nccl==2.27.3
+[GRZO-S] master weights saved on all engines
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False
+[36m(ESNcclLLM pid=265331)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.
+countdown_eval -- eval pass@1 (shaped): 0.0720 -- answer_acc (0/1): 0.0720 --
+saving model outputs at /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/eval-output/model_eval_taskcountdown_eval_iteration1.json
+
+
+=== Epoch 1; Iteration 1 ===
+[36m(RayWorkerWrapper pid=265337)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/checkpoints/smoke512b-llama8b-acc0.072/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:39:02 [custom_all_reduce.py:203] Registering 6630 cuda graph addresses[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:39:02 [gpu_model_runner.py:3480] Graph capturing finished in 5 secs, took 0.67 GiB[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:02 [core.py:210] init engine (profile, create kv cache, warmup model) took 42.99 seconds
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:03 [llm.py:306] Supported_tasks: ('generate',)
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:39:03 [__init__.py:1384] Found nccl from library libnccl.so.2[32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m INFO 07-19 06:39:03 [pynccl.py:103] vLLM is using nccl==2.27.3[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False
+[36m(ESNcclLLM pid=265329)[0m INFO 07-19 06:39:04 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.
+[GRZO-S] iter 0 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=64 | delta mean=+1.77e-03 std=2.02e-02 | len=507 rounds=2 | UPDATED n=64
+=== Iteration 1 finished in 33.13s ===
+
+
+
+=== Epoch 1; Iteration 2 ===
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+[GRZO-S] iter 1 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=64 | delta mean=+1.56e-03 std=3.00e-02 | len=502 rounds=2 | UPDATED n=64
+=== Iteration 2 finished in 32.67s ===
+
+
+
+=== Epoch 1; Iteration 3 ===
+[GRZO-S] iter 2 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=64 | delta mean=+1.15e-03 std=2.69e-02 | len=506 rounds=2 | UPDATED n=64
+=== Iteration 3 finished in 32.48s ===
+
+
+
+=== Epoch 1; Iteration 4 ===
+[GRZO-S] iter 3 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=64 | delta mean=-2.37e-03 std=2.10e-02 | len=509 rounds=2 | UPDATED n=64
+=== Iteration 4 finished in 32.61s ===
+
+[CKPT] latest saved at iteration 3 -> /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/latest
+[36m(RayWorkerWrapper pid=265337)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/latest/pytorch_model.pth.[32m [repeated 2x across cluster][0m
+Final model weights saved to /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/checkpoint-grzo_iteration_3.
+[INFO] Cleanup complete.
+[36m(RayWorkerWrapper pid=265337)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/checkpoint-grzo_iteration_3/pytorch_model.pth.[32m [repeated 2x across cluster][0m
+wandb: updating run metadata
+wandb: uploading config.yaml; uploading output.log; uploading wandb-summary.json
+wandb: uploading summary, console lines 149-150
+wandb: 
+wandb: Run history:
+wandb:                      eval-iteration ▁
+wandb:            eval/avg_answer_acc/mean ▁
+wandb:                 eval/avgpass@1/mean ▁
+wandb: eval/countdown_eval/answer_acc/mean ▁
+wandb:     eval/countdown_eval/pass@1/mean ▁
+wandb:                         global_step ▁▁▃▆█
+wandb:            train/grzos/active_pairs ▁▁▁▁
+wandb:              train/grzos/delta/mean ██▇▁
+wandb:               train/grzos/delta/std ▁█▆▂
+wandb:      train/grzos/frac_active_groups ▁▁▁▁
+wandb:                                  +6 ...
+wandb: 
+wandb: Run summary:
+wandb:                      eval-iteration 0
+wandb:            eval/avg_answer_acc/mean 0.072
+wandb:                 eval/avgpass@1/mean 0.072
+wandb: eval/countdown_eval/answer_acc/mean 0.072
+wandb:     eval/countdown_eval/pass@1/mean 0.072
+wandb:                         global_step 3
+wandb:            train/grzos/active_pairs 64
+wandb:              train/grzos/delta/mean -0.00237
+wandb:               train/grzos/delta/std 0.021
+wandb:      train/grzos/frac_active_groups 1
+wandb:                                  +6 ...
+wandb: 
+wandb: 🚀 View run smoke512b-llama8b at: https://wandb.ai/liyan_tan/grzo-rlvr/runs/vi0tw888
+wandb: ⭐️ View project at: https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/wandb/run-20260719_063725-vi0tw888/logs
+-- Training completed! --
+[36m(RayWorkerWrapper pid=265330)[0m Model weights saved to /pscratch/sd/l/liyantan/runs/grzo/smoke512b-llama8b/checkpoint-grzo_iteration_3/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  88%|████████▊ | 59/67 [00:02<00:00, 22.80it/s][32m [repeated 39x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:03<00:00, 22.04it/s][32m [repeated 5x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (decode, FULL):  83%|████████▎ | 29/35 [00:01<00:00, 22.09it/s][32m [repeated 20x across cluster][0m
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:01<00:00, 22.28it/s]
+[36m(RayWorkerWrapper pid=265330)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 22.68it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 21.61it/s]
+[INFO] Received signal 15, cleaning up...
+[INFO] Received signal 15, cleaning up...

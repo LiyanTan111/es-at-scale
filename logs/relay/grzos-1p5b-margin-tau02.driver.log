@@ -1,0 +1,5 @@
+[RELAY grzos-1p5b-margin-zs-lr5e4-tau02] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=150 wall=04:00:00
+[RELAY grzos-1p5b-margin-zs-lr5e4-tau02] resume-from iter -1; allocating 04:00:00 node...
+[RELAY grzos-1p5b-margin-zs-lr5e4-tau02] RUNNING jid=55999886 node=nid001088
+[RELAY grzos-1p5b-margin-zs-lr5e4-tau02] srun returned (finished or wall hit); releasing 55999886
+[RELAY grzos-1p5b-margin-zs-lr5e4-tau02] DONE at iter 150

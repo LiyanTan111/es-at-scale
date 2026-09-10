@@ -1,0 +1,30 @@
+[2026-07-15 06:00:09,529 W 2038451 2038451] rpc_client.h:153: Failed to connect to GCS at address 128.55.67.105:39185 within 5 seconds.
+2026-07-15 06:01:24,001	ERROR services.py:1431 -- Failed to start the dashboard 
+2026-07-15 06:01:24,002	ERROR services.py:1456 -- Error should be written to 'dashboard.log' or 'dashboard.err'. We are printing the last 20 lines for you. See 'https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#logging-directory-structure' to find where the log file is.
+2026-07-15 06:01:24,002	ERROR services.py:1500 -- 
+The last 20 lines of /tmp/ray/session_2026-07-15_05-59-48_445456_2038451/logs/dashboard.log (it contains the error message from the dashboard): 
+2026-07-15 06:01:18,638	INFO utils.py:330 -- Module ray.dashboard.modules.aggregator.aggregator_agent cannot be loaded because we cannot import all dependencies. Install this module using `pip install 'ray[default]'` for the full dashboard functionality. Error: No module named 'opentelemetry'
+2026-07-15 06:01:20,786	INFO utils.py:330 -- Module ray.dashboard.modules.aggregator.multi_consumer_event_buffer cannot be loaded because we cannot import all dependencies. Install this module using `pip install 'ray[default]'` for the full dashboard functionality. Error: No module named 'opentelemetry'
+
+2026-07-15 06:01:54,235	INFO node.py:424 -- Failed to get node info b'GCS cannot find the node with node ID a11c209b2cd0b48e4c603f28651fdaeeefcee377e0dfa309214ec665. The node registration may not be complete yet before the timeout. Try increase the RAY_raylet_start_wait_time_s config.'
+Traceback (most recent call last):
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 177, in <module>
+    main()
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 135, in main
+    trainer = GRZOSurrogateTrainer(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/grzo_surrogate_trainer.py", line 52, in __init__
+    super().__init__(*args, **kwargs)
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/grzo_trainer.py", line 75, in __init__
+    super().__init__(*args, **kwargs)
+  File "/global/cfs/cdirs/m4788/liyantan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 73, in __init__
+    ray.init(address="local", include_dashboard=False, ignore_reinit_error=True)
+  File "/pscratch/sd/l/liyantan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_private/client_mode_hook.py", line 110, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/l/liyantan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_private/worker.py", line 1917, in init
+    _global_node = ray._private.node.Node(
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pscratch/sd/l/liyantan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_private/node.py", line 426, in __init__
+    raise Exception(
+Exception: The current node timed out during startup. This could happen because some of the raylet failed to startup or the GCS has become overloaded.

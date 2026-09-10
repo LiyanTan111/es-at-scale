@@ -1,0 +1,5 @@
+[RELAY probe-math-cos600] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=600 wall=04:00:00
+[RELAY probe-math-cos600] resume-from iter -1; allocating 04:00:00 node...
+[RELAY probe-math-cos600] RUNNING jid=56274998 node=nid001453
+[RELAY probe-math-cos600] srun returned (finished or wall hit); releasing 56274998
+[RELAY probe-math-cos600] DONE at iter 600

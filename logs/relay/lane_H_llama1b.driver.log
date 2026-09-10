@@ -1,0 +1,72 @@
+[RELAY forge512-llama1b] start: model=meta-llama/Llama-3.2-1B-Instruct sigma=1e-3 lr=5e-4 T=1.0 G=8 B=8 iters=4000 wall=04:00:00
+[RELAY forge512-llama1b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56167980 node=nid001037
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56167980
+[RELAY forge512-llama1b] resume-from iter 219; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56172569 node=nid001096
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56172569
+[RELAY forge512-llama1b] resume-from iter 1149; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56185394 node=nid001012
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56185394
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56197398
+salloc: job 56197398 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56198223
+salloc: job 56198223 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56198663
+salloc: job 56198663 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56198968
+salloc: job 56198968 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56199527
+salloc: job 56199527 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56200179
+salloc: job 56200179 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56200634
+salloc: job 56200634 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56200877
+salloc: job 56200877 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56201428
+salloc: job 56201428 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56202217
+salloc: job 56202217 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56202709
+salloc: job 56202709 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56203193
+salloc: job 56203193 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] salloc failed: salloc: Pending job allocation 56203729
+salloc: job 56203729 queued and waiting for resources
+salloc: error: Unable to allocate resources: Connection timed out
+[RELAY forge512-llama1b] resume-from iter 2049; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56204451 node=nid001233
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56204451
+[RELAY forge512-llama1b] resume-from iter 2874; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56220289 node=nid001005
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56220289
+[RELAY forge512-llama1b] resume-from iter 3849; allocating 04:00:00 node...
+[RELAY forge512-llama1b] RUNNING jid=56236054 node=nid001005
+[RELAY forge512-llama1b] srun returned (finished or wall hit); releasing 56236054
+[RELAY forge512-llama1b] DONE at iter 4000

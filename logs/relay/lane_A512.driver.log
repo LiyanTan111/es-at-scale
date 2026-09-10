@@ -1,0 +1,38 @@
+[LANE A] ==== starting es512-qwen0p5b (Qwen/Qwen2.5-0.5B-Instruct, 500 iters) ====
+[RELAY es512-qwen0p5b] start: model=Qwen/Qwen2.5-0.5B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-qwen0p5b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es512-qwen0p5b] RUNNING jid=56061408 node=nid001061
+[RELAY es512-qwen0p5b] srun returned; releasing 56061408
+[RELAY es512-qwen0p5b] DONE at iter 500
+[LANE A] ==== finished es512-qwen0p5b ====
+[LANE A] ==== starting es512-llama1b (meta-llama/Llama-3.2-1B-Instruct, 500 iters) ====
+[RELAY es512-llama1b] start: model=meta-llama/Llama-3.2-1B-Instruct sigma=1e-3 pop=30 B=200 iters=500 wall=04:00:00
+[RELAY es512-llama1b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es512-llama1b] RUNNING jid=56071803 node=nid001128
+[RELAY es512-llama1b] srun returned; releasing 56071803
+[RELAY es512-llama1b] DONE at iter 500
+[LANE A] ==== finished es512-llama1b ====
+[LANE A] ==== starting es512-qwen3b (Qwen/Qwen2.5-3B-Instruct, 400 iters) ====
+[RELAY es512-qwen3b] start: model=Qwen/Qwen2.5-3B-Instruct sigma=1e-3 pop=30 B=200 iters=400 wall=04:00:00
+[RELAY es512-qwen3b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es512-qwen3b] RUNNING jid=56075480 node=nid001188
+[RELAY es512-qwen3b] srun returned; releasing 56075480
+[RELAY es512-qwen3b] resume-from iter 199; allocating 04:00:00 node...
+[RELAY es512-qwen3b] RUNNING jid=56080121 node=nid001128
+[RELAY es512-qwen3b] srun returned; releasing 56080121
+[RELAY es512-qwen3b] DONE at iter 400
+[LANE A] ==== finished es512-qwen3b ====
+[LANE A] ==== starting es512-llama3b (meta-llama/Llama-3.2-3B-Instruct, 400 iters) ====
+[RELAY es512-llama3b] start: model=meta-llama/Llama-3.2-3B-Instruct sigma=1e-3 pop=30 B=200 iters=400 wall=04:00:00
+[RELAY es512-llama3b] resume-from iter -1; allocating 04:00:00 node...
+[RELAY es512-llama3b] RUNNING jid=56087134 node=nid001096
+[RELAY es512-llama3b] srun returned; releasing 56087134
+[RELAY es512-llama3b] resume-from iter 174; allocating 04:00:00 node...
+[RELAY es512-llama3b] RUNNING jid=56091930 node=nid001064
+[RELAY es512-llama3b] srun returned; releasing 56091930
+[RELAY es512-llama3b] resume-from iter 349; allocating 04:00:00 node...
+[RELAY es512-llama3b] RUNNING jid=56097859 node=nid001049
+[RELAY es512-llama3b] srun returned; releasing 56097859
+[RELAY es512-llama3b] DONE at iter 400
+[LANE A] ==== finished es512-llama3b ====
+[LANE A] ALL DONE

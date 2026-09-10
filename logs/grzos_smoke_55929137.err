@@ -1,0 +1,49 @@
+2026-07-15 00:14:49,217	INFO worker.py:2024 -- Started a local Ray instance.
+[36m(ESNcclLLM pid=1763367)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(RayWorkerWrapper pid=1763398)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(ESNcclLLM pid=1763371)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.86s/it]
+[36m(RayWorkerWrapper pid=1763369)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:07<00:00,  7.86s/it]
+[36m(RayWorkerWrapper pid=1763369)[0m 
+[36m(RayWorkerWrapper pid=1763368)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1763375)[0m 
+[36m(RayWorkerWrapper pid=1763368)[0m 
+[36m(RayWorkerWrapper pid=1763398)[0m 
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:08<00:00,  8.08s/it][32m [repeated 6x across cluster][0m
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   7%|▋         | 5/67 [00:00<00:01, 33.83it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  13%|█▎        | 9/67 [00:00<00:01, 34.12it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  19%|█▉        | 13/67 [00:00<00:01, 35.82it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  27%|██▋       | 18/67 [00:00<00:01, 38.35it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  34%|███▍      | 23/67 [00:00<00:01, 39.33it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  40%|████      | 27/67 [00:00<00:01, 32.91it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  48%|████▊     | 32/67 [00:00<00:00, 35.39it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  54%|█████▎    | 36/67 [00:01<00:00, 36.21it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  60%|█████▉    | 40/67 [00:01<00:00, 34.71it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  67%|██████▋   | 45/67 [00:01<00:00, 36.46it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  73%|███████▎  | 49/67 [00:01<00:00, 36.89it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  79%|███████▉  | 53/67 [00:01<00:00, 36.67it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  85%|████████▌ | 57/67 [00:01<00:00, 37.07it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  91%|█████████ | 61/67 [00:01<00:00, 35.58it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  97%|█████████▋| 65/67 [00:01<00:00, 36.44it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.11it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):   6%|▌         | 2/35 [00:00<00:01, 16.65it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  17%|█▋        | 6/35 [00:00<00:01, 28.00it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  29%|██▊       | 10/35 [00:00<00:00, 31.58it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  40%|████      | 14/35 [00:00<00:00, 32.04it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  51%|█████▏    | 18/35 [00:00<00:00, 34.48it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  66%|██████▌   | 23/35 [00:00<00:00, 36.25it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  77%|███████▋  | 27/35 [00:00<00:00, 33.48it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL):  89%|████████▊ | 31/35 [00:00<00:00, 34.87it/s]
+[36m(RayWorkerWrapper pid=1763398)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 36.13it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 33.76it/s]
+[36m(RayWorkerWrapper pid=1763375)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.55it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 36.70it/s]
+[36m(RayWorkerWrapper pid=1763368)[0m Capturing CUDA graphs (decode, FULL):  91%|█████████▏| 32/35 [00:00<00:00, 36.51it/s]
+[36m(RayWorkerWrapper pid=1763368)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 35.87it/s]
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  87%|████████▋ | 58/67 [00:01<00:00, 36.28it/s][32m [repeated 40x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  93%|█████████▎| 62/67 [00:01<00:00, 35.65it/s][32m [repeated 4x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s][32m [repeated 3x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (decode, FULL):  89%|████████▊ | 31/35 [00:00<00:00, 35.72it/s][32m [repeated 22x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 36.73it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:01<00:00, 34.93it/s][32m [repeated 2x across cluster][0m
+[36m(RayWorkerWrapper pid=1763369)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  99%|█████████▊| 66/67 [00:01<00:00, 36.20it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 35.64it/s]

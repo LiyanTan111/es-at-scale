@@ -1,0 +1,5 @@
+[RELAY probe-math-sig2e3] start: model=Qwen/Qwen2.5-1.5B-Instruct sigma=2e-3 lr=5e-4 T=1.0 G=8 B=8 iters=400 wall=04:00:00
+[RELAY probe-math-sig2e3] resume-from iter -1; allocating 04:00:00 node...
+[RELAY probe-math-sig2e3] RUNNING jid=56280430 node=nid001112
+[RELAY probe-math-sig2e3] srun returned (finished or wall hit); releasing 56280430
+[RELAY probe-math-sig2e3] DONE at iter 400

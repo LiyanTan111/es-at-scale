@@ -1,0 +1,14 @@
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] start: model=Qwen/Qwen2.5-1.5B-Instruct mode=single_point sigma=1e-3 G=32 B=8 iters=250 wall=04:00:00
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] resume-from iter 149; allocating 04:00:00 node...
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] RUNNING jid=55928877 node=nid001053
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] srun returned (finished or wall hit); releasing 55928877
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] resume-from iter 174; allocating 04:00:00 node...
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] RUNNING jid=55932277 node=nid001029
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] srun returned (finished or wall hit); releasing 55932277
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] resume-from iter 199; allocating 04:00:00 node...
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] RUNNING jid=55938720 node=nid001029
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] srun returned (finished or wall hit); releasing 55938720
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] resume-from iter 224; allocating 04:00:00 node...
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] RUNNING jid=55949367 node=nid001029
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] srun returned (finished or wall hit); releasing 55949367
+[RELAY grzo-1p5b-sp-bin-G32-s1e3] DONE at iter 250
