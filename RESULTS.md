@@ -6,7 +6,8 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 
 | run (EXPNAME) | task | model | recipe | seed | engines | iters | gens | wall (h) | best (iter) | final | notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:10 PT** |
+| forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:11 PT** (wandb ngqa6knz) |
+| es512-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | ES paper | 42 | 2 (3,4) | 500 | — | — | — | — | **E1.1, in flight since 12:10 PT** (same-hardware wall-clock) |
 
 ## Reference rows imported from NERSC (A100-40GB, 4 engines) — see PROJECT_STATUS.md §2
 

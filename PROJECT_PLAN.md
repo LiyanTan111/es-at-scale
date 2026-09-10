@@ -222,17 +222,10 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 
 ## 9. Status block (update at every milestone)
 
-- **Today:** 2026-09-10 (12:10 PT).
-- **Current step:** Phase 0 complete; Phase 1 starts. F1 launched (E0.5 ✅).
-- **In flight:** Lane A: `forge2-cd-1p5b-h100-s42` (F1, v2 recipe, 4000 iters, wandb grzo-rlvr,
-  ETA ~2026-09-11 09:00 PT). Lane B: idle → next E1.1 (ES on H100) then E1.7 (noise decomposition).
-- **Next decision:** none pending; E1.6 GRPO venv build (CPU) can proceed anytime.
-- **Next gate:** G1 at F1 iter 1500 (~2026-09-10 20:30 PT): best ≥ 9%, no collapse.
-
-## 10. Parking lot (ideas not scheduled; each needs a lit check before promotion)
-
-- Angle A (perturbed rollouts for exploration) — roadmap §5; blocked until C5 resolved.
-- Angle C (direct optimisation of pass@k / self-consistency objectives) — roadmap §5.
-- Curriculum from the replay buffer (train on neighbours of solved prompts).
-- Applying the ratchet to ES as well (fairness check; would also be a general contribution).
-- Partial first-order hybrid: exact LM-head gradient from the forward pass + ZO body (see METHOD_REVIEW R1; lit check: ElasticZO 2501.04287 and hybrid ZO/FO papers).
+- **Today:** 2026-09-10 (12:20 PT).
+- **Current step:** Phase 1. Lane A: F1 running (relaunched 12:11 PT after one NCCL-init crash;
+  ~15 s/iter → 4000 iters ≈ 18 h, ETA ~2026-09-11 06:30 PT). Lane B: E1.1 ES-on-H100 running
+  (started 12:10 PT, ~47 s/iter → 500 iters ≈ 7 h, ETA ~19:30 PT). E1.6 GRPO venv building (CPU).
+- **In flight:** `forge2-cd-1p5b-h100-s42` (wandb ngqa6knz), `es512-cd-1p5b-h100-s42`.
+- **Next decision:** none pending. After E1.1 finishes, Lane B → E1.7 noise decomposition, then B1 probe.
+- **Next gate:** G1 at F1 iter 1500 (~2026-09-10 19:30 PT): best ≥ 9%, no collapse.
