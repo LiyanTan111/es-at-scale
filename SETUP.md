@@ -115,3 +115,63 @@ Then a short training run (few iterations, ≤2 GPUs) to confirm the ES update l
 - [x] Reward/grader paths validated end-to-end (CPU)
 - [ ] GPU smoke test (eval-only) — run on target cluster
 - [ ] Short training run on ≤2 GPUs — run on target cluster
+
+---
+
+## lambda-scalar (this box) — 2026-09-10 onward
+
+Same physical machine as the original setup box (hostname `lambda-scalar`, 8× H100 NVL,
+**no scheduler** — plain processes). The NERSC scripts (`scripts/relay_*.sh`,
+`submit_regular_*.sh`, `train_grzo.sbatch`) hardcode Slurm + `/pscratch` paths and
+**must not be used here**; use `scripts/local_forge.sh` instead (same env-var knobs).
+
+**GPU rules (hard):**
+- **GPU 0 is permanently banned** (hardware temperature fault). Never put it in `--use-gpus`.
+- **At most 4 cards.** Default `GPUS=1,2,3,4`.
+- Shared box (~30 users). `local_forge.sh` refuses to start if a requested card already has
+  >2 GB in use. Check `nvidia-smi` first anyway.
+
+**Launch / stop:**
+```bash
+source env.sh                                  # venv + HF_HOME on /data
+MODEL=Qwen/Qwen2.5-1.5B-Instruct EXPNAME=forge2-cd-v2-local ITERS=4000 EVAL_FREQ=25 \
+  MIN_DIRS=64 DAPO_TARGET=8 DAPO_DRAW=32 REPLAY_FRAC=0.5 \
+  ANCHOR_RATCHET=1 RATCHET_DROP=0.03 RATCHET_PATIENCE=3 RATCHET_WARMUP=400 MAXTOK=512 \
+  setsid bash scripts/local_forge.sh > logs/local/forge2-cd-v2-local.driver.log 2>&1 &
+# training log: logs/local/<EXPNAME>.log ; runs/ckpts: /data/liyan/runs/grzo/<EXPNAME>/
+kill -TERM $(cat /data/liyan/runs/grzo/<EXPNAME>/train.pid)     # graceful stop
+```
+
+### P5 — `setsid nohup cmd &` gives the wrong PID
+`$!` after `setsid ... &` is the setsid/shell wrapper, not the python process (it exits at
+once, so a watcher on it concludes the run "died silently" while it is actually loading).
+`local_forge.sh` writes the real trainer PID to `<run>/train.pid` and the driver PID to
+`<run>/driver.pid` — use those.
+
+### P6 — Never `pkill -f train_grzo_surrogate`
+The trainer's reward-grading `multiprocessing.Pool(8)` workers share the driver's command
+line, so a name-based pkill also kills them (and any other run's driver). Worse, a
+`pgrep -f`/`pkill -f` pattern typed into an interactive command also matches *that command's
+own shell* (its cmdline contains the pattern) — use the `[t]rain_grzo` bracket trick if you
+must search by name. Kill only the PID from `train.pid`; the trainer's SIGTERM handler tears
+down its Ray actors.
+
+### P7 — Ray dashboard `opentelemetry` messages are benign
+`dashboard.log` prints INFO lines like "Module ... cannot be loaded ... No module named
+'opentelemetry'". Harmless (dashboard disabled); ignore.
+
+### Status on this box
+- [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)
+- [x] HF hub reachable; `HF_HOME=/data/liyan/hf-cache`; wandb creds in `~/.netrc`
+- [x] fork `main` pulled; `setup/py312-env` (futures fix) merged back into `main` and pushed
+- [x] `scripts/local_forge.sh` written; GPU-0 / busy-card guards tested
+- [x] FORGE smoke via `scripts/local_forge.sh` (Qwen2.5-0.5B, 4 engines on GPUs 1–4,
+      3 iters, eval every 2): rc=0, `DONE at iter 3`, 135 s wall (≈90 s engine start,
+      ≈1.3 s/iter, ≈9 s per 2000-sample eval), GPUs fully released, no stray processes.
+      Base 0.5B answer_acc 0.0000 matches the NERSC validate number.
+
+### P8 — `[INFO] Received signal 15, cleaning up...` at shutdown is benign
+Printed (several times) *after* `-- Training completed! --`. It comes from the reward
+`multiprocessing.Pool` workers: they inherit the driver's SIGTERM handler and the Pool
+sends them SIGTERM on exit. Not a crash. A driver that sits in `do_wait` for minutes after
+completion, however, means a Pool worker was killed externally (see P6) — kill -9 it.
