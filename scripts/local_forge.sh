@@ -97,10 +97,11 @@ echo "[LOCAL $EXPNAME] FORGE_MASTER_PORT=$FORGE_MASTER_PORT"
 # Cross-socket NCCL groups (GPUs 0-3 = NUMA node 0, 4-7 = node 1) crash with
 # "illegal memory access" in init_inter_engine_group unless PCIe P2P is disabled
 # (SETUP.md P10). Apply automatically when the GPU set spans both sockets.
-if grep -qE '(^|,)[0-3](,|$)' <<<"$GPUS" && grep -qE '(^|,)[4-7](,|$)' <<<"$GPUS"; then
-    export NCCL_P2P_DISABLE="${NCCL_P2P_DISABLE:-1}"
-    echo "[LOCAL $EXPNAME] GPU set spans NUMA nodes -> NCCL_P2P_DISABLE=$NCCL_P2P_DISABLE"
-fi
+# 2026-09-10: the same crash also hit the same-socket pair (1,2) intermittently (2 of 3
+# starts), so P2P is disabled for every run; the update phase is ~10% of a step.
+export NCCL_P2P_DISABLE="${NCCL_P2P_DISABLE:-1}"
+echo "[LOCAL $EXPNAME] NCCL_P2P_DISABLE=$NCCL_P2P_DISABLE"
+export RAY_TMPDIR="${RAY_TMPDIR:-/data/liyan/ray_tmp}"; mkdir -p "$RAY_TMPDIR"
 CHILD=""
 forward() { echo "[LOCAL $EXPNAME] driver got signal; forwarding TERM to trainer ${CHILD:-?}"; [[ -n "$CHILD" ]] && kill -TERM "$CHILD" 2>/dev/null; wait "$CHILD" 2>/dev/null; exit 130; }
 trap forward TERM INT HUP

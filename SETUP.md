@@ -172,10 +172,17 @@ inter-engine rendezvous cross. Fix: `es_trainer.py` honours `FORGE_MASTER_PORT`;
 GPUs 0–3 are on NUMA node 0, GPUs 4–7 on node 1 (`nvidia-smi topo -m`). A 2-engine run on
 a pair that spans sockets (e.g. 3,4) dies in `init_inter_engine_group` with
 `CUDA error: an illegal memory access` — solo, with unique ports, every time. Same-socket
-pairs (1,2) work; the 4-engine group (1,2,3,4) also works. Fix: `NCCL_P2P_DISABLE=1`
-(forces NCCL off PCIe P2P onto shared-memory transport) — verified on (3,4).
-`scripts/local_forge.sh` sets it automatically whenever the GPU set spans both sockets.
+pairs (1,2) mostly work but the same crash hit (1,2) on 2 of 3 starts, so it is not purely a
+cross-socket issue — PCIe P2P between non-NVLink GPUs looks flaky on this box (NVLink pairs:
+(0,1) (2,3) (4,6) (5,7)). The 4-engine group (1,2,3,4) worked 3/3. Fix: `NCCL_P2P_DISABLE=1`
+(NCCL falls back to shared-memory transport) — verified on (3,4) for FORGE and ES; both runners
+now set it for **every** run (update phase is ~10% of a step, so the cost is small).
 Lane policy: Lane A = (1,2), Lane B = (3,4).
+
+### P11 — Root partition at 95%: move Ray's temp dir off /tmp
+The raylet logs `... is over 95% full ... Object creation will fail if spilling is required`
+because `/tmp` is on `/` (95% full). `es_trainer.py` honours `RAY_TMPDIR` (passed to
+`ray.init(_temp_dir=...)`); both runners export `RAY_TMPDIR=/data/liyan/ray_tmp`.
 
 ### Status on this box
 - [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)

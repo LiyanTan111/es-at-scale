@@ -70,7 +70,11 @@ class EvolutionStrategiesTrainer:
         os.environ.pop("RAY_HEAD_IP", None)
         os.environ.pop("RAY_GCS_SERVER_ADDRESS", None)
 
-        ray.init(address="local", include_dashboard=False, ignore_reinit_error=True)
+        # Ray session/spill dir: default /tmp is on the (95%-full) root partition and the
+        # raylet refuses object creation past 95%. RAY_TMPDIR moves it (runner sets /data).
+        _ray_tmp = os.environ.get("RAY_TMPDIR")
+        ray.init(address="local", include_dashboard=False, ignore_reinit_error=True,
+                 **({"_temp_dir": _ray_tmp} if _ray_tmp else {}))
 
         signal.signal(signal.SIGINT, lambda sig, frame: self._handle_exit(sig, frame))
         signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
