@@ -1002,3 +1002,52 @@ def boxed_reward_fn(model_response, gt_answer, fast=False):
             "formatted": True
         }, 0.0  # Formatted but wrong answer; no format reward to avoid hacking.
 
+
+
+def _try_numeric_value(ans):
+    """Best-effort finite float value of a math answer string; None if non-numeric."""
+    if ans is None:
+        return None
+    s = str(ans).strip().strip("$").replace(",", "").replace("\\%", "").replace("%", "")
+    try:
+        return float(s)
+    except Exception:
+        pass
+    if "/" in s and s.count("/") == 1:
+        try:
+            a, b = s.split("/")
+            return float(a) / float(b)
+        except Exception:
+            pass
+    try:
+        _, val = latex_eval(s)
+        v = float(val)
+        if v == v and abs(v) != float("inf"):
+            return v
+    except Exception:
+        pass
+    return None
+
+
+def math_margin_tiebreak_reward_fn(model_response, gt_answer, tau=0.5, lam=0.2):
+    """Margin-tiebreak reward for math: r = binary + lam*exp(-rel_delta/tau),
+    margin applied only when BOTH model answer and ground truth evaluate to
+    finite numbers; otherwise plain binary. Exactness strictly dominates
+    (>=1.0 vs <=lam); margin only ORDERS wrong-but-numeric answers so group
+    advantages carry graded credit. fmt keeps answer_reward for answer_acc and
+    the Spearman calibration gate. Module-level (picklable); sympy parsing of
+    adversarial latex is bounded by the trainer's reward timeout pool."""
+    import math as _math
+    fmt, binary = boxed_reward_fn(model_response, gt_answer)
+    out = {"formatted": bool(fmt.get("formatted", False)),
+           "answer_reward": float(binary), "margin_delta_rel": None}
+    margin = 0.0
+    if binary < 1.0 and out["formatted"]:
+        gt = gt_answer[0] if isinstance(gt_answer, list) else gt_answer
+        pv = _try_numeric_value(extract_answer(model_response))
+        gv = _try_numeric_value(str(gt))
+        if pv is not None and gv is not None:
+            delta_rel = abs(pv - gv) / max(1.0, abs(gv))
+            out["margin_delta_rel"] = delta_rel
+            margin = _math.exp(-delta_rel / tau) if tau > 0 else 0.0
+    return out, float(binary) + lam * margin

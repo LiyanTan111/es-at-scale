@@ -109,3 +109,88 @@ def countdown_reward_fn(
         "answer_reward": answer_reward,
     }
     return fmt, 0.1 * format_reward + answer_reward
+
+
+def countdown_answer_only_reward_fn(
+    model_response: str,
+    gt_answer: Union[Dict[str, Any], Tuple[List[int], Union[int, str]]],
+) -> Tuple[Dict[str, Any], float]:
+    """Binary variant: pure 0/1 answer correctness, no format bonus.
+
+    Keeps the same fmt dict (so answer_acc logging still works) but the scalar
+    reward is just ``answer_reward``. Module-level so it stays picklable for the
+    reward-timeout multiprocessing pool.
+    """
+    fmt, _ = countdown_reward_fn(model_response, gt_answer)
+    return fmt, float(fmt.get("answer_reward", 0.0))
+
+
+def _parse_countdown_value(response: str, numbers: List[int]):
+    """Extract the last <answer> expression's numeric value, or None if the
+    answer is missing/ill-formed/uses the wrong multiset of numbers."""
+    all_matches = re.findall(r"<answer>(.*?)<\/answer>", response, re.DOTALL)
+    if not all_matches:
+        return None
+    answer_content = all_matches[-1].strip()
+    if not answer_content or not re.match(r"^[0-9+\-*/() ]+$", answer_content):
+        return None
+    used_numbers = [int(n) for n in re.findall(r"\d+", answer_content)]
+    if sorted(used_numbers) != sorted(numbers):
+        return None
+    try:
+        return float(eval(answer_content, {"__builtins__": None}, {}))
+    except Exception:
+        return None
+
+
+def countdown_margin_reward_fn(
+    model_response: str,
+    gt_answer: Union[Dict[str, Any], Tuple[List[int], Union[int, str]]],
+    tau: float = 0.1,
+) -> Tuple[Dict[str, Any], float]:
+    """Margin surrogate reward (TCAD smoothed-spec style).
+
+    Instead of the 0/1 indicator 1{|value-target|<eps}, expose the verifier's
+    internal continuous margin: relative miss delta = |value-target|/max(1,|target|),
+    reward = exp(-delta/tau). Continuous through the pass boundary (exact hit
+    -> exp(0)=1), decays with distance; invalid/unparseable answers get 0.
+    tau is the calibration knob (TCAD's alpha_k analog): tau=0.1 means a 10%
+    relative miss scores ~0.37. The fmt dict keeps the true binary
+    ``answer_reward`` so answer_acc eval and the Spearman calibration gate see
+    the honest 0/1 signal. Module-level: picklable for the timeout pool.
+    """
+    import math
+    numbers, target_value = _unpack_target(gt_answer)
+    val = _parse_countdown_value(model_response, numbers)
+    binary = 0.0
+    margin_reward = 0.0
+    delta_rel = None
+    if val is not None:
+        delta = abs(val - float(target_value))
+        binary = 1.0 if delta < 1e-5 else 0.0
+        delta_rel = delta / max(1.0, abs(float(target_value)))
+        margin_reward = float(math.exp(-delta_rel / tau)) if tau > 0 else binary
+    fmt = {
+        "formatted": val is not None,
+        "answer_reward": binary,
+        "margin_delta_rel": delta_rel,
+    }
+    return fmt, margin_reward
+
+
+def countdown_margin_tiebreak_reward_fn(
+    model_response: str,
+    gt_answer: Union[Dict[str, Any], Tuple[List[int], Union[int, str]]],
+    tau: float = 0.2,
+    lam: float = 0.2,
+) -> Tuple[Dict[str, Any], float]:
+    """Margin as TIEBREAKER only: r = binary + lam * margin.
+
+    Pure-margin reward got gamed at scale (B=32 run: margin rose, exactness
+    fell, Spearman gate slid 0.49 -> 0.31): 'systematically closer' is an easier
+    direction than 'exact'. Here correctness strictly dominates (correct >= 1.0
+    beats any near-miss <= lam), and the margin only ORDERS the incorrect mass
+    so within-group gradients still exist without exactness ever being
+    trade-able for closeness."""
+    fmt, margin = countdown_margin_reward_fn(model_response, gt_answer, tau=tau)
+    return fmt, float(fmt["answer_reward"]) + lam * margin

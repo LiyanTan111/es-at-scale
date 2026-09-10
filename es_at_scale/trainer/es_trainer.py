@@ -250,7 +250,14 @@ class EvolutionStrategiesTrainer:
                 dtype=precision,
                 enable_prefix_caching=False,
                 enforce_eager=False,
-                gpu_memory_utilization=0.7,
+                # Env-tunable: FORGE's GPU-resident master copy needs headroom
+                # outside vLLM's reservation on 7B+ models (0.5 for 7B TP1,
+                # 0.6 for 8B TP2); default 0.7 unchanged for small models.
+                gpu_memory_utilization=float(os.environ.get("GRZO_GPU_MEM_UTIL", "0.7")),
+                # Cap context: long-context models (e.g. Llama-3.1's 131k)
+                # otherwise demand 16GB+ KV reservation and fail engine init on
+                # 40GB cards. Our tasks use <=~2.5k tokens (prompt + max 2048 gen).
+                max_model_len=4096,
             )
             for strategy in strategies
         ]

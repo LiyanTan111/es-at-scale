@@ -160,18 +160,153 @@ class WorkerExtension:
         torch.cuda.empty_cache()
         print(f"Weights changed with: sign={sign}; scale={sign * scale}.")
 
+    # ------------------------------------------------------------------ #
+    # Master-copy perturbation (Angle B / GRZO-surrogate).
+    #
+    # In-place bf16 add/sub perturb-restore drifts weights by ~1 ulp per add
+    # ((a+b)-b != a in floating point); measured drift was ~half the two-point
+    # log-prob signal, which corrupts a small-signal ZO estimator. Instead keep
+    # a GPU-resident master copy of theta: perturb = one deterministic rounding
+    # from master, restore = bitwise-exact copy of master.
+    #
+    # Noise is generated in fp32 here AND in update_weights_from_seeds_fp32 --
+    # the scoring-side and update-side noise must be the identical vector.
+    # ------------------------------------------------------------------ #
+
+    def save_master_weights(self):
+        """Snapshot current weights as the GPU-resident master copy."""
+        self.master_weights = {
+            name: p.detach().clone()
+            for name, p in self.model_runner.model.named_parameters()
+        }
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        return True
+
+    # fp32 chunk size for the elementwise apply loops below (64M elems = 256MB).
+    # Whole-tensor `(master.to(fp32) + s*noise).to(bf16)` holds THREE fp32
+    # temporaries of the largest layer at once (~7GB transient for a 7B embed),
+    # which OOMs 40GB cards next to the vLLM reservation + master copy. The
+    # noise tensor itself must stay whole (RNG sequence must match the update
+    # side exactly), but the scale/add/round can run in chunks — the per-element
+    # fp32 operations and their order are unchanged, so results are bitwise
+    # identical to the whole-tensor expression.
+    _APPLY_CHUNK = 1 << 26
+
+    def perturb_from_master(self, seed, sigma, negate=False):
+        """Set weights to master +/- sigma*eps(seed), computed in fp32 with a
+        single rounding from master. No restore needed between jobs -- the next
+        perturb_from_master overwrites from master again."""
+        sign = -1.0 if negate else 1.0
+        for name, p in self.model_runner.model.named_parameters():
+            gen = torch.Generator(device=p.device)
+            gen.manual_seed(int(seed))
+            noise = torch.randn(p.shape, dtype=torch.float32, device=p.device,
+                                generator=gen)
+            noise.mul_(sign * float(sigma))
+            master = self.master_weights[name]
+            if p.data.is_contiguous() and master.is_contiguous():
+                p_flat, m_flat, n_flat = (p.data.view(-1), master.view(-1),
+                                          noise.view(-1))
+                for s in range(0, p_flat.numel(), self._APPLY_CHUNK):
+                    e = min(s + self._APPLY_CHUNK, p_flat.numel())
+                    tmp = m_flat[s:e].to(torch.float32)
+                    tmp.add_(n_flat[s:e])
+                    p_flat[s:e].copy_(tmp.to(p.dtype))
+                    del tmp
+            else:
+                p.data.copy_((master.to(torch.float32) + noise).to(p.dtype))
+            del noise
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        return True
+
+    def restore_from_master(self):
+        """Bitwise-exact restore of theta from the master copy."""
+        for name, p in self.model_runner.model.named_parameters():
+            p.data.copy_(self.master_weights[name])
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        return True
+
+    def update_weights_from_seeds_fp32(self, seeds, coeffs, alpha, population_size):
+        """Like update_weights_from_seeds, but noise is generated in fp32 so it
+        matches perturb_from_master's noise exactly. theta += (alpha/N)*sum c_i*eps_i.
+        Call save_master_weights afterwards (post-broadcast) to refresh masters."""
+        for _, p in self.model_runner.model.named_parameters():
+            acc = torch.zeros_like(p.data, dtype=torch.float32)
+            for i, seed in enumerate(seeds):
+                gen = torch.Generator(device=p.device)
+                gen.manual_seed(int(seed))
+                noise = torch.randn(p.shape, dtype=torch.float32, device=p.device,
+                                    generator=gen)
+                # In-place scale: same fp32 multiply as `noise * c`, without the
+                # third full-size temporary (bitwise-identical result).
+                noise.mul_(float(coeffs[i]))
+                acc.add_(noise)
+                del noise
+            acc.mul_(float(alpha) / float(population_size))
+            if p.data.is_contiguous():
+                p_flat, a_flat = p.data.view(-1), acc.view(-1)
+                for s in range(0, p_flat.numel(), self._APPLY_CHUNK):
+                    e = min(s + self._APPLY_CHUNK, p_flat.numel())
+                    p_flat[s:e].add_(a_flat[s:e].to(p.dtype))
+            else:
+                p.data.add_(acc.to(p.dtype))
+            del acc
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        torch.cuda.empty_cache()
+        return True
+
+    def _tp_rank_suffix(self):
+        """Per-rank filename suffix under tensor parallelism.
+
+        With TP>1 each worker holds only its parameter SHARD, and
+        collective_rpc runs on every rank -- a shared filepath means ranks
+        race on the same file (observed 2026-07-21: FileNotFoundError when
+        rank B's os.replace ran after rank A consumed the tmp) and the
+        surviving file is one rank's shard, not the model. Each rank gets its
+        own file instead; resume re-loads shard-per-rank under the same TP
+        layout. TP=1 keeps the legacy un-suffixed path.
+        """
+        try:
+            from vllm.distributed import (
+                get_tensor_model_parallel_rank,
+                get_tensor_model_parallel_world_size,
+            )
+            if get_tensor_model_parallel_world_size() > 1:
+                return f".rank{get_tensor_model_parallel_rank()}"
+        except Exception:
+            pass
+        return ""
+
     def save_self_weights_to_disk(self, filepath):
-        """Save the current model weights to disk."""
+        """Save the current model weights to disk (atomically).
+
+        Relay hops get SIGKILLed at the wall-time limit; a plain torch.save
+        overwrite caught mid-write leaves a truncated file that poisons every
+        subsequent resume (observed 2026-07-19: 335MB of 3.1GB). Write to a
+        temp file and rename -- rename is atomic on the same filesystem.
+        """
+        import os as _os
+        filepath = f"{filepath}{self._tp_rank_suffix()}"
         state_dict_to_save = {}
         for name, p in self.model_runner.model.named_parameters():
             state_dict_to_save[name] = p.detach().cpu()
-        torch.save(state_dict_to_save, filepath)
+        tmp = f"{filepath}.tmp"
+        torch.save(state_dict_to_save, tmp)
+        _os.replace(tmp, filepath)
         print(f"Model weights saved to {filepath}.")
 
     def load_weights_from_disk(self, filepath):
-        state_dict = torch.load(filepath, map_location=self.device)
+        # map_location MUST be cpu: loading the full state dict straight to GPU
+        # stacks a second copy of the weights on top of vLLM's reservation and
+        # OOMs for 7B+ models (28GB vLLM + 14GB ckpt > 40GB). Stream per-param.
+        filepath = f"{filepath}{self._tp_rank_suffix()}"
+        state_dict = torch.load(filepath, map_location="cpu")
         for name, p in self.model_runner.model.named_parameters():
-            p.data.copy_(state_dict[name].to(self.device))
+            p.data.copy_(state_dict[name])
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
