@@ -69,8 +69,11 @@ def rollout(model, tok, prompts, G, max_new, seed, device):
     tok.padding_side = "left"
     enc = tok(prompts, return_tensors="pt", padding=True).to(device)
     torch.manual_seed(seed)
+    # Qwen2.5-Instruct's generation_config carries repetition_penalty=1.1, top_k=20, top_p=0.8;
+    # vLLM's explicit SamplingParams (used in training) apply none of these. Override all of
+    # them so the HF rollouts match the training distribution (checked: 0/24 vs 3/24 active groups).
     out = model.generate(**enc, do_sample=True, temperature=1.0, top_p=1.0, top_k=0,
-                         max_new_tokens=max_new, num_return_sequences=G,
+                         repetition_penalty=1.0, max_new_tokens=max_new, num_return_sequences=G,
                          pad_token_id=tok.pad_token_id)
     L = enc["input_ids"].shape[1]
     gens = out[:, L:]
@@ -267,6 +270,8 @@ def main():
     if tok.pad_token_id is None: tok.pad_token = tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(args.model_name, torch_dtype=torch.bfloat16).to(device).eval()
     if args.vllm_ckpt: load_vllm_ckpt_into_hf(model, args.vllm_ckpt)
+    for k, v in dict(temperature=1.0, top_p=1.0, top_k=0, repetition_penalty=1.0).items():
+        setattr(model.generation_config, k, v)
     d = sum(p.numel() for p in model.parameters())
     print(f"[ALIGN] model {args.model_name} d={d/1e6:.1f}M device={device}")
 
@@ -300,6 +305,7 @@ def main():
         rows1 += rollout(model, tok, P_prompts[s:s + 8], G, args.max_new_tokens, 2002 + s, device)
     R0, R1 = grade(rows0, P_targets), grade(rows1, P_targets)
     pairs0, pairs1 = build_pairs(rows0, R0), build_pairs(rows1, R1)
+    assert pairs0 and pairs1, f"no active pairs after re-rollout (R0={len(pairs0)}, R1={len(pairs1)})"
     print(f"[ALIGN] prompts={len(P_prompts)} pairs R0={len(pairs0)} R1={len(pairs1)} reward R0={R0.mean():.3f} R1={R1.mean():.3f}")
     torch.save({"pairs0": pairs0, "pairs1": pairs1, "prompts": P_prompts, "targets": P_targets},
                args.out.replace(".json", "_pairs.pt"))
