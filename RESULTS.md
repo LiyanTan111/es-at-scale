@@ -34,3 +34,16 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 ## E1.5 gradient alignment (2026-09-10, Qwen2.5-1.5B base, 1 H100) — `results/align_1p5b_base.json`
 
 ⟨ĝ,g_BP⟩ ≈ ‖g_BP‖² (unbiased) at all N; cos(ĝ,g_BP) = √(N/d) (hybrid) / ¼√(N/d) (per-example): 6e-5 @N=96 → 2e-4 @N=1024. Same-rollout agreement at noise floor. See METHOD_REVIEW R3.
+
+## GRPO reference — checkpoint evaluations (2026-09-11 01:00; same eval as FORGE/ES: countdown_eval 2000, greedy, 512 tok)
+
+| step | generations | answer_acc |
+|---|---|---|
+| 100 | 51k | 40.25% |
+| 200 | 102k | 41.95% |
+| 300 | 154k | 44.30% |
+| 400 | 205k | 45.50% |
+| 500 | 256k | 45.60% |
+| 600 | 307k | 45.90% |
+
+Base 1.75%. Train-set reward mean at step 669 = 0.68. TRL 0.29 GRPOTrainer: loss_type grpo, β=0, lr 1e-6 const, 64 prompts × 8, T=1, 512 tok, vLLM colocate.

@@ -281,3 +281,21 @@ equivalent ≈ 4e-5) sits ~4× below the good region — which by itself explain
 slowness. A single seed, but the ordering 4e-5 ≪ 1.6e-4 ≫ 6.4e-4 (collapse) is unambiguous.
 Next: N = 384 at 6.4e-4 (the η ∝ N prediction: stable where N = 96 collapsed) and 1.6e-4
 (N alone), running now; then finer lr points and seeds.
+
+## R7 (2026-09-11 01:00) — The backprop ceiling is much higher and much cheaper than assumed
+
+GRPO (TRL, β=0, lr 1e-6, 64×8 per step) on the identical protocol: **40.3% at 51k generations
+(step 100), 45.9% at 307k (step 600)**, still rising slowly. For comparison ES (paper recipe) is
+at 1.75% base → ~17% at 100k and 37.9% at 3M generations (NERSC), and FORGE v2 ≈ 10% at 3M.
+So on Countdown-1.5B the backprop method is ≳ 10× more generation-efficient than the best
+backprop-free method and reaches a higher plateau. Consequences for the paper:
+1. The Pareto figure's x-axis must span 5e4–3e6 generations; GRPO occupies the top-left corner.
+   "FORGE reaches first signal 20× cheaper than ES" remains true but is small next to GRPO.
+2. The honest positioning is *among forward-only methods* (FORGE vs ES), with GRPO as the
+   ceiling and the memory/any-serveable-model table (C8) as the reason forward-only exists.
+3. The ES paper's claim that ES beats GRPO on Countdown does not reproduce with a current TRL
+   GRPO; recent literature (2604.01499, 2608.27351) also finds ES ≈ GRPO at best. Cite and
+   report our numbers.
+4. FORGE's generation budget per step is only ~600 (vs GRPO's 512): the gap is not rollouts,
+   it is the ~1e4× noisier update per rollout (E1.5) — i.e. steps, not samples. The lr×N sweep
+   (R6) is therefore exactly the right lever to quantify.

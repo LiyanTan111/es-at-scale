@@ -63,7 +63,7 @@ Fallback: NeurIPS 2027 (2027-05-21).
 | C6 | FORGE has signal where ES has none (MATH-500, 1.5B) | 3 seeds each, same budget, ES flat vs FORGE +Δ | NERSC: FORGE +2.3pp avg (3 seeds), ES flat; rerun best recipe (E3.3) |
 | C7 | Scope boundary: no within-group diversity ⇒ no FORGE signal (conciseness) | Existing NERSC result + 1 confirmatory run | done (NERSC); confirm once |
 | C8 | Scale: FORGE runs 7B/8B on inference memory (TP2) where GRPO needs training memory | 7B run to a short budget + peak-memory table (FORGE vs GRPO vs ES) | 7B smoke works (TP2, base 25.1%); **memory table TODO (E1.4)** |
-| C9 | GRPO reference (backprop ceiling) on the same protocol | GRPO run(s) at matched generation budgets | **no infra yet (E1.6)** |
+| C9 | GRPO reference (backprop ceiling) on the same protocol | GRPO run(s) at matched generation budgets | **running: 40.3% @51k gens, 45.9% @307k (R7)** |
 
 Rule: no claim enters the paper without its row being "done". No experiment runs unless it
 serves a row (or a gated bet in §5).
