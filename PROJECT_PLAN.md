@@ -271,7 +271,7 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** F2 (N=384, η=6.4e-4) on (1,4) → G2' at 1000. GPU 3: GRPO → ES_MASTER_COPY parity (1 engine, ~11 h) → **F2b** (N=384, η=1.6e-4, 1500 iters; R10 prediction: slower but higher peak). Parking: B6 fp32 master.
+- **Next decision:** F2 (η=6.4e-4) collapsed by iter 225 (R11) → **F3 = N=384, η=1.6e-4, ratchet warmup 200** on (1,4), 4000 iters. GPU 3: ES_MASTER_COPY parity (running, 1 engine) → F3-fp32 ablation (B6, 1500 iters). G2' at F3 iter 1000: best ≥ 15%.
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
   vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs
@@ -285,6 +285,6 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
   variance and one extra FORGE seed is run to confirm.
 - **G2 verdict (2026-09-11 08:00): F1 (v2/z-score) best 9.25% @3700, final 8.2% — below 15%.** v2 cannot
   carry C5. Superseded by the raw+N recipe (R6/R8): N=384, lr 6.4e-4 reaches 11.0% in 200 iterations.
-  **F2 flagship** = raw, N=384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet as safety, 4000 iters, 2 engines
+  ~~F2 = raw, N=384, lr 6.4e-4~~ (collapsed by iter 225, R11) → **F3 flagship** = raw, N=384, lr 1.6e-4, DAPO 8/32, replay 0.5, ratchet as safety, 4000 iters, 2 engines
   (Lane A after the probe batch). New gate **G2'** at F2 iter 1000 (~10 h): best ≥ 15% ⇒ C5 alive.
 - **Next gate:** G2' at F2 iter 1000.

@@ -12,7 +12,8 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 | forge-raw-N384-lr2.6e-3-s42 | countdown | 1.5B | FORGE raw, N=384, lr 2.6e-3 | 42 | 1 (2) | 200 | — | — | 0% | immediate collapse |
 | forge-raw-N96-lr3.2e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 3.2e-4 | 42 | 1 (1) | 200 | — | 1.5 | 2.05% (100) | 0.8% | degrades below base: η_max(96) < 3.2e-4 |
 | forge-raw-N96-lr1.6e-4-s43 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4 | 43 | 1 (1) | 200 | ~0.13M | 1.6 | 7.2% (175) | 6.1% | replicates s42 |
-| forge3-cd-1p5b-rawN384-h100-s42 | countdown | 1.5B | **F2**: raw, N=384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet | 42 | 2 (1,4) | 4000 | — | — | — | — | **launched 2026-09-11 11:35 PT** |
+| forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42 | countdown | 1.5B | **F3**: raw, N=384, lr 1.6e-4, DAPO 8/32, replay 0.5, ratchet (warmup 200) | 42 | 2 (1,4) | 4000 | — | — | — | — | **launched 2026-09-11 14:55 PT** |
+| forge3-cd-1p5b-rawN384-h100-s42 | countdown | 1.5B | **F2**: raw, N=384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet | 42 | 2 (1,4) | 4000 | — | — | — | — | 8.2% (50) | 0% | **collapsed by iter 225** (drift ≈ 7e-3 RMS); stopped at 425 |
 | forge-raw-N384-lr6.4e-4-s42 | countdown | 1.5B | FORGE raw, N=384 (k=4), lr 6.4e-4, no ratchet | 42 | 1 (4) | 200 | ~0.09M | 3.4 | **11.0% (200)**, 9.0% (75) | 11.0% | η_max grows with N: N=96 collapses at this lr |
 | forge-raw-N384-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=384, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.12M | 3.1 | 6.7% (200) | 6.7% | N alone at fixed lr: no gain vs N=96 |
 | forge-raw-N96-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | **8.2% (200)** | 8.2% | lr sweep; fastest climb seen so far (F1 z-score needs ~1100 iters for 8%) |
@@ -58,6 +59,11 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 | 1200 | 614k | 46.95% |
 | 1400 | 717k | 46.10% |
 | 1500 | 768k | 45.55% |
+| 1600 | 819k | 48.20% |
+| 1700 | 870k | 46.50% |
+| 1800 | 922k | 44.40% |
+| 1900 | 973k | 42.25% |
+| 2000 | 1024k | 45.90% |
 
 Base 1.75%. Train-set reward mean at step 669 = 0.68. TRL 0.29 GRPOTrainer: loss_type grpo, β=0, lr 1e-6 const, 64 prompts × 8, T=1, 512 tok, vLLM colocate.
 

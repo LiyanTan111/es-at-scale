@@ -399,3 +399,19 @@ survival — see the bf16 survival check below for the likely reason.
    leans on the ratchet; **F2b (N=384, η=1.6e-4)** climbs 4× slower but should reach a *higher*
    accuracy before drift-limited decay. F2b is queued on GPU 3 (1 engine, 1500 iters) after the
    ES parity run.
+
+## R11 (2026-09-11 15:00) — F2 collapsed exactly as the drift accounting predicts; flagship moves to η = 1.6e-4
+
+F2 (N=384, η=6.4e-4, 2 engines, ratchet warm-up 400): 3.6% @25 → **8.2% @50** → 2.7 → 2.6 →
+4.8 → 3.9 → 2.4 → 1.9 → **0.05% @225 → 0% thereafter**. Random-walk drift at this η is
+≈ 4.6e-4 RMS per step ⇒ ≈ 7e-3 RMS by step 225, past the ≈ 4–8e-3 destruction band of R9.
+The 1-engine probes at the same setting (R9) simply stopped at 200, on the edge of the same
+cliff (s43 was already decaying). The ratchet, armed only from iteration 400, could not help.
+Stopped at 425.
+
+Decision (R10 trade-off): **F3 = N=384, η=1.6e-4** — 4× less drift per step ⇒ ≈ 16× longer
+horizon (≳ 3000 steps before the same drift), 4× slower per-step climb (6.7% @200 in the probe,
+still rising), ratchet warm-up 200 / drop 0.03 / patience 3 as a reset. 4000 iterations, 2 engines,
+GPUs (1,4), started 14:55 PT. Companion on GPU 3 after the ES parity run: the same recipe with
+**FORGE_FP32_MASTER=1** (B6) for 1500 iterations — a direct A/B on the rounding effect.
+GRPO final: 45.9% @2000 steps (1.0M generations; 42–48% over the last 500 steps).
