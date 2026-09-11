@@ -171,6 +171,7 @@ def main():
         eta_c = args.eta96 * N / 96.0
         etas = [eta_c * f for f in factors]
         dL = np.zeros((args.reps, len(etas))); surv = np.zeros((args.reps, len(etas)))
+        surv_idx = sorted({0, len(etas) // 2, len(etas) - 1})
         c2, ghat_n2, dot_g = [], [], []
         for r in range(args.reps):
             seeds, deltas = m32.score(N, args.sigma, rng)
@@ -180,7 +181,7 @@ def main():
             ghat_n2.append(vnorm2(ghat)); dot_g.append(vdot(ghat, g))
             for k, eta in enumerate(etas):
                 m32.set_from_master(ghat, -eta); dL[r, k] = m32.loss() - L0
-                surv[r, k] = bf16_survival(m32, ghat, -eta) if k in (0, 3, 6) else np.nan
+                surv[r, k] = bf16_survival(m32, ghat, -eta) if k in surv_idx else np.nan
             m32.set_from_master(); del ghat; (torch.cuda.empty_cache() if dev.type == 'cuda' else None)
         mean_dL = dL.mean(0)
         # quadratic fit dL = -a eta + b eta^2 on points with eta <= first positive-going region (all points)
@@ -205,7 +206,7 @@ def main():
               f"| fit a={a:.3f} b={b:.3e} -> eta_opt={eta_opt_obs:.2e} eta_max={eta_max_obs:.2e} "
               f"| pred eta_opt={a_pred/(2*b_pred):.2e} eta_max={a_pred/b_pred:.2e} | best grid eta={etas[best_k]:.2e} dL={mean_dL[best_k]:+.4f} | {time.time()-t0:.0f}s")
         print("       dL(eta): " + " ".join(f"{e:.1e}:{v:+.4f}" for e, v in zip(etas, mean_dL)))
-        print("       bf16 update survival at eta grid[0,3,6]: " + " ".join(f"{v:.2f}" for v in np.nanmean(surv, 0)[[0, 3, 6]]))
+        print("       bf16 update survival at eta " + " ".join(f"{etas[i]:.1e}:{np.nanmean(surv, 0)[i]:.2f}" for i in surv_idx))
         json.dump(res, open(args.out, "w"), indent=2)
     print(f"[STAB] wrote {args.out}")
 
