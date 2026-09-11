@@ -493,6 +493,11 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                 e.collective_rpc.remote("broadcast_all_weights", args=(0,))
                 for e in self.engines
             ])
+            if _os.environ.get("FORGE_FP32_MASTER", "0") == "1":
+                ray.get([
+                    e.collective_rpc.remote("broadcast_master32", args=(0,))
+                    for e in self.engines
+                ])
             ray.get([
                 e.collective_rpc.remote("save_master_weights", args=())
                 for e in self.engines

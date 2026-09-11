@@ -138,6 +138,7 @@ while true; do
         export RATCHET_WARMUP=$RATCHET_WARMUP
         export REPLAY_FRAC=$REPLAY_FRAC REPLAY_ADV=$REPLAY_ADV
         export REPLAY_CAP_PER_PROMPT=$REPLAY_CAP_PER_PROMPT REPLAY_MAX=$REPLAY_MAX
+        export FORGE_FP32_MASTER=${FORGE_FP32_MASTER:-0}
         exec python es_at_scale/train_grzo_surrogate.py \
             --model-name "$MODEL" --sigma "$SIGMA" --lr "$LR" \
             --task "$TASK" --train-dataset "$TRAIN_DS" --eval-dataset "$EVAL_DS" \

@@ -173,12 +173,43 @@ class WorkerExtension:
     # the scoring-side and update-side noise must be the identical vector.
     # ------------------------------------------------------------------ #
 
+    # FORGE_FP32_MASTER=1 (parking-lot B6, evidence METHOD_REVIEW R10): keep the master copy
+    # in fp32 and apply updates to it, so sub-half-ulp components of an update are not
+    # rounded away by the bf16 serving weights. Serving weights p are always master -> bf16.
+    # Protocol per update: engine 0 update_weights_from_seeds_fp32 (master32 += delta,
+    # p = master32) -> broadcast_all_weights (p) -> broadcast_master32 (fp32 master) ->
+    # save_master_weights (no-op while the master is fresh). load_weights_from_disk marks the
+    # master stale so the next save_master_weights rebuilds it from the loaded weights.
+    @property
+    def _fp32_master(self):
+        import os as _os
+        return _os.environ.get("FORGE_FP32_MASTER", "0") == "1"
+
     def save_master_weights(self):
-        """Snapshot current weights as the GPU-resident master copy."""
+        """Snapshot current weights as the GPU-resident master copy (bf16 clone, or fp32
+        when FORGE_FP32_MASTER=1; in that mode an existing fresh master is kept)."""
+        if self._fp32_master and getattr(self, "master_weights", None) is not None \
+                and not getattr(self, "_master_stale", True):
+            return True
+        dtype = torch.float32 if self._fp32_master else None
         self.master_weights = {
-            name: p.detach().clone()
+            name: (p.detach().to(dtype).clone() if dtype else p.detach().clone())
             for name, p in self.model_runner.model.named_parameters()
         }
+        self._master_stale = False
+        if torch.cuda.is_available():
+            torch.cuda.synchronize()
+        return True
+
+    def broadcast_master32(self, src_rank: int):
+        """Broadcast the fp32 master copy across engines (FORGE_FP32_MASTER mode)."""
+        if not self._fp32_master:
+            return True
+        for name, _ in self.model_runner.model.named_parameters():
+            self.inter_pg.broadcast(
+                self.master_weights[name], src=int(src_rank), stream=torch.cuda.current_stream()
+            )
+        self._master_stale = False
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         return True
@@ -233,7 +264,7 @@ class WorkerExtension:
         """Like update_weights_from_seeds, but noise is generated in fp32 so it
         matches perturb_from_master's noise exactly. theta += (alpha/N)*sum c_i*eps_i.
         Call save_master_weights afterwards (post-broadcast) to refresh masters."""
-        for _, p in self.model_runner.model.named_parameters():
+        for _name, p in self.model_runner.model.named_parameters():
             acc = torch.zeros_like(p.data, dtype=torch.float32)
             for i, seed in enumerate(seeds):
                 gen = torch.Generator(device=p.device)
@@ -246,7 +277,11 @@ class WorkerExtension:
                 acc.add_(noise)
                 del noise
             acc.mul_(float(alpha) / float(population_size))
-            if p.data.is_contiguous():
+            if self._fp32_master and getattr(self, "master_weights", None) is not None:
+                m = self.master_weights[_name]
+                m.add_(acc)                      # exact fp32 accumulation
+                p.data.copy_(m)                  # serving weights = master -> bf16
+            elif p.data.is_contiguous():
                 p_flat, a_flat = p.data.view(-1), acc.view(-1)
                 for s in range(0, p_flat.numel(), self._APPLY_CHUNK):
                     e = min(s + self._APPLY_CHUNK, p_flat.numel())
@@ -336,6 +371,7 @@ class WorkerExtension:
         state_dict = torch.load(filepath, map_location="cpu")
         for name, p in self.model_runner.model.named_parameters():
             p.data.copy_(state_dict[name])
+        self._master_stale = True
         gc.collect()
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
