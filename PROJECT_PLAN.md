@@ -172,6 +172,12 @@ Runs in the probe lane while F1 trains (or after, if lane A only):
 - E1.7 **Noise decomposition** — absorbed into E1.5 (same/cross-rollout agreement); `scripts/noise_decomposition.py` (vLLM-layout version) kept as a cross-check: on one fixed batch, re-score the same
   pairs with fresh directions (ZO projection variance) and re-roll the same prompts (policy-
   gradient sampling variance); report both vs N and G. Justifies/kills bets B1–B3 before they run.
+- E1.8 **Local stability & curvature (user, 2026-09-10; runs before any further probe).**
+  `scripts/local_stability.py` on the E1.5 batch: η sweep around η ∝ N for N ∈ {64..1024}, exact
+  ΔL(η) with independent direction draws, quadratic fit → η_opt/η_max vs N; forward-only tr(H)
+  and gᵀHg; prediction η_opt(N) from forward-only quantities vs observed. Success = η_max ∝ N and
+  predicted ≈ observed. Sets the learning rates for P2–P4 (paused until then). Also reports the
+  bf16 update-survival fraction (apply-path rounding diagnostic).
 - **Gate G1 (F1 @ iter 1500):** local curve must track NERSC v2 (best ≥ 9% by 1500, no
   collapse). If not → parity debugging is the only allowed task until fixed.
 
@@ -265,7 +271,7 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** B1 probes P1–P4 (raw estimator; lr × N scaling test). P1 running on GPU 4. After F1 ends: P2–P4 + ES reruns on Lane A.
+- **Next decision:** E1.8 runs on GPU 4 right after P1 (~22:00 PT); its η_max(N) sets P2–P4. F1 → G2 at 4000.
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
   vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs

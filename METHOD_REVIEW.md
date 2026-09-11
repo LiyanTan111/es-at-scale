@@ -170,3 +170,32 @@ structured/low-rank directions (B2) or fewer effective dimensions are the only w
 starving, no ratchet); P2 raw N=384 lr 1.6e-4 (the bet); P3 raw N=384 lr 4e-5 (N alone);
 P4 raw N=96 lr 1.6e-4 (lr alone; expected to destabilise). 400 iters each, 1 engine, eval
 every 25; metric = train reward slope and eval acc at equal iteration vs F1 (z-score).
+
+## R4 (2026-09-10, user) — The mature story, and the experiment that nails the mechanism
+
+The user's reading of E1.5, adopted as the project's framing:
+
+> **FORGE does not reconstruct the gradient direction.** It takes **an unbiased but extremely
+> noisy policy-gradient step**, and the role of N is **not to recover the gradient but to
+> reduce the second-order noise penalty, thereby allowing a larger learning rate.**
+
+The old story ("ZO is noisy, add directions until it looks like backprop") is dead — E1.5
+shows it cannot happen at d = 1.5e9. The ZO-native story is: progress per step ∝ η‖ḡ‖²
+minus a curvature penalty ∝ η²·(mean‖g_j‖²/N)·tr(H); so η_stable ∝ N and
+iterations-to-target ∝ 1/N.
+
+**E1.8 — local stability & curvature (the user's design, `scripts/local_stability.py`):**
+on the *same* fixed batch and surrogate as E1.5, for N ∈ {64, 96, 256, 512, 1024}, sweep η
+around η ∝ N with several independent direction draws, and measure the *exact*
+ΔL = L(θ − η ĝ) − L(θ). Fit ΔL = −aη + bη² → η_opt = a/2b, η_max = a/b. Plot η_max vs N.
+Then estimate tr(H) **forward-only** from random second differences
+(L(θ+hu) + L(θ−hu) − 2L(θ))/h², E_u[uᵀHu] = tr(H), plus gᵀHg/‖g‖² along the true gradient,
+and predict η_opt(N) = ‖ḡ‖² / (mean‖g_j‖²·tr(H)/N + ḡᵀHḡ) with mean‖g_j‖² = E[(δ/2σ)²]
+(also forward-only). Closure to aim for:
+
+    measured tr(H)  ⇒  predicted η_max(N)  ≈  observed η_max(N),   η_max ∝ N.
+
+This is cheaper (minutes), cleaner, and more decisive than 20-hour training probes; P2–P4
+are paused until E1.8 sets their learning rates. A side diagnostic is included: the training
+code applies updates as `p_bf16.add_(u.to(bf16))`, so sub-ulp components of the update are
+rounded away; E1.8 reports the fraction of the update norm that survives at each (N, η).
