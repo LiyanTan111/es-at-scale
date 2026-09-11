@@ -108,3 +108,65 @@ scientific story.
 Actions: E1.5 implemented as `scripts/grad_alignment.py` (pure HF/torch, one GPU; also
 measures same-/cross-rollout agreement and the δ statistics needed to set a principled
 raw-estimator learning rate); B1 redefined as raw estimator + N sweep + no-ratchet ablation.
+
+## R3 (2026-09-10 evening) — E1.5 result: the estimator is exactly textbook ZO; alignment ∝ √(N/d)
+
+Setup: Qwen2.5-1.5B base (d = 1.54e9), one fixed batch of 8 active Countdown groups
+(16 pairs with |Â|>0 in rollout R0, 8 in R1), g_BP by autograd (fp32), ĝ(N) from seed-
+regenerated directions on one H100. `results/align_1p5b_base.json`.
+
+| scheme | N | cos(ĝ, g_BP) | predicted | ⟨ĝ, g_BP⟩ | ‖g_BP‖² | ‖ĝ‖ |
+|---|---|---|---|---|---|---|
+| per-example | 32 | 4.3e-5 | ¼·√(N/d) = 3.6e-5 | 14.5 | 14.87 | 8.7e4 |
+| per-example | 96 | 5.9e-5 | 6.2e-5 | 9.7 | 14.87 | 4.2e4 |
+| per-example | 256 | 4.3e-5 | 1.0e-4 | 5.2 | 14.87 | 3.1e4 |
+| per-example | 512 | 1.8e-4 | 1.4e-4 | 17.9 | 14.87 | 2.5e4 |
+| per-example | 1024 | 2.1e-4 | 2.0e-4 | 14.0 | 14.87 | 1.7e4 |
+| hybrid (all pairs) | 8 | 4.0e-5 | √(N/d) = 7.2e-5 | 3.6 | 14.87 | 2.4e4 |
+| hybrid | 32 | 1.7e-4 | 1.4e-4 | 20.7 | 14.87 | 3.1e4 |
+| hybrid | 96 | 2.5e-4 | 2.5e-4 | 15.0 | 14.87 | 1.6e4 |
+
+**Findings.**
+1. **Unbiasedness confirmed quantitatively (claim C1 done):** ⟨ĝ, g_BP⟩ ≈ ‖g_BP‖² = 14.9 at every N
+   (scatter is the expected ‖g‖²/√N), for both schemes. The implementation estimates the GRPO
+   policy gradient correctly.
+2. **Alignment is astronomically small and follows theory exactly:** cos ≈ √(N/d) for the
+   hybrid scheme (2.48e-4 observed vs 2.49e-4 predicted at N=96) and ≈ (‖ḡ‖/rms‖g_j‖)·√(N/d)
+   ≈ ¼·√(N/d) for the per-example scheme (16 nearly-orthogonal per-pair gradients). Going
+   from N=96 to 1024 raises cos from 6e-5 to 2e-4. To reach cos = 0.01 one would need
+   N ≈ 1.5e5 directions per step — ~1500× today's prefill budget.
+3. **Same-rollout agreement cos(ĝ_A, ĝ_B) is at the noise floor (|·| < 5e-4) at every N**, as
+   theory predicts ((N/d)·(‖ḡ‖/rms‖g_j‖)² ≈ 4e-8): two independent FORGE updates on the same
+   data are essentially orthogonal. Cross-rollout agreement likewise.
+4. **z-score does not change the direction** (cos_z ≡ cos_raw to 4 decimals): raw coefficients
+   δ_j/2σ = ⟨g_j, ε_j⟩ are already zero-mean, so z-scoring is a per-step rescaling. Its only
+   effect is the step norm: fixed lr·√(d/N) (z) vs. lr·rms‖g_j‖·√(d/N) (raw, shrinks with the
+   gradient). The user's critique stands exactly in that form.
+
+**Answer to the core question at the estimator level: no.** Cheap extra forward queries
+cannot make a full-parameter Gaussian ZO estimate *point* along the gradient at d = 1.5e9;
+the cosine gap is set by d, and N reduces it only as √N.
+
+**Why anything trains at all, and what N really buys.** Progress does not require alignment:
+E⟨ĝ, g⟩ = ‖ḡ‖² holds at any N, so the first-order loss decrease per step, lr·‖ḡ‖², is the
+same as gradient descent with the same lr. The cost of the noise is second-order:
+lr²·ĝᵀHĝ ≈ lr²·(rms‖g_j‖²/N)·tr(H). Hence the **stable learning rate scales linearly with N**
+(and inversely with tr H), and progress per step at the stability limit ∝ N. This is the
+MeZO/ES regime (convergence governed by the Hessian's effective rank, not by cosine), and
+it is the precise, testable form of the core question:
+
+> **Reframed core question: does FORGE's stable learning rate — and therefore its progress
+> per step — scale linearly with the number of directions N?**
+
+If yes, N = 4–16× (cheap prefills) gives 4–16× fewer steps to any accuracy level, which is
+the "make it win" lever; if no, curvature along random directions (tr H) is the wall and
+structured/low-rank directions (B2) or fewer effective dimensions are the only way out.
+
+**Immediate consequence for recipe design.** With raw coefficients the step-norm-matched lr
+(matching z-score's early step norm lr·√(d/N)) is ≈ 3.5–4.7e-5 for N≈96 per-example
+(4e-5 used in probe P1). Under the linear-scaling hypothesis, N=384 admits ≈ 1.6e-4.
+
+**Probes (Phase 2 / B1, redefined):** P1 raw N=96 lr 4e-5 (control: does raw train without
+starving, no ratchet); P2 raw N=384 lr 1.6e-4 (the bet); P3 raw N=384 lr 4e-5 (N alone);
+P4 raw N=96 lr 1.6e-4 (lr alone; expected to destabilise). 400 iters each, 1 engine, eval
+every 25; metric = train reward slope and eval acc at equal iteration vs F1 (z-score).

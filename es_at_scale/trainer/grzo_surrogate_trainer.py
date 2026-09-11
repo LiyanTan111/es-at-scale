@@ -50,8 +50,12 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                  min_directions=1, dapo_target_groups=0, dapo_max_rounds=4,
                  dapo_draw=0, pairs_per_direction=1, directions_per_step=0,
                  lr_schedule="const", anneal_reward_fn=None,
-                 anneal_tau=None, **kwargs):
+                 anneal_tau=None, dir_multiplier=1, **kwargs):
         super().__init__(*args, **kwargs)
+        # N directions per step decoupled from #pairs: every scoring job (pair) is
+        # replicated dir_multiplier times with fresh direction seeds (per-example
+        # scheme, pairs cycled). N = dir_multiplier x #pairs. 1 = legacy behaviour.
+        self.dir_multiplier = int(dir_multiplier)
         self.rollout_temperature = float(rollout_temperature)
         self.lr = float(lr)
         self.normalize_by_length = bool(normalize_by_length)
@@ -408,6 +412,9 @@ class GRZOSurrogateTrainer(GRZOTrainer):
                     "adv": radv,
                 })
 
+        if self.dir_multiplier > 1 and jobs:
+            jobs = [dict(j, seed=int(rng.integers(0, 2 ** 30)))
+                    for _ in range(self.dir_multiplier) for j in jobs]
         n_act = len(jobs)
         reward_mean = float(rewards.mean())
         frac_active_groups = float(active_group.mean())

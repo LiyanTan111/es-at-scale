@@ -115,6 +115,8 @@ def main():
     parser.add_argument("--pairs-per-direction", type=int, default=1,
                         help="Hybrid: each direction's delta = mean over this many "
                              "shared pairs (ES-style m-averaging). 1 = legacy.")
+    parser.add_argument("--dir-multiplier", type=int, default=1,
+                        help="replicate each scoring pair this many times with fresh directions (N = k x #pairs)")
     parser.add_argument("--directions-per-step", type=int, default=0,
                         help="Hybrid: fresh direction seeds per step (0 = one per pair).")
     parser.add_argument("--n-iterations", type=int, default=300)
@@ -245,6 +247,7 @@ def main():
         dapo_draw=args.dapo_draw,
         pairs_per_direction=args.pairs_per_direction,
         directions_per_step=args.directions_per_step,
+        dir_multiplier=args.dir_multiplier,
         lr_schedule=args.lr_schedule,
         anneal_reward_fn=anneal_reward_fn,
         anneal_tau=anneal_tau,

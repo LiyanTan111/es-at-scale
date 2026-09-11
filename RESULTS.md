@@ -26,3 +26,7 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 |---|---|---|---|---|
 | probe-1p5b-v2-2eng | 1.5B v2 | 2 (GPUs 1,2) | 15–19 (mean 17.9) | rollout ~12 s, score ~5.5 s, update ~1.5 s; eval ≈ 50 s |
 | probe-1p5b-v2-speed | 1.5B v2 | 4 | 11.5–12.5 (mean 13.0 incl. eval step) | H100, GPUs 1–4; eval of 2000 prompts ≈ 28 s; base acc 1.60%/1.75% (NERSC 1.80%/1.40%) ✓; A100 ref 17.7 |
+
+## E1.5 gradient alignment (2026-09-10, Qwen2.5-1.5B base, 1 H100) — `results/align_1p5b_base.json`
+
+⟨ĝ,g_BP⟩ ≈ ‖g_BP‖² (unbiased) at all N; cos(ĝ,g_BP) = √(N/d) (hybrid) / ¼√(N/d) (per-example): 6e-5 @N=96 → 2e-4 @N=1024. Same-rollout agreement at noise floor. See METHOD_REVIEW R3.

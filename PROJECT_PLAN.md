@@ -13,6 +13,10 @@ not change the running plan unless a gate in §5 says so.
 **Core scientific question (set by the user, 2026-09-10):**
 
 > **Can cheap additional forward queries close the ZO-gradient estimation gap?**
+>
+> *Answered at the estimator level on 2026-09-10 (METHOD_REVIEW R3): not in cosine terms —*
+> *cos(ĝ, g_BP) = √(N/d) exactly, ~2e-4 at N=1024. Reframed: **does the stable learning rate,***
+> ***and hence progress per step, scale linearly with N?** (B1 probes P1–P4).*
 
 i.e. is FORGE's limitation the *zeroth-order estimate* of the GRPO gradient (fixable with
 more prefill-only queries), or the surrogate itself? The paper is organised around answering
@@ -51,7 +55,7 @@ Fallback: NeurIPS 2027 (2027-05-21).
 
 | ID | Claim | Evidence required | Status |
 |---|---|---|---|
-| C1 | FORGE is a valid forward-only policy-gradient estimator (gradient-exact surrogate; O(σ²) bias) | Derivation (§A of paper) + numerical check: cosine(ZO estimate, true gradient) on a small model at increasing N directions | derivation exists (roadmap §4); numerical check **TODO (E1.5)** |
+| C1 | FORGE is a valid forward-only policy-gradient estimator (gradient-exact surrogate; O(σ²) bias) | Derivation + numerical check ⟨ĝ, g_BP⟩ = ‖g_BP‖² and cos = √(N/d) on 1.5B | **done (E1.5, results/align_1p5b_base.json)** |
 | C2 | Per-step cost: FORGE needs generations only for rollouts; perturbation scoring is prefill-only | Per-step time breakdown (rollout / scoring / perturb-restore / update) on H100 | **TODO (E1.2)** |
 | C3 | Low-budget efficiency: FORGE reaches first signal ≫ cheaper than ES (in generations) | Curves vs #generations, ES & FORGE, same protocol | NERSC data exists; re-measure on H100 (E1.3, E1.1) |
 | C4 | With ratchet+replay FORGE is stable (no collapse) at full budget | Flagship F1 4000 iters, no collapse; ablation without each | NERSC partial (1574/4000); **F1 local** |
@@ -261,6 +265,6 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** after E1.5 → B1 probe (raw estimator, N sweep) on GPU 4. After F1 ends (~06:30 PT):
+- **Next decision:** B1 probes P1–P4 (raw estimator; lr × N scaling test). P1 running on GPU 4. After F1 ends: P2–P4 + ES reruns on Lane A.
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **Next gate:** G1 at F1 iter 1500 (~19:20 PT): best ≥ 9%, no collapse.

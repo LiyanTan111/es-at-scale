@@ -28,6 +28,7 @@ DAPO_TARGET="${DAPO_TARGET:-0}"
 DAPO_DRAW="${DAPO_DRAW:-0}"
 PAIRS_PER_DIR="${PAIRS_PER_DIR:-1}"
 DIRS_PER_STEP="${DIRS_PER_STEP:-0}"
+DIR_MULT="${DIR_MULT:-1}"
 CD_REWARD="${CD_REWARD:-binary}"
 MATH_REWARD="${MATH_REWARD:-binary}"
 MARGIN_TAU="${MARGIN_TAU:-0.1}"
@@ -144,6 +145,7 @@ while true; do
             --delta-norm "$DELTA_NORM" --min-directions "$MIN_DIRS" \
             --dapo-target-groups "$DAPO_TARGET" --dapo-draw "$DAPO_DRAW" \
             --pairs-per-direction "$PAIRS_PER_DIR" --directions-per-step "$DIRS_PER_STEP" \
+            --dir-multiplier "$DIR_MULT" \
             --countdown-reward "$CD_REWARD" --math-reward "$MATH_REWARD" \
             --margin-tau "$MARGIN_TAU" --margin-tau-end "$MARGIN_TAU_END" \
             --lr-schedule "$LR_SCHEDULE" \
