@@ -59,3 +59,11 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 | 1400 | 717k | 46.10% |
 
 Base 1.75%. Train-set reward mean at step 669 = 0.68. TRL 0.29 GRPOTrainer: loss_type grpo, β=0, lr 1e-6 const, 64 prompts × 8, T=1, 512 tok, vLLM colocate.
+
+## Weight drift from base (R10) — per-parameter RMS of θ − θ_base
+
+| run | steps | matrices | layer norms | random-walk prediction |
+|---|---|---|---|---|
+| forge-raw-N384-lr6.4e-4-s42 | 200 | 4.7e-3 | 1.1e-3 | 6.5e-3 |
+| forge-raw-N96-lr1.6e-4-s42 | 200 | 2.2e-3 | 2.2e-4 | 2.3e-3 |
+| forge2-cd-1p5b-h100-s42 (z-score F1) | 4000 | 1.1e-3 | 4e-5 | 3.2e-3 (rounding-limited) |

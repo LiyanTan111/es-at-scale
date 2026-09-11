@@ -271,7 +271,7 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** F2 running on GPUs (1,4) (GPU 2 taken by another user). GPU 3: GRPO → last ckpt evals → ES_MASTER_COPY parity (1 engine). Then: F2 companion at lr 4e-4 / no-ratchet ablation; bf16-master-copy fix test (see R9/R10).
+- **Next decision:** F2 (N=384, η=6.4e-4) on (1,4) → G2' at 1000. GPU 3: GRPO → ES_MASTER_COPY parity (1 engine, ~11 h) → **F2b** (N=384, η=1.6e-4, 1500 iters; R10 prediction: slower but higher peak). Parking: B6 fp32 master.
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
   vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs

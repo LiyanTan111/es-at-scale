@@ -362,3 +362,40 @@ weight) before its Countdown behaviour degrades, and dies by 8e-3. Accuracy itse
 usable signal. Naive random-walk accounting (step RMS ≈ lr·rms‖g_j‖/√N ≈ 4.6e-4 per step at
 N=384/6.4e-4 ⇒ 2e-3 after ~20 steps) predicts destruction long before the observed 200-step
 survival — see the bf16 survival check below for the likely reason.
+
+## R10 (2026-09-11 12:00) — A quantitative picture of FORGE dynamics: signal, drift, rounding
+
+**Measured weight drift from the base** (`scripts/weight_drift.py`, per-parameter RMS of
+θ_ckpt − θ_base; matrices vs. layer-norm vectors):
+
+| run | steps | per-step noise RMS predicted = η·rms‖g_j‖/√N | random-walk prediction ×√T | measured RMS (matrices) | measured RMS (norms) |
+|---|---|---|---|---|---|
+| raw N=384 η=6.4e-4 | 200 | 4.6e-4 | 6.5e-3 | **4.7e-3** | 1.1e-3 |
+| raw N=96 η=1.6e-4 | 200 | 1.6e-4 | 2.3e-3 | **2.2e-3** | 2.2e-4 |
+| z-score (F1) | 4000 | 5e-5 (fixed-norm step) | 3.2e-3 | **1.1e-3** | 4e-5 |
+
+1. **The random-walk accounting is right for the matrix parameters** (predicted 6.5e-3 / 2.3e-3
+   vs measured 4.7e-3 / 2.2e-3). FORGE's weights perform a random walk with drift; the walk is
+   the price of the ZO noise (‖ĝ_noise‖ = rms‖g_j‖·√(d/N)).
+2. **bf16 rounding is a first-order effect for small steps.** Layer-norm weights (magnitude ≈ 1,
+   bf16 ulp ≈ 8e-3) received 4–10× less update than matrices: sub-half-ulp components are
+   rounded away by `p_bf16.add_(u.to(bf16))`. F1 (z-score, per-param step ≈ 5e-5 ≈ half-ulp of
+   a 0.02 weight) accumulated only 1/3 of the predicted drift: **the v2 recipe was running in the
+   rounding regime — a large part of its updates never landed** (E1.8 survival 0.4–0.8 at that
+   step size). The raw recipes at η ≥ 1.6e-4 have survival ≈ 1.0 on matrices. Fix (parking
+   lot B6): fp32 master copy on each engine for updates/perturbations, bf16 only for serving.
+3. **Noise tolerance vs. drift.** One isotropic perturbation of 4e-3 RMS degrades the base model
+   (R9), yet the N=384 run sits at 4.7e-3 RMS drift with 11% accuracy: drift *with* signal is
+   tolerated far better than pure noise (and the norms were accidentally protected by rounding).
+   The tolerance curve is a lower bound on the usable walk length, not an exact budget.
+4. **The η–N trade-off, now quantitative.** Per step: signal ∝ η‖ḡ‖²; drift ∝ η·rms‖g_j‖/√N.
+   At η ∝ N (max speed) drift per step grows ∝ √N, so the drift budget r* is exhausted after
+   T* ∝ 1/N steps and the *total* progress before that is independent of N — N buys speed, not
+   height. At **fixed η**, drift per step ∝ 1/√N ⇒ T* ∝ N ⇒ total progress ∝ N: **N used at a
+   moderate η raises the reachable accuracy, not just the speed.** The ratchet acts as a
+   drift reset (restart from the best point). ES is the same story: α/√30 ≈ 9e-5 RMS per
+   iteration ⇒ ≈ 2e-3 after 500 iterations — right where its curve saturates.
+   **Prediction to test:** F2 (N=384, η=6.4e-4) climbs fastest but peaks/oscillates early and
+   leans on the ratchet; **F2b (N=384, η=1.6e-4)** climbs 4× slower but should reach a *higher*
+   accuracy before drift-limited decay. F2b is queued on GPU 3 (1 engine, 1500 iters) after the
+   ES parity run.
