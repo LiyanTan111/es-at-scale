@@ -267,4 +267,14 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
 - **Next decision:** B1 probes P1–P4 (raw estimator; lr × N scaling test). P1 running on GPU 4. After F1 ends: P2–P4 + ES reruns on Lane A.
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
-- **Next gate:** G1 at F1 iter 1500 (~19:20 PT): best ≥ 9%, no collapse.
+- **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
+  vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs
+  @674). Config identical (Namespace diff clean). ES on the same box is also ~40% below NERSC, so a common
+  systematic factor (2 engines / H100) is possible — but E1.5 shows FORGE trajectories are intrinsically
+  high-variance (independent updates on the same data are orthogonal), so a single-run gap of 2 pp is not
+  strong evidence either way. **Action (deviation from the gate's "parity only" rule, flagged to the user):**
+  F1 continues to 4000 (G2 data; stopping it gains nothing); parity work runs in parallel on Lane A after F1
+  (ES_MASTER_COPY 2-engine rerun, then ES 4-engine); the core-question probes P1–P4 continue on GPU 4 because
+  the user placed them first. If ES parity recovers with master-copy, the FORGE gap is attributed to trajectory
+  variance and one extra FORGE seed is run to confirm.
+- **Next gate:** G2 at F1 iter 4000 (~2026-09-11 06:30 PT).
