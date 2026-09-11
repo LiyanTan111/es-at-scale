@@ -116,6 +116,7 @@ class EvolutionStrategiesTrainer:
         self.task = functools.partial(reward_function)
         self.reward_function_timeout = reward_function_timeout
         # Process pool is used to enable the timeout mechanism for answer grading in our distributed training setup.
+        self._main_pid = os.getpid()
         self.mp_pool = Pool(8)
         self.template = template_function
 
@@ -223,9 +224,20 @@ class EvolutionStrategiesTrainer:
         print("[INFO] Cleanup complete.")
 
     def _handle_exit(self, sig, frame):
-        """Signal handler wrapper."""
+        """Signal handler wrapper.
+
+        The reward-grading multiprocessing.Pool workers inherit this handler; when the
+        Pool terminates them at shutdown they used to run cleanup() (no `engines` in a
+        worker -> AttributeError inside the handler -> worker never exits -> the parent
+        hangs in do_wait after "Training completed", and drivers never see DONE).
+        Workers now just exit."""
+        if os.getpid() != getattr(self, "_main_pid", os.getpid()):
+            os._exit(0)
         print(f"[INFO] Received signal {sig}, cleaning up...")
-        self.cleanup()
+        try:
+            self.cleanup()
+        except Exception as e:
+            print(f"[WARN] cleanup failed: {e!r}")
         sys.exit(0)
 
     def launch_engines(

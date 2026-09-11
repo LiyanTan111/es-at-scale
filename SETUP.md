@@ -205,3 +205,7 @@ Printed (several times) *after* `-- Training completed! --`. It comes from the r
 `multiprocessing.Pool` workers: they inherit the driver's SIGTERM handler and the Pool
 sends them SIGTERM on exit. Not a crash. A driver that sits in `do_wait` for minutes after
 completion, however, means a Pool worker was killed externally (see P6) — kill -9 it.
+**Update 2026-09-11:** the hang also happened on a clean 4000-iter run: the Pool workers ran
+`cleanup()` inside the inherited SIGTERM handler, hit `AttributeError: no attribute 'engines'`
+and never exited. Fixed in `es_trainer._handle_exit` (workers `os._exit(0)`; cleanup wrapped).
+Runs started before the fix may still need `kill -TERM <train.pid>` after completion.
