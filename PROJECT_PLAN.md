@@ -271,7 +271,7 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** E1.8 runs on GPU 4 right after P1 (~22:00 PT); its η_max(N) sets P2–P4. F1 → G2 at 4000.
+- **Next decision:** E1.8 running on GPU 4 now (P1 stopped at ~60 iters: ~1 min/iter on a loaded 1-engine slot, no signal yet; it was a raw-estimator smoke, E1.8 sets the real lrs). Then P2–P4 with E1.8's η_max(N).
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
   vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs
