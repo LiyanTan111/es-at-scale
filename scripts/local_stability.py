@@ -48,6 +48,15 @@ class Model32:
         return float((-(self.adv * lp)).mean())
 
     @torch.no_grad()
+    def loss_split(self):
+        lps = []
+        for s in range(0, len(self.pairs), self.chunk):
+            lps.append(batch_mean_logprob(self.model, self.pairs[s:s + self.chunk], self.dev, self.pad))
+        lp = torch.cat(lps); term = -(self.adv * lp)
+        pos = self.adv > 0
+        return float(term[pos].sum() / len(self.pairs)), float(term[~pos].sum() / len(self.pairs)), float(lp[pos].mean()), float(lp[~pos].mean())
+
+    @torch.no_grad()
     def set_from_master(self, vec=None, scale=0.0):
         for (n, p), m in zip(self.params, self.master):
             if vec is None or scale == 0.0: p.copy_(m)
@@ -161,6 +170,15 @@ def main():
         trH[hs] = (float(np.mean(vals)), float(np.std(vals) / math.sqrt(len(vals))))
         print(f"[STAB] tr(H) via h={hs:g}: {trH[hs][0]:.4e} ± {trH[hs][1]:.1e}  (uHu samples: min {min(vals):.3e} max {max(vals):.3e})")
     trH_est = trH[max(trH)][0]
+    # mechanism check: how do the positive- and negative-advantage parts of L respond to random noise?
+    Lp0, Ln0, lpp0, lpn0 = m32.loss_split()
+    for hs in (5e-4, 1e-3):
+        dp, dn, dlpp, dlpn = [], [], [], []
+        for k in range(8):
+            m32.set_from_seed(900000 + k, +hs); Lp1, Ln1, lpp1, lpn1 = m32.loss_split()
+            dp.append(Lp1 - Lp0); dn.append(Ln1 - Ln0); dlpp.append(lpp1 - lpp0); dlpn.append(lpn1 - lpn0)
+        m32.set_from_master()
+        print(f"[STAB] random noise h={hs:g}: dL_pos={np.mean(dp):+.4f} dL_neg={np.mean(dn):+.4f} | mean dlogpi: pos-adv seqs {np.mean(dlpp):+.4f}, neg-adv seqs {np.mean(dlpn):+.4f} (n_pos={int((m32.adv>0).sum())}, n_neg={int((m32.adv<=0).sum())})")
 
     res = {"model": args.model_name, "ckpt": args.vllm_ckpt, "d": d, "pairs": len(pairs), "L0": L0,
            "g_norm2": gn2, "gHg_over_g2": gHg_unit, "trH": {str(k): v for k, v in trH.items()}, "rows": []}

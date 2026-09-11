@@ -199,3 +199,58 @@ This is cheaper (minutes), cleaner, and more decisive than 20-hour training prob
 are paused until E1.8 sets their learning rates. A side diagnostic is included: the training
 code applies updates as `p_bf16.add_(u.to(bf16))`, so sub-ulp components of the update are
 rounded away; E1.8 reports the fraction of the update norm that survives at each (N, η).
+
+## R5 (2026-09-10, late) — E1.8 result: the batch surrogate is *not* a stability criterion
+
+`results/stability_1p5b_base.json` (1.5B base, same 16-pair batch as E1.5, fp32, 3 direction
+draws per N, η grid centred at η ∝ N spanning ×1/8…×16).
+
+| N | ⟨ĝ,g⟩ | mean‖g_j‖² (fwd) | fit a | fit b | η_opt (fit) | best grid η (= top of grid) | ΔL there |
+|---|---|---|---|---|---|---|---|
+| 64 | 14.5 | 188 | 14.7 | 1924 | 3.8e-3 | 4.3e-4 | −0.006 |
+| 96 | 11.6 | 214 | 12.0 | 763 | 7.9e-3 | 6.4e-4 | −0.007 |
+| 256 | 12.0 | 200 | 12.1 | 641 | 9.5e-3 | 1.7e-3 | −0.019 |
+| 512 | 13.3 | 208 | 13.3 | 549 | 1.2e-2 | 3.4e-3 | −0.039 |
+| 1024 | 15.0 | 227 | 14.7 | 641 | 1.2e-2 | 6.8e-3 | −0.071 |
+
+with ‖g‖² = 14.87, gᵀHg/‖g‖² = +69, and **tr(H) = −2.1e3 ± 0.4e3 (h = 5e-4), −1.8e3 ± 0.35e3 (h = 1e-3)**
+(individual uᵀHu from −5.4e3 to +0.9e3).
+
+**What happened.**
+1. ⟨ĝ, g⟩ = ‖g‖² again at every N (unbiasedness, second independent confirmation), and the
+   forward-only second moment E[(δ/2σ)²] = mean‖g_j‖² ≈ 200 is stable across N — these
+   forward-only quantities are reliable.
+2. **The surrogate loss has *negative* mean curvature along random directions.** Random
+   parameter noise *lowers* L on this batch. Mechanism (checked with a split of L into
+   positive- and negative-advantage terms): 14 of the 16 pairs carry Â < 0 (one success per
+   group ⇒ seven failures at Â ≈ −0.38 each), and random noise makes every specific sequence
+   less likely; for Â < 0 terms that *decreases* −Â·log π. The surrogate rewards "unlearning
+   everything", and noise does that for free. Hence the quadratic-penalty model
+   b = (mean‖g_j‖² tr(H)/N + gᵀHg)/2 predicts b < 0 — meaningless — while the *observed* b is
+   positive and roughly N-independent (≈ 550–760 for N ≥ 96, close to gᵀHg/2 = 514): the
+   curvature along ĝ is dominated by the signal component, not by the noise.
+3. **The η grid was too low at every N**: the best grid point was always the top of the grid,
+   and the parabola fits extrapolate η_opt ≈ 4e-3…1e-2 — 100–300× the training learning
+   rate (raw-equivalent 4e-5; z-score's step norm ≈ 2.0 in L2 corresponds to ≈ 4e-5 here).
+   At those η the step norm is ≈ 300 in L2 (≈ 40% relative change of a typical weight): the
+   batch surrogate keeps decreasing while the model is being destroyed. The "best grid η ∝ N"
+   pattern is an artefact of the grid centre scaling with N.
+
+**Conclusion.** The single-batch surrogate decrease is not a proxy for training stability
+in RLVR: (i) its curvature along random directions is negative (noise looks like progress),
+(ii) per-batch surrogate gradients are nearly orthogonal across batches (E1.5:
+cos(g_R0, g_R1) = −0.02), so a step's value can only be judged on the *objective* (accuracy),
+not on another batch's surrogate. This is a genuine difference from the SFT setting where
+MeZO-style local analysis works (convex-ish cross-entropy, positive tr H). It also warns
+against any batch-loss-based line search / step-size adaptation for FORGE.
+
+**What replaces it (decisive, still cheap):** the *training-level* sweep the user wants at the
+end: raw estimator, N ∈ {96 (k=1), 384 (k=4)} × η ∈ {4e-5, 1.6e-4, 6.4e-4} (N=384 also 2.6e-3),
+200 iterations each, eval every 25 (train reward slope + eval acc). Hypothesis η_stable ∝ N ⇒
+N=384's best η ≈ 4× N=96's and its iterations-to-target ≈ ¼. Launched tonight on GPU 4 (N=96
+series); N=384 series on Lane A after F1. A second local measurement that *is* meaningful:
+the objective's noise tolerance — greedy train-prompt accuracy F(θ + h·u) vs h (deterministic,
+ES-style fitness): how far θ can move randomly before accuracy degrades. This bounds the
+cumulative random-walk displacement a training run can afford and, with the per-step noise
+norm η·rms‖g_j‖·√(d/N), gives an η–N–horizon relation (to be done with the vLLM trainer
+machinery; ~1 h).
