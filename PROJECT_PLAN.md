@@ -254,10 +254,13 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 
 ## 9. Status block (update at every milestone)
 
-- **Today:** 2026-09-10 (12:20 PT).
-- **Current step:** Phase 1. Lane A: F1 running (relaunched 12:11 PT after one NCCL-init crash;
-  ~15 s/iter → 4000 iters ≈ 18 h, ETA ~2026-09-11 06:30 PT). Lane B: E1.1 ES-on-H100 running
-  (started 12:10 PT, ~47 s/iter → 500 iters ≈ 7 h, ETA ~19:30 PT). E1.6 GRPO venv building (CPU).
-- **In flight:** `forge2-cd-1p5b-h100-s42` (wandb ngqa6knz), `es512-cd-1p5b-h100-s42`.
-- **Next decision:** at ~19:30 PT when E1.1 ends: Lane B → **E1.5 gradient alignment** (0.5B then 1.5B, base ckpt; ~30 min, 1 GPU) → B1 probe (raw, N sweep) on the other GPU; GRPO after.
-- **Next gate:** G1 at F1 iter 1500 (~2026-09-10 19:30 PT): best ≥ 9%, no collapse.
+- **Today:** 2026-09-10 (19:10 PT).
+- **Current step:** Phase 1. Lane A (1,2): F1 at iter ~1400 (G1 at 1500 imminent). GPU 3: GRPO reference
+  running (35 s/step, ETA 2026-09-11 ~14:30 PT). GPU 4: E1.5 gradient alignment on 1.5B base (running).
+- **In flight:** `forge2-cd-1p5b-h100-s42`, `grpo-cd-1p5b-h100-s42`, `align_1p5b_base`.
+- **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
+  (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
+  `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
+- **Next decision:** after E1.5 → B1 probe (raw estimator, N sweep) on GPU 4. After F1 ends (~06:30 PT):
+  Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
+- **Next gate:** G1 at F1 iter 1500 (~19:20 PT): best ≥ 9%, no collapse.

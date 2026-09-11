@@ -7,6 +7,7 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 | run (EXPNAME) | task | model | recipe | seed | engines | iters | gens | wall (h) | best (iter) | final | notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:11 PT** (wandb ngqa6knz) |
+| grpo-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | GRPO (TRL 0.29, loss grpo, β=0, lr 1e-6, 64 prompts×8/step, vLLM colocate) | 42 | 1 GPU (3) | 2000 steps | 1.0M | ~19.5 (35 s/step) | — | — | **E1.6, in flight since 2026-09-10 19:00 PT** (wandb ctcmdgya→relaunch); HF ckpts every 100 steps, evaluate with scripts/eval_hf_ckpt.sh |
 | es512-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | ES paper | 42 | 2 (3,4) | 500 | 3.0M | ~6.2 | 22.8% (470) | **22.6%** | ⚠️ far below NERSC 37.9% (same vLLM 0.11, FA, config; only engines 2 vs 4 + H100). Eval noise ruled out (fixed-θ repeat std 0.0000; population std 0.016). UNVERIFIED as a reference until a 4-engine H100 rerun. |
 
 ## Reference rows imported from NERSC (A100-40GB, 4 engines) — see PROJECT_STATUS.md §2
