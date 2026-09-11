@@ -254,3 +254,13 @@ ES-style fitness): how far θ can move randomly before accuracy degrades. This b
 cumulative random-walk displacement a training run can afford and, with the per-step noise
 norm η·rms‖g_j‖·√(d/N), gives an η–N–horizon relation (to be done with the vLLM trainer
 machinery; ~1 h).
+
+**R5 addendum (small-h check, 24 directions):** tr(H) = −1.46e3 ± 0.44e3 (h = 1e-4),
+−1.44e3 ± 0.44e3 (2e-4), −1.38e3 ± 0.42e3 (5e-4), −1.12e3 ± 0.38e3 (1e-3): the sign is
+robust down to h = 1e-4 (individual uᵀHu range ±5e3, so tr H is "≈ 0 to negative", not
+large positive as in SFT). Mechanism confirmed directly: random noise at h = 1e-3 lowers the
+mean log-probability of every sampled sequence (−0.016 for the 3 positive-advantage pairs,
+−0.019 for the 13 negative-advantage pairs); the positive-advantage part of L rises by
++0.005 while the negative-advantage part falls by −0.007 ⇒ net ΔL < 0. Noise "unlearns" the
+failures faster than it unlearns the successes. This is a property of the mixed-sign GRPO
+surrogate on sparse-reward batches (13 of 16 pairs negative), not a numerical artefact.
