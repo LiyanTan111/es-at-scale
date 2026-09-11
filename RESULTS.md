@@ -8,6 +8,9 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:11 PT** (wandb ngqa6knz) |
 | forge-raw-N96-lr4e-5-s42 | countdown | 1.5B | FORGE raw δ/2σ, N=96, lr 4e-5, no ratchet | 42 | 1 (4) | 60/400 (stopped) | — | ~1 | 2.25% (25) | 1.2% | P1 smoke: raw estimator trains without error (~24–60 s/iter on 1 engine); stopped to give GPU 4 to E1.8 |
+| forge-raw-N96-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | **8.2% (200)** | 8.2% | lr sweep; fastest climb seen so far (F1 z-score needs ~1100 iters for 8%) |
+| forge-raw-N96-lr6.4e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 6.4e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | 5.3% (25) | 0.05% | collapse after ~40 iters (η_max < 6.4e-4 at N=96) |
+| forge-raw-N96-lr4e-5-s42b | countdown | 1.5B | FORGE raw, N=96, lr 4e-5, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.6 | 2.3% (25) | 1.9% | too small |
 | grpo-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | GRPO (TRL 0.29, loss grpo, β=0, lr 1e-6, 64 prompts×8/step, vLLM colocate) | 42 | 1 GPU (3) | 2000 steps | 1.0M | ~19.5 (35 s/step) | — | — | **E1.6, in flight since 2026-09-10 19:00 PT** (wandb ctcmdgya→relaunch); HF ckpts every 100 steps, evaluate with scripts/eval_hf_ckpt.sh |
 | es512-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | ES paper | 42 | 2 (3,4) | 500 | 3.0M | ~6.2 | 22.8% (470) | **22.6%** | ⚠️ far below NERSC 37.9% (same vLLM 0.11, FA, config; only engines 2 vs 4 + H100). Eval noise ruled out (fixed-θ repeat std 0.0000; population std 0.016). UNVERIFIED as a reference until a 4-engine H100 rerun. |
 

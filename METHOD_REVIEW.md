@@ -264,3 +264,20 @@ mean log-probability of every sampled sequence (−0.016 for the 3 positive-adva
 +0.005 while the negative-advantage part falls by −0.007 ⇒ net ΔL < 0. Noise "unlearns" the
 failures faster than it unlearns the successes. This is a property of the mixed-sign GRPO
 surrogate on sparse-reward batches (13 of 16 pairs negative), not a numerical artefact.
+
+## R6 (2026-09-11 00:45) — Training-level lr sweep at N = 96: the raw estimator at 4× the matched lr learns ~5× faster
+
+Raw coefficients (δ/2σ), per-example N ≈ 96, DAPO 8/32 + replay 0.5, **no ratchet**, 200
+iterations, 1 engine, eval every 25 (`forge-raw-N96-lr*-s42`, wandb grzo-rlvr):
+
+| lr | eval acc @25/50/100/150/200 | train reward (50-iter means) | verdict |
+|---|---|---|---|
+| 4e-5 (step-norm-matched to z-score) | 2.3 / 1.2 / 1.6 / 1.9 / 1.9 % | 0.130 → 0.141 | too small; no signal in 200 iters |
+| **1.6e-4** | 2.0 / 3.9 / 4.2 / 5.3 / **8.2 %** | 0.138 → 0.145 | **learns; 8.2% @200 vs F1 (z-score) 8.1% @≈1100, NERSC v2 8.0% @300** |
+| 6.4e-4 | 5.3 / 0.3 / 0.3 / 0.05 / 0.05 % | 0.127 → 0.005 | collapse: model destroyed after ~40 iters |
+
+So at N ≈ 96 the stable window is 1.6e-4 ≤ η_max < 6.4e-4, and the z-score recipe (raw-
+equivalent ≈ 4e-5) sits ~4× below the good region — which by itself explains much of F1's
+slowness. A single seed, but the ordering 4e-5 ≪ 1.6e-4 ≫ 6.4e-4 (collapse) is unambiguous.
+Next: N = 384 at 6.4e-4 (the η ∝ N prediction: stable where N = 96 collapsed) and 1.6e-4
+(N alone), running now; then finer lr points and seeds.
