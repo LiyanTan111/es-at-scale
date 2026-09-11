@@ -332,3 +332,33 @@ family found this week is ~7× faster in iterations and replaces v2 as the flags
 kept as a safety net (drop 0.03, patience 3, warmup 400), 4000 iterations, 2 engines
 (~30 s/iter → ~33 h), seed 42, launched after the Lane A probe batch. Ablation "no ratchet"
 and larger N (1536, lr 2.6e-3) follow on free single-engine slots.
+
+## R9 (2026-09-11 11:30) — η_max brackets at two N, seed replication, GRPO plateau, noise tolerance
+
+**Stable-lr brackets (raw estimator, no ratchet, 200 iters, 1 engine):**
+
+| N | lr | outcome |
+|---|---|---|
+| 96 | 1.6e-4 | learns: 8.2% (s42), 7.2% @175 / 6.1% @200 (s43) |
+| 96 | 3.2e-4 | degrades below base from iter 25 (0.15%), never recovers (0.8% @200) |
+| 96 | 6.4e-4 | collapse |
+| 384 | 6.4e-4 | learns fast but volatile: s42 9.0% @75 → 2.2% @100 → 11.0% @200; s43 10.9% @125 → 4.9% @175 → 6.0% @200 |
+| 384 | 2.6e-3 | immediate collapse (0% from iter 25) |
+
+⇒ η_max(96) ∈ (1.6e-4, 3.2e-4); η_max(384) ∈ (6.4e-4, 2.6e-3). The ratio is ≥ 2 and ≤ 16
+with the bracket resolution; the η ∝ N prediction (4×) sits inside. Both seeds at N=384/6.4e-4
+reach ≥ 9% within 75–125 iterations (v2: 1475), then oscillate/decay without a ratchet: that lr
+is at the edge of the window. F2 keeps the ratchet; a 4e-4 variant is the natural companion.
+
+**GRPO reference:** 46.0–47.0% from step 600 to 1400 (0.3–0.7M generations); plateau ≈ 46.5%.
+
+**Objective noise tolerance** (`results/noise_tolerance_1p5b.json`, base model, greedy shaped
+reward on 200 train prompts, 3 seeds): base 0.093; h ≤ 1e-3 (per-param RMS; L2 ≤ 39):
+0.085–0.10 (unchanged within seed noise); h = 2e-3 (L2 78): 0.043–0.106 (seed-dependent, one
+seed +14%); h = 4e-3 (L2 157): 0.018–0.074 (degrading); h = 8e-3 (L2 314): 0.000 (destroyed).
+So the base model tolerates isotropic parameter noise up to ≈ 2e-3 RMS (≈ 10% of a typical
+weight) before its Countdown behaviour degrades, and dies by 8e-3. Accuracy itself (0/1 on
+200–500 prompts) is too coarse at a 1.5% base to resolve small changes; shaped reward is the
+usable signal. Naive random-walk accounting (step RMS ≈ lr·rms‖g_j‖/√N ≈ 4.6e-4 per step at
+N=384/6.4e-4 ⇒ 2e-3 after ~20 steps) predicts destruction long before the observed 200-step
+survival — see the bf16 survival check below for the likely reason.

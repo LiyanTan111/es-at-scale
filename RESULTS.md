@@ -8,6 +8,11 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | 4000 | 2.3M | 19.7 | **9.25% (3700)** | 8.2% | F1 done 2026-09-11 07:40; ratchet @624, @1599; G2 FAIL (<15%) |
 | forge-raw-N96-lr4e-5-s42 | countdown | 1.5B | FORGE raw δ/2σ, N=96, lr 4e-5, no ratchet | 42 | 1 (4) | 60/400 (stopped) | — | ~1 | 2.25% (25) | 1.2% | P1 smoke: raw estimator trains without error (~24–60 s/iter on 1 engine); stopped to give GPU 4 to E1.8 |
+| forge-raw-N384-lr6.4e-4-s43 | countdown | 1.5B | FORGE raw, N=384, lr 6.4e-4, no ratchet | 43 | 1 (4) | 200 | ~0.1M | 3.5 | **10.85% (125)** | 6.0% | replicates fast climb; decays after peak without ratchet |
+| forge-raw-N384-lr2.6e-3-s42 | countdown | 1.5B | FORGE raw, N=384, lr 2.6e-3 | 42 | 1 (2) | 200 | — | — | 0% | immediate collapse |
+| forge-raw-N96-lr3.2e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 3.2e-4 | 42 | 1 (1) | 200 | — | 1.5 | 2.05% (100) | 0.8% | degrades below base: η_max(96) < 3.2e-4 |
+| forge-raw-N96-lr1.6e-4-s43 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4 | 43 | 1 (1) | 200 | ~0.13M | 1.6 | 7.2% (175) | 6.1% | replicates s42 |
+| forge3-cd-1p5b-rawN384-h100-s42 | countdown | 1.5B | **F2**: raw, N=384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet | 42 | 2 (1,4) | 4000 | — | — | — | — | **launched 2026-09-11 11:35 PT** |
 | forge-raw-N384-lr6.4e-4-s42 | countdown | 1.5B | FORGE raw, N=384 (k=4), lr 6.4e-4, no ratchet | 42 | 1 (4) | 200 | ~0.09M | 3.4 | **11.0% (200)**, 9.0% (75) | 11.0% | η_max grows with N: N=96 collapses at this lr |
 | forge-raw-N384-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=384, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.12M | 3.1 | 6.7% (200) | 6.7% | N alone at fixed lr: no gain vs N=96 |
 | forge-raw-N96-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | **8.2% (200)** | 8.2% | lr sweep; fastest climb seen so far (F1 z-score needs ~1100 iters for 8%) |
@@ -47,5 +52,10 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 | 400 | 205k | 45.50% |
 | 500 | 256k | 45.60% |
 | 600 | 307k | 45.90% |
+| 700 | 358k | 46.05% |
+| 800 | 410k | 45.15% |
+| 1000 | 512k | 46.20% |
+| 1200 | 614k | 46.95% |
+| 1400 | 717k | 46.10% |
 
 Base 1.75%. Train-set reward mean at step 669 = 0.68. TRL 0.29 GRPOTrainer: loss_type grpo, β=0, lr 1e-6 const, 64 prompts × 8, T=1, 512 tok, vLLM colocate.
