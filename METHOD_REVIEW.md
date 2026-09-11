@@ -80,3 +80,31 @@ part of B3 (not a new bet; folded in).
 head's exact gradient is available from the forward pass (softmax − one-hot) ⊗ h with no
 activation storage for the body; ZO for the body + exact gradient for the head. cf. ElasticZO
 (2501.04287). Would attack (b) for the parameters that matter most for token probabilities.
+
+## R2 (2026-09-10, user) — z-score discards the gradient magnitude; measure alignment directly
+
+The user sharpened R1 into the project's core question. Two points, adopted verbatim into
+the plan:
+
+1. **z-score(δ) removes the absolute magnitude of the estimate.** Late in training all δ_j
+   become small, but as long as they differ *relatively*, the z-scored coefficients stay
+   O(1) and the model keeps taking fixed-size steps → climb → overshoot/noise → decay, and
+   the ratchet pulls it back. So the ratchet is most likely **treating a symptom introduced
+   by the z-score update, not something FORGE needs.** With the raw estimator
+   c_j = δ_j/(2σ) we have E_ε[c_j ε_j] ≈ ∇L_j and hence E[ĝ] ≈ ∇L̄ — the clean statement
+   "FORGE estimates the GRPO policy gradient without backpropagation" holds; with z-score it
+   does not.
+2. **Measure cos(ĝ_FORGE(N), g_BP) directly** on a small model (0.5B or smaller), allowing
+   one backward pass to get g_BP = ∇_θ L, for N ∈ {32, 64, 96, 256, 512, 1024}. If
+   N↑ ⇒ alignment↑ ⇒ training improves, the mechanism is nailed: the main limitation is
+   ZO estimation error, not the surrogate. This is far stronger than "256 directions beats
+   96 by 2 pp". Placed at the very front of the plan (E1.5).
+
+**Core question (boxed):** *Can cheap additional forward queries close the ZO-gradient
+estimation gap?* If N = 256/1024 significantly improves both alignment and final
+performance, the project turns from "an interesting forward-only RL trick" into a clear
+scientific story.
+
+Actions: E1.5 implemented as `scripts/grad_alignment.py` (pure HF/torch, one GPU; also
+measures same-/cross-rollout agreement and the δ statistics needed to set a principled
+raw-estimator learning rate); B1 redefined as raw estimator + N sweep + no-ratchet ablation.

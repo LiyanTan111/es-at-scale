@@ -10,6 +10,22 @@ not change the running plan unless a gate in §5 says so.
 
 ## 1. North star
 
+**Core scientific question (set by the user, 2026-09-10):**
+
+> **Can cheap additional forward queries close the ZO-gradient estimation gap?**
+
+i.e. is FORGE's limitation the *zeroth-order estimate* of the GRPO gradient (fixable with
+more prefill-only queries), or the surrogate itself? The paper is organised around answering
+this with a direct measurement (E1.5) and then a training-level confirmation (B1).
+Consequences: (i) the estimator must be the **raw** one, c_j = δ_j/2σ, so that
+E[ĝ] ≈ ∇L̄ and the sentence "FORGE estimates the GRPO policy gradient without
+backpropagation" is literally true; z-score becomes an ablation, not the method.
+(ii) The anchor ratchet is treated as a hypothesis-to-test: it likely treats a symptom of
+fixed-norm z-scored steps (late-run δ_j → small, z-scored c_j stays O(1) → constant-size
+random steps → climb → overshoot → decay). (iii) Alignment-vs-N is measured before any
+recipe change is promoted.
+
+
 **Paper thesis (one sentence):** *Forward-only policy gradients for RLVR — a zeroth-order
 estimator on the GRPO surrogate that trains any model you can serve, with per-prompt credit
 assignment that evolution strategies lack; we characterise where it wins, where it fails, and
@@ -129,16 +145,27 @@ Runs in the probe lane while F1 trains (or after, if lane A only):
   (FORGE & ES) so curves can be plotted vs. generations exactly.
 - E1.4 **Peak-memory table**: FORGE vs ES (measured) vs GRPO (measured in E1.6) for 1.5B
   and 7B. One table, one sentence of the abstract.
-- E1.5 **Estimator sanity (C1)**: on Qwen2.5-0.5B, one fixed batch: true surrogate gradient
-  (autograd, CPU/one GPU) vs FORGE estimate at N ∈ {16, 64, 256, 1024}; report cosine and
-  variance ∝ 1/N. Small, but it is the figure that convinces a theory-minded reviewer.
+- E1.5 **Gradient-alignment experiment (THE key measurement; runs first on Lane B).**
+  `scripts/grad_alignment.py`, pure HF/torch on ONE GPU (no vLLM), so both the ZO estimate and
+  the backprop gradient live in the same parameter layout.
+  Fixed batch: 8 active groups (DAPO-style pooling), G=8, T=1, 512 tokens → ~96 (x, y, Â) pairs.
+  g_BP = ∇_θ (1/|pairs|) Σ_j −Â_j log π(y_j|x_j)/|y_j| by autograd (fp32).
+  ĝ_FORGE(N) with per-example directions (one pair per direction, cycling pairs, fresh seeds),
+  N ∈ {32, 64, 96, 256, 512, 1024}, coefficients raw δ/2σ **and** z-scored; plus the hybrid
+  scheme (each direction scored on all pairs) at N ∈ {8, 32, 96}.
+  Report: cos(ĝ, g_BP) vs N (raw vs z), same-rollout agreement cos(ĝ_A, ĝ_B), cross-rollout
+  agreement cos(ĝ_A, ĝ_C) (absorbs E1.7), ‖g_BP‖, δ statistics (→ principled lr for raw:
+  lr_raw = lr_z · std(z-coeffs)/std(raw-coeffs) matches the early step norm).
+  Models: Qwen2.5-0.5B and 1.5B; checkpoints: base **and** F1's `best/` (late-training regime
+  where the SNR collapse is hypothesised). Expected signature if the ZO-error hypothesis is
+  right: cos rises ~√N; if cos saturates low at large N, the surrogate/PG-noise term dominates.
 - E1.6 **GRPO baseline infra** — venv built (`/data/liyan/venvs/grpo`: TRL 0.29.1, vLLM 0.11, torch 2.8 cu128;
   a cu130 torch pulled by default is incompatible with driver 570), `scripts/grpo_countdown.py` +
   `scripts/eval_hf_ckpt.sh` written, **untested** until Lane B frees. Countdown
   reward = ours, protocol = ours (512 tok, same eval set). Run 1.5B to the generation budgets
   {0.1M, 0.5M, 3M} — gives the backprop ceiling for the Pareto figure. (Needs ≥1 GPU for
   training memory; schedule in probe lane.)
-- E1.7 **Noise decomposition** (from METHOD_REVIEW R1) — `scripts/noise_decomposition.py` written, runs first on Lane B after E1.1: on one fixed batch, re-score the same
+- E1.7 **Noise decomposition** — absorbed into E1.5 (same/cross-rollout agreement); `scripts/noise_decomposition.py` (vLLM-layout version) kept as a cross-check: on one fixed batch, re-score the same
   pairs with fresh directions (ZO projection variance) and re-roll the same prompts (policy-
   gradient sampling variance); report both vs N and G. Justifies/kills bets B1–B3 before they run.
 - **Gate G1 (F1 @ iter 1500):** local curve must track NERSC v2 (best ≥ 9% by 1500, no
@@ -148,10 +175,13 @@ Runs in the probe lane while F1 trains (or after, if lane A only):
 Each bet: (a) targeted literature check (feedback rule), (b) 1500-iter probe against the F1
 curve at equal iteration, (c) promote to full budget only if it beats F1's best-so-far at the
 same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value / cost:
-- **B1 More directions per step (N = 64 → 256 → 1024).** The cost asymmetry says scoring is
-  prefill-only, so this is the cheapest variance reduction available; the SNR-collapse
-  diagnosis predicts it moves the peak. Also the natural axis for a "generations vs directions"
-  plot. Cheap; do first.
+- **B1 Raw estimator + more directions (the training-level confirmation of E1.5).**
+  Probes (1500 iters, Lane B) with `--delta-norm none`, lr set from E1.5's step-norm matching,
+  N ∈ {96, 256, 1024} directions per update (`--directions-per-step N --pairs-per-direction 1`
+  or per-example expansion), DAPO + replay on. Success = accuracy at equal iteration ordered
+  the same way as alignment in E1.5 (N↑ ⇒ cos↑ ⇒ acc↑). Companion ablations: (a) z-score vs
+  raw at N=96; (b) raw **without ratchet** (hypothesis: no climb-then-decay once steps scale
+  with the signal); (c) raw with ratchet (should trigger rarely).
 - **B2 Low-rank / structured perturbations (EGGROLL-style, cite).** Shrinks effective
   dimension → lower ZO variance per direction; also makes perturb/restore cheaper (helps E1.2).
 - **B3 SNR-gated / trust-region steps.** Skip or shrink an update when direction agreement
@@ -229,5 +259,5 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
   ~15 s/iter → 4000 iters ≈ 18 h, ETA ~2026-09-11 06:30 PT). Lane B: E1.1 ES-on-H100 running
   (started 12:10 PT, ~47 s/iter → 500 iters ≈ 7 h, ETA ~19:30 PT). E1.6 GRPO venv building (CPU).
 - **In flight:** `forge2-cd-1p5b-h100-s42` (wandb ngqa6knz), `es512-cd-1p5b-h100-s42`.
-- **Next decision:** at ~19:30 PT when E1.1 ends: Lane B → E1.7 (20 min, 2 GPUs) → then GRPO (GPU 3, ~1–2 days) + B1 probe (GPU 4, 1 engine).
+- **Next decision:** at ~19:30 PT when E1.1 ends: Lane B → **E1.5 gradient alignment** (0.5B then 1.5B, base ckpt; ~30 min, 1 GPU) → B1 probe (raw, N sweep) on the other GPU; GRPO after.
 - **Next gate:** G1 at F1 iter 1500 (~2026-09-10 19:30 PT): best ≥ 9%, no collapse.
