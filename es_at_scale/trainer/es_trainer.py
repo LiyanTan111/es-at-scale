@@ -341,7 +341,20 @@ class EvolutionStrategiesTrainer:
         }
 
 
+    # ES_MASTER_COPY=1: drift-free perturbations for the ES baseline. The original ES code
+    # perturbs/restores in bf16 in place, so theta drifts by rounding every population member
+    # (2 x pop cycles per iteration on each engine); with fewer engines each engine does more
+    # cycles per iteration. Master-copy perturbations (fp32 from a bf16 master) restore
+    # bitwise; the update then uses fp32 noise so scoring and update see the same vectors.
+    @property
+    def _es_master_copy(self):
+        return os.environ.get("ES_MASTER_COPY", "0") == "1"
+
     def train_step(self, iteration, seeds, input_text, target_text):
+        if self._es_master_copy and not getattr(self, "_es_master_ready", False):
+            ray.get([e.collective_rpc.remote("save_master_weights", args=()) for e in self.engines])
+            self._es_master_ready = True
+            print("[ES] master copies saved on all engines (ES_MASTER_COPY=1)")
 
         sampling_params = SamplingParams(
             n=self.n_samples,
@@ -446,7 +459,7 @@ class EvolutionStrategiesTrainer:
 
         ray.get(
             self.engines[0].collective_rpc.remote(
-                "update_weights_from_seeds",
+                "update_weights_from_seeds_fp32" if self._es_master_copy else "update_weights_from_seeds",
                 args=(
                     seeds,
                     coeffs,
@@ -462,6 +475,8 @@ class EvolutionStrategiesTrainer:
                 for e in self.engines
             ]
         )
+        if self._es_master_copy:
+            ray.get([e.collective_rpc.remote("save_master_weights", args=()) for e in self.engines])
         torch.cuda.synchronize()
 
     def _iter_minibatches(self, input_text, target_text, mini_batch_size: int):
@@ -489,7 +504,9 @@ class EvolutionStrategiesTrainer:
             engine_batch = seeds[b:b+self.n_vllm_engines]
             # 1) Perturb the model weights
             ray.get([
-                self.engines[eng_idx].collective_rpc.remote("perturb_self_weights", args=(int(seed), self.sigma, False))
+                self.engines[eng_idx].collective_rpc.remote(
+                    "perturb_from_master" if self._es_master_copy else "perturb_self_weights",
+                    args=(int(seed), self.sigma, False))
                 for eng_idx, seed in enumerate(engine_batch)
             ])
 
@@ -502,7 +519,9 @@ class EvolutionStrategiesTrainer:
             outputs_per_engine = ray.get(handles)
             # 4) Restore weights
             ray.get([
-                self.engines[eng_idx].collective_rpc.remote("restore_self_weights", args=(int(seed), self.sigma))
+                (self.engines[eng_idx].collective_rpc.remote("restore_from_master", args=())
+                 if self._es_master_copy else
+                 self.engines[eng_idx].collective_rpc.remote("restore_self_weights", args=(int(seed), self.sigma)))
                 for eng_idx, seed in enumerate(engine_batch)
             ])
             # 5) Score and record

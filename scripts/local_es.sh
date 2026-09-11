@@ -115,6 +115,7 @@ while true; do
         export VLLM_ENABLE_V1_MULTIPROCESSING=0
         export PYTHONUNBUFFERED=1
         export GRZO_GPU_MEM_UTIL=$GPU_MEM_UTIL
+        export ES_MASTER_COPY=${ES_MASTER_COPY:-0}
         exec python es_at_scale/train_es_relay.py \
             --model-name "$MODEL" --sigma "$SIGMA" --alpha "$ALPHA" --population-size "$POP" \
             --task "$TASK" --train-dataset "$TRAIN_DS" --eval-dataset "$EVAL_DS" \
