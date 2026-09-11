@@ -190,6 +190,13 @@ running produced `syntax error near unexpected token 'done'` when that driver re
 of its loop (the ES run itself was unaffected; only the driver's DONE bookkeeping was lost).
 Both runners now copy themselves to `<run>/driver.sh` and re-exec from the snapshot.
 
+### P13 — Killing a chained launcher's wait loop does not stop the chain
+A background chain of the form `until <cond>; do sleep; done; launch ...` continues to the
+launch when only the `until` loop's bash is killed (observed 2026-09-11: a superseded chain
+resumed the dead F2 run on GPUs 1,2 next to the new flagship). Kill the chain's *top-level*
+bash (the process whose cmdline contains the whole script), or make launches conditional on a
+sentinel file that the operator can remove. Prefer one chain per lane and record its PID.
+
 ### Status on this box
 - [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)
 - [x] HF hub reachable; `HF_HOME=/data/liyan/hf-cache`; wandb creds in `~/.netrc`
