@@ -49,6 +49,15 @@ RETRY_MAX="${RETRY_MAX:-20}"; RETRY_SLEEP="${RETRY_SLEEP:-60}"
 OUT="${OUT:-/data/liyan/runs/grzo}"
 
 REPO=/data/liyan/es-at-scale
+
+# Run from a per-run SNAPSHOT of this script. bash reads scripts incrementally, so editing
+# scripts/local_*.sh while a driver is running corrupts that driver (observed 2026-09-10:
+# "syntax error near unexpected token `done'" at the end of a finished ES run). SETUP.md P12.
+if [[ -z "${_RUNNER_SNAPSHOT:-}" ]]; then
+    mkdir -p "$OUT/$EXPNAME"
+    cp "$0" "$OUT/$EXPNAME/driver.sh"
+    _RUNNER_SNAPSHOT=1 exec bash "$OUT/$EXPNAME/driver.sh" "$@"
+fi
 VENV=$REPO/.venv
 LOGDIR="$REPO/logs/local"; mkdir -p "$LOGDIR" "$OUT/$EXPNAME"
 PROG="$OUT/$EXPNAME/latest/progress.json"

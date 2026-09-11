@@ -184,6 +184,12 @@ The raylet logs `... is over 95% full ... Object creation will fail if spilling 
 because `/tmp` is on `/` (95% full). `es_trainer.py` honours `RAY_TMPDIR` (passed to
 `ray.init(_temp_dir=...)`); both runners export `RAY_TMPDIR=/data/liyan/ray_tmp`.
 
+### P12 — Never edit a runner script while a driver is executing it
+bash reads a script file incrementally; patching `scripts/local_*.sh` while a driver was
+running produced `syntax error near unexpected token 'done'` when that driver reached the end
+of its loop (the ES run itself was unaffected; only the driver's DONE bookkeeping was lost).
+Both runners now copy themselves to `<run>/driver.sh` and re-exec from the snapshot.
+
 ### Status on this box
 - [x] venv reused (Python 3.12.13, all deps incl. scipy/wandb import; new trainer modules import)
 - [x] HF hub reachable; `HF_HOME=/data/liyan/hf-cache`; wandb creds in `~/.netrc`
