@@ -6,8 +6,10 @@ Budget columns: `gens` = cumulative rollouts generated (train), `iters`, `wall` 
 
 | run (EXPNAME) | task | model | recipe | seed | engines | iters | gens | wall (h) | best (iter) | final | notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | **F1, in flight since 2026-09-10 12:11 PT** (wandb ngqa6knz) |
+| forge2-cd-1p5b-h100-s42 | countdown | Qwen2.5-1.5B-Instruct | FORGE v2 | 42 | 2 (1,2) | 4000 | — | — | — | — | 4000 | 2.3M | 19.7 | **9.25% (3700)** | 8.2% | F1 done 2026-09-11 07:40; ratchet @624, @1599; G2 FAIL (<15%) |
 | forge-raw-N96-lr4e-5-s42 | countdown | 1.5B | FORGE raw δ/2σ, N=96, lr 4e-5, no ratchet | 42 | 1 (4) | 60/400 (stopped) | — | ~1 | 2.25% (25) | 1.2% | P1 smoke: raw estimator trains without error (~24–60 s/iter on 1 engine); stopped to give GPU 4 to E1.8 |
+| forge-raw-N384-lr6.4e-4-s42 | countdown | 1.5B | FORGE raw, N=384 (k=4), lr 6.4e-4, no ratchet | 42 | 1 (4) | 200 | ~0.09M | 3.4 | **11.0% (200)**, 9.0% (75) | 11.0% | η_max grows with N: N=96 collapses at this lr |
+| forge-raw-N384-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=384, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.12M | 3.1 | 6.7% (200) | 6.7% | N alone at fixed lr: no gain vs N=96 |
 | forge-raw-N96-lr1.6e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 1.6e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | **8.2% (200)** | 8.2% | lr sweep; fastest climb seen so far (F1 z-score needs ~1100 iters for 8%) |
 | forge-raw-N96-lr6.4e-4-s42 | countdown | 1.5B | FORGE raw, N=96, lr 6.4e-4, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.5 | 5.3% (25) | 0.05% | collapse after ~40 iters (η_max < 6.4e-4 at N=96) |
 | forge-raw-N96-lr4e-5-s42b | countdown | 1.5B | FORGE raw, N=96, lr 4e-5, no ratchet | 42 | 1 (4) | 200 | ~0.13M | 1.6 | 2.3% (25) | 1.9% | too small |

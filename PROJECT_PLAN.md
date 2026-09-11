@@ -271,7 +271,7 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
 - **Done today:** E1.1 ES on H100 (2 engines) = 22.6% — ⚠️ far below NERSC 37.9%; eval noise ruled out
   (fixed-θ repeat std 0); hypothesis = bf16 perturb/restore drift × more cycles per engine at E=2.
   `ES_MASTER_COPY=1` (drift-free) implemented for a controlled rerun.
-- **Next decision:** N=96 sweep done (R6): lr 1.6e-4 → 8.2% @200 iters (z-score F1 needs ~1100); 6.4e-4 collapses. Now: GRPO ckpt evals (100–600) then N=384 at 6.4e-4 / 1.6e-4 on GPU 4. Lane A after F1 (06:30): N=96 lr 3.2e-4, N=384 lr 2.6e-3, noise tolerance, ES parity.
+- **Next decision:** none pending. Queue: Lane A → (noise tolerance, N96 lr3.2e-4, N96 s43, N384 lr2.6e-3) → F2. GPU 4 → GRPO evals 700–1400 → N384/6.4e-4 seed 43. GPUs 3,4 after GRPO (~14:30) → ES_MASTER_COPY 2-engine parity (6 h).
   Lane A → ES rerun ×2 (2 engines + ES_MASTER_COPY; 4 engines original) to settle the ES-on-H100 question.
 - **G1 verdict (2026-09-10 19:05 PT): FAIL on the number, PASS on the shape.** F1 best by 1500 = 8.10% (@~1100)
   vs threshold 9% and NERSC v2 10.45%; at 1500: 4.9% vs 9.75%. Curve shape identical (climb → sag → ratchet @624 vs
@@ -283,4 +283,8 @@ same iteration by ≥ 2 pp on two consecutive evals. Ordered by expected value /
   (ES_MASTER_COPY 2-engine rerun, then ES 4-engine); the core-question probes P1–P4 continue on GPU 4 because
   the user placed them first. If ES parity recovers with master-copy, the FORGE gap is attributed to trajectory
   variance and one extra FORGE seed is run to confirm.
-- **Next gate:** G2 at F1 iter 4000 (~2026-09-11 06:30 PT).
+- **G2 verdict (2026-09-11 08:00): F1 (v2/z-score) best 9.25% @3700, final 8.2% — below 15%.** v2 cannot
+  carry C5. Superseded by the raw+N recipe (R6/R8): N=384, lr 6.4e-4 reaches 11.0% in 200 iterations.
+  **F2 flagship** = raw, N=384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet as safety, 4000 iters, 2 engines
+  (Lane A after the probe batch). New gate **G2'** at F2 iter 1000 (~10 h): best ≥ 15% ⇒ C5 alive.
+- **Next gate:** G2' at F2 iter 1000.

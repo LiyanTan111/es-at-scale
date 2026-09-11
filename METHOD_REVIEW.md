@@ -299,3 +299,36 @@ backprop-free method and reaches a higher plateau. Consequences for the paper:
 4. FORGE's generation budget per step is only ~600 (vs GRPO's 512): the gap is not rollouts,
    it is the ~1e4× noisier update per rollout (E1.5) — i.e. steps, not samples. The lr×N sweep
    (R6) is therefore exactly the right lever to quantify.
+
+## R8 (2026-09-11 08:00) — η_max grows with N; G2 verdict for the v2 recipe
+
+**N = 384 (k = 4), raw, no ratchet, 200 iterations, 1 engine** (`forge-raw-N384-*`):
+
+| N | lr | eval @25/50/75/100/150/200 | train reward (first→last 50) | s/iter |
+|---|---|---|---|---|
+| 96 | 1.6e-4 | 2.0/3.9/–/4.2/5.3/**8.2%** | 0.138 → 0.145 | 25 |
+| 96 | 6.4e-4 | 5.3/0.3/–/0.3/0.05/0.05% (collapse) | 0.127 → 0.005 | 25 |
+| 384 | 1.6e-4 | 3.0/3.6/3.4/3.1/4.9/6.7% | 0.133 → 0.152 | 56 |
+| **384** | **6.4e-4** | 4.8/4.6/**9.0**/2.2/5.6/**11.0%** | 0.146 → 0.159 | 61 |
+
+- At lr 6.4e-4, N = 96 destroys the model within ~40 iterations while N = 384 trains and
+  reaches **11.0% at 200 iterations** (v2/z-score: NERSC 10.45% at 1475, local F1 9.25% at
+  3700). **The stable learning rate grows with N** — the reframed core question (R4) answered
+  positively at the training level: 4× directions ⇒ the 4× larger lr is stable ⇒ ≈ 2.7× fewer
+  iterations to 8–9% (75 vs 200), at unchanged generations per iteration.
+- At fixed lr 1.6e-4, N = 384 vs 96 is not better at 200 iterations (6.7 vs 8.2%, single seed,
+  within noise): N alone buys little; the win is the lr headroom. Exactly the R4 mechanism.
+- Cost: scoring 384 directions on one engine = 41 s/iter (prefill-only, parallelises across
+  engines); rollouts unchanged (~600 generations/iter). Generations-to-8%: N=96 ≈ 0.13M,
+  N=384 ≈ 0.05M — vs GRPO 40% at 0.05M (R7) and ES ~9% at ~0.07M.
+- Single seeds so far; seed 43 of the N=384/6.4e-4 point is running; the N=384/2.6e-3 point
+  (predicted to collapse if η_max ∝ N holds tightly) and N=96/3.2e-4 are queued on Lane A.
+
+**G2 verdict (F1, v2 recipe, 4000 iterations, 2 engines):** best 9.25% @3700, final 8.2%,
+two ratchet triggers (624, 1599), no collapse. Below the 15% threshold ⇒ by the gate's rule
+the v2 recipe alone cannot carry C5. But the gate was written for the v2 recipe; the raw+N
+family found this week is ~7× faster in iterations and replaces v2 as the flagship recipe.
+**F2 (new flagship):** raw coefficients, N = 384, lr 6.4e-4, DAPO 8/32, replay 0.5, ratchet
+kept as a safety net (drop 0.03, patience 3, warmup 400), 4000 iterations, 2 engines
+(~30 s/iter → ~33 h), seed 42, launched after the Lane A probe batch. Ablation "no ratchet"
+and larger N (1536, lr 2.6e-3) follow on free single-engine slots.
