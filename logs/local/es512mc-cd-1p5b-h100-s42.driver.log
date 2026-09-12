@@ -1,0 +1,5 @@
+[LOCAL es512mc-cd-1p5b-h100-s42] GPU 3 memory.used=0 MiB
+[LOCAL es512mc-cd-1p5b-h100-s42] FORGE_MASTER_PORT=31364
+[LOCAL es512mc-cd-1p5b-h100-s42] NCCL_P2P_DISABLE=1
+[LOCAL es512mc-cd-1p5b-h100-s42] start Fri Sep 11 12:36:52 PM PDT 2026: ES model=Qwen/Qwen2.5-1.5B-Instruct gpus=3 engines=1 sigma=1e-3 alpha=-1 pop=30 B=200 iters=500
+[LOCAL es512mc-cd-1p5b-h100-s42] attempt 1: resume-from iter -1 Fri Sep 11 12:36:52 PM PDT 2026

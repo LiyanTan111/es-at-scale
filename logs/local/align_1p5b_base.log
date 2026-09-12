@@ -1,0 +1,20 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+[ALIGN] model Qwen/Qwen2.5-1.5B-Instruct d=1543.7M device=cuda
+[ALIGN] pooling round 1: active 1/8
+[ALIGN] pooling round 2: active 2/8
+[ALIGN] pooling round 3: active 3/8
+[ALIGN] pooling round 4: active 6/8
+[ALIGN] pooling round 5: active 7/8
+[ALIGN] pooling round 6: active 8/8
+[ALIGN] prompts=8 pairs R0=16 R1=8 reward R0=0.047 R1=0.031
+[ALIGN] g_BP: |g0|=3.8558e+00 |g1|=4.5925e+00 cos(g0,g1)=-0.0206 (5s)
+[ALIGN][per-example] N=   32 | cos(g_hat,g_BP) raw=+0.0000 z=+0.0000 | same-rollout AB raw=-0.0005 z=-0.0005 | cross-rollout AC raw=+0.0002 | delta std=2.51e-02 | 15s
+[ALIGN][per-example] N=   64 | cos(g_hat,g_BP) raw=+0.0000 z=+0.0000 | same-rollout AB raw=+0.0001 z=+0.0001 | cross-rollout AC raw=+0.0003 | delta std=2.88e-02 | 29s
+[ALIGN][per-example] N=   96 | cos(g_hat,g_BP) raw=+0.0001 z=+0.0001 | same-rollout AB raw=-0.0001 z=-0.0001 | cross-rollout AC raw=-0.0001 | delta std=2.11e-02 | 42s
+[ALIGN][per-example] N=  256 | cos(g_hat,g_BP) raw=+0.0000 z=+0.0000 | same-rollout AB raw=-0.0002 z=-0.0002 | cross-rollout AC raw=+0.0003 | delta std=2.53e-02 | 112s
+[ALIGN][per-example] N=  512 | cos(g_hat,g_BP) raw=+0.0002 z=+0.0002 | same-rollout AB raw=+0.0005 z=+0.0005 | cross-rollout AC raw=-0.0001 | delta std=2.92e-02 | 222s
+[ALIGN][per-example] N= 1024 | cos(g_hat,g_BP) raw=+0.0002 z=+0.0002 | same-rollout AB raw=-0.0004 z=-0.0004 | cross-rollout AC raw=-0.0001 | delta std=2.84e-02 | 444s
+[ALIGN][hybrid]      N=    8 | cos(g_hat,g_BP) raw=+0.0000 z=+0.0000 | same-rollout AB raw=+0.0003 | cross-rollout AC raw=-0.0000 | 11s
+[ALIGN][hybrid]      N=   32 | cos(g_hat,g_BP) raw=+0.0002 z=+0.0002 | same-rollout AB raw=+0.0002 | cross-rollout AC raw=-0.0001 | 38s
+[ALIGN][hybrid]      N=   96 | cos(g_hat,g_BP) raw=+0.0002 z=+0.0002 | same-rollout AB raw=+0.0005 | cross-rollout AC raw=-0.0003 | 113s
+[ALIGN] wrote /data/liyan/runs/grzo-smoke/align/align_1p5b_base.json

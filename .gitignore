@@ -28,3 +28,6 @@ env/
 # Local machine-specific setup helpers / logs (paths are cluster-specific)
 env.sh
 install.log
+
+# wandb local run cache (curves live on wandb.ai)
+wandb/

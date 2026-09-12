@@ -1,0 +1,10 @@
+[STAB] model Qwen/Qwen2.5-0.5B-Instruct d=494.0M pairs=4 L(theta)=0.288456
+[STAB] |g|^2=11392.8846  g^T H g/|g|^2=1.0142e+03  (8s)
+[STAB] tr(H) via h=0.001: 2.8683e+04 ± 5.2e+03  (uHu samples: min 2.139e+04 max 3.598e+04)
+[STAB] N=    4 | <ghat,g>=17244.82 (|g|^2=11392.88) | mean|g_j|^2(fwd)=45717.74 | fit a=17547.060 b=1.957e+08 -> eta_opt=4.48e-05 eta_max=8.97e-05 | pred eta_opt=3.36e-05 eta_max=6.71e-05 | best grid eta=3.33e-06 dL=-0.0563 | 60s
+       dL(eta): 8.3e-07:-0.0144 1.7e-06:-0.0287 3.3e-06:-0.0563
+       bf16 update survival at eta 8.3e-07:1.04 1.7e-06:1.01 3.3e-06:1.00
+[STAB] N=    8 | <ghat,g>=2977.54 (|g|^2=11392.88) | mean|g_j|^2(fwd)=12576.95 | fit a=3073.564 b=-3.885e+07 -> eta_opt=nan eta_max=nan | pred eta_opt=2.01e-04 eta_max=4.02e-04 | best grid eta=6.67e-06 dL=-0.0222 | 112s
+       dL(eta): 1.7e-06:-0.0052 3.3e-06:-0.0107 6.7e-06:-0.0222
+       bf16 update survival at eta 1.7e-06:1.04 3.3e-06:1.02 6.7e-06:1.01
+[STAB] wrote /data/liyan/runs/grzo-smoke/align/stability_cpu_smoke.json

@@ -1,0 +1,1615 @@
+INFO 09-10 19:59:44 [__init__.py:216] Automatically detected platform cuda.
+Namespace(task='countdown', countdown_reward='binary', math_reward='binary', margin_tau_end=0.02, margin_tau=0.1, lr_schedule='const', eval_subsets='', model_name='Qwen/Qwen2.5-1.5B-Instruct', checkpoint=None, sigma=0.001, lr=0.00016, rollout_temperature=1.0, group_size=8, batch_size=8, mini_batch_size=8, no_length_norm=False, delta_norm='none', min_directions=64, dapo_target_groups=8, dapo_max_rounds=4, dapo_draw=32, pairs_per_direction=1, dir_multiplier=1, directions_per_step=0, n_iterations=200, eval_freq=25, train_dataset='datasets/train/countdown', eval_dataset='datasets/evaluation_suite/countdown/', max_tokens=512, n_vllm_engines=1, n_gpu_per_vllm_engine=1, logging='wandb', seed=42, use_gpus='4', reward_function_timeout=10, output_directory='/data/liyan/runs/grzo', save_best_models=True, experiment_name='forge-raw-N96-lr1.6e-4-s42', wandb_project='grzo-rlvr', resume=True)
+eval subsets: ['countdown_eval']
+-- Running: forge-raw-N96-lr1.6e-4-s42 --
+[RESUME] no latest checkpoint under /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest; starting fresh
+2026-09-10 19:59:52,996	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/liyan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: setting up run 161qevfm
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/wandb/run-20260910_195955-161qevfm
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run forge-raw-N96-lr1.6e-4-s42
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/161qevfm
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+[ENGINES] inter-engine rendezvous 128.111.185.29:45585
+[36m(pid=1174301)[0m INFO 09-10 20:00:01 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:04 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-1.5B-Instruct'}
+[36m(ESNcclLLM pid=1174301)[0m WARNING 09-10 20:00:04 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:05 [model.py:547] Resolved architecture: Qwen2ForCausalLM
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:05 [model.py:1510] Using max model len 4096
+[36m(ESNcclLLM pid=1174301)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=16384.
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-1.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-1.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-1.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:07 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[36m(pid=1174302)[0m INFO 09-10 20:00:11 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:13 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:13 [ray_env.py:65] Copying the following environment variables to workers: ['VLLM_USE_RAY_SPMD_WORKER', 'VLLM_USE_RAY_COMPILED_DAG', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1']
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:13 [ray_env.py:68] If certain env vars should NOT be copied, add them to /home/liyan/.config/vllm/ray_non_carry_over_env_vars.json file
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:18 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', '_tp_rank_suffix', 'broadcast_all_weights', 'direction_stats', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32']
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:19 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[36m(RayWorkerWrapper pid=1174302)[0m WARNING 09-10 20:00:19 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:19 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen2.5-1.5B-Instruct...
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:19 [gpu_model_runner.py:2634] Loading model from scratch...
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:19 [cuda.py:366] Using Flash Attention backend on V1 engine.
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:19 [weight_utils.py:392] Using model weights format ['*.safetensors']
+[36m(RayWorkerWrapper pid=1174302)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:20 [weight_utils.py:450] No model.safetensors.index.json found in remote.
+[36m(RayWorkerWrapper pid=1174302)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  2.68it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  2.67it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m 
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:20 [default_loader.py:267] Loading weights took 0.49 seconds
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:21 [gpu_model_runner.py:2653] Model loading took 2.8876 GiB and 1.024806 seconds
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:24 [backends.py:548] Using cache directory: /home/liyan/.cache/vllm/torch_compile_cache/8220326b2b/rank_0_0/backbone for vLLM's torch.compile
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:24 [backends.py:559] Dynamo bytecode transform time: 3.09 s
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:25 [backends.py:164] Directly load the compiled graph(s) for dynamic shape from the cache, took 0.830 s
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:25 [monitor.py:34] torch.compile takes 3.09 s in total
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:27 [gpu_worker.py:298] Available KV cache memory: 56.55 GiB
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:27 [kv_cache_utils.py:1087] GPU KV cache size: 2,117,760 tokens
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:27 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 517.03x
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   7%|▋         | 5/67 [00:00<00:01, 41.62it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  15%|█▍        | 10/67 [00:00<00:01, 44.50it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  22%|██▏       | 15/67 [00:00<00:01, 45.07it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  30%|██▉       | 20/67 [00:00<00:01, 44.62it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  37%|███▋      | 25/67 [00:00<00:00, 43.13it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  45%|████▍     | 30/67 [00:00<00:00, 42.50it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  52%|█████▏    | 35/67 [00:02<00:03,  9.44it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  57%|█████▋    | 38/67 [00:02<00:02, 11.06it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  63%|██████▎   | 42/67 [00:02<00:01, 13.89it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  69%|██████▊   | 46/67 [00:02<00:01, 17.02it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  75%|███████▍  | 50/67 [00:02<00:00, 20.03it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  81%|████████  | 54/67 [00:02<00:00, 22.63it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  87%|████████▋ | 58/67 [00:02<00:00, 24.99it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  93%|█████████▎| 62/67 [00:02<00:00, 26.91it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:03<00:00, 30.16it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:03<00:00, 22.28it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/67 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL):   7%|▋         | 5/67 [00:00<00:01, 47.95it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  16%|█▋        | 11/67 [00:00<00:01, 51.67it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  25%|██▌       | 17/67 [00:00<00:00, 53.77it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  34%|███▍      | 23/67 [00:00<00:00, 53.87it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  43%|████▎     | 29/67 [00:00<00:00, 54.09it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  52%|█████▏    | 35/67 [00:00<00:00, 54.30it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  61%|██████    | 41/67 [00:00<00:00, 54.59it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  70%|███████   | 47/67 [00:00<00:00, 54.78it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  79%|███████▉  | 53/67 [00:00<00:00, 54.76it/s]Capturing CUDA graphs (decode, FULL):  88%|████████▊ | 59/67 [00:01<00:00, 55.11it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 65/67 [00:01<00:00, 55.52it/s]
+[36m(RayWorkerWrapper pid=1174302)[0m Capturing CUDA graphs (decode, FULL): 100%|██████████| 67/67 [00:01<00:00, 54.57it/s]
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:32 [core.py:210] init engine (profile, create kv cache, warmup model) took 11.11 seconds
+[36m(RayWorkerWrapper pid=1174302)[0m INFO 09-10 20:00:32 [gpu_model_runner.py:3480] Graph capturing finished in 5 secs, took 0.94 GiB
+[GRZO-S] master weights saved on all engines
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:33 [llm.py:306] Supported_tasks: ('generate',)
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:33 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:33 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:33 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False
+[36m(ESNcclLLM pid=1174301)[0m INFO 09-10 20:00:33 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.
+countdown_eval -- eval pass@1 (shaped): 0.0155 -- answer_acc (0/1): 0.0155 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration1.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.0155/pytorch_model.pth.
+
+
+=== Epoch 1; Iteration 1 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[GRZO-S] iter 0 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=72 (replay 8) | delta mean=+2.21e-04 std=1.01e-02 | len=512 rounds=4 | UPDATED n=72
+[GRZO-T] iter 0 | rollout=19.3s score=7.6s update=2.2s step=29.1s | gens_total=832 score_tokens_total=91296
+=== Iteration 1 finished in 29.12s ===
+
+
+
+=== Epoch 1; Iteration 2 ===
+[GRZO-S] iter 1 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=80 (replay 16) | delta mean=-1.48e-03 std=1.70e-02 | len=512 rounds=3 | UPDATED n=80
+[GRZO-T] iter 1 | rollout=13.3s score=8.3s update=1.7s step=23.3s | gens_total=1408 score_tokens_total=192736
+=== Iteration 2 finished in 23.31s ===
+
+
+
+=== Epoch 1; Iteration 3 ===
+[GRZO-S] iter 2 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=88 (replay 24) | delta mean=+1.12e-03 std=2.31e-02 | len=512 rounds=3 | UPDATED n=88
+[GRZO-T] iter 2 | rollout=13.1s score=9.6s update=1.5s step=24.2s | gens_total=1984 score_tokens_total=304428
+=== Iteration 3 finished in 24.22s ===
+
+
+
+=== Epoch 1; Iteration 4 ===
+[GRZO-S] iter 3 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.12e-04 std=1.76e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 3 | rollout=18.9s score=10.1s update=1.5s step=30.6s | gens_total=2816 score_tokens_total=426168
+=== Iteration 4 finished in 30.57s ===
+
+
+
+=== Epoch 1; Iteration 5 ===
+[GRZO-S] iter 4 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.02e-03 std=1.71e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 4 | rollout=13.5s score=9.9s update=1.7s step=25.2s | gens_total=3392 score_tokens_total=547950
+=== Iteration 5 finished in 25.17s ===
+
+
+
+=== Epoch 1; Iteration 6 ===
+[GRZO-S] iter 5 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.95e-03 std=1.74e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 5 | rollout=13.5s score=9.5s update=1.5s step=24.5s | gens_total=3968 score_tokens_total=669684
+=== Iteration 6 finished in 24.48s ===
+
+
+
+=== Epoch 1; Iteration 7 ===
+[GRZO-S] iter 6 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.88e-03 std=2.15e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 6 | rollout=13.5s score=10.4s update=1.6s step=25.6s | gens_total=4544 score_tokens_total=791424
+=== Iteration 7 finished in 25.58s ===
+
+
+
+=== Epoch 1; Iteration 8 ===
+[GRZO-S] iter 7 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.57e-03 std=1.88e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 7 | rollout=13.7s score=10.2s update=1.5s step=25.5s | gens_total=5120 score_tokens_total=913164
+=== Iteration 8 finished in 25.47s ===
+
+
+
+=== Epoch 1; Iteration 9 ===
+[GRZO-S] iter 8 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.88e-04 std=1.70e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 8 | rollout=13.8s score=10.0s update=1.8s step=25.6s | gens_total=5696 score_tokens_total=1034904
+=== Iteration 9 finished in 25.59s ===
+
+
+
+=== Epoch 1; Iteration 10 ===
+[GRZO-S] iter 9 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.96e-03 std=1.75e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 9 | rollout=19.1s score=9.9s update=1.6s step=30.6s | gens_total=6528 score_tokens_total=1156650
+[CKPT] latest saved at iteration 9 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 10 finished in 35.65s ===
+
+
+
+=== Epoch 1; Iteration 11 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 10 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-8.97e-04 std=1.38e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 10 | rollout=19.0s score=9.8s update=1.5s step=30.4s | gens_total=7360 score_tokens_total=1278378
+=== Iteration 11 finished in 30.36s ===
+
+
+
+=== Epoch 1; Iteration 12 ===
+[GRZO-S] iter 11 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.78e-03 std=2.01e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 11 | rollout=7.9s score=10.3s update=1.6s step=19.8s | gens_total=7680 score_tokens_total=1400112
+=== Iteration 12 finished in 19.80s ===
+
+
+
+=== Epoch 1; Iteration 13 ===
+[GRZO-S] iter 12 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.37e-04 std=1.82e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 12 | rollout=13.3s score=10.6s update=1.5s step=25.5s | gens_total=8256 score_tokens_total=1521894
+=== Iteration 13 finished in 25.47s ===
+
+
+
+=== Epoch 1; Iteration 14 ===
+[GRZO-S] iter 13 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.79e-04 std=1.45e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 13 | rollout=8.3s score=9.8s update=1.5s step=19.6s | gens_total=8576 score_tokens_total=1643634
+=== Iteration 14 finished in 19.65s ===
+
+
+
+=== Epoch 1; Iteration 15 ===
+[GRZO-S] iter 14 | B=8 G=8 | reward mean=0.1875 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+8.93e-04 std=1.97e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 14 | rollout=13.5s score=10.2s update=1.5s step=25.2s | gens_total=9152 score_tokens_total=1765362
+=== Iteration 15 finished in 25.22s ===
+
+
+
+=== Epoch 1; Iteration 16 ===
+[GRZO-S] iter 15 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.42e-04 std=1.61e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 15 | rollout=18.9s score=10.2s update=2.8s step=31.9s | gens_total=9984 score_tokens_total=1887144
+=== Iteration 16 finished in 31.87s ===
+
+
+
+=== Epoch 1; Iteration 17 ===
+[GRZO-S] iter 16 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.56e-03 std=2.11e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 16 | rollout=13.2s score=10.0s update=2.4s step=25.6s | gens_total=10560 score_tokens_total=2008878
+=== Iteration 17 finished in 25.63s ===
+
+
+
+=== Epoch 1; Iteration 18 ===
+[GRZO-S] iter 17 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-8.07e-04 std=1.48e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 17 | rollout=7.8s score=9.1s update=1.6s step=18.4s | gens_total=10880 score_tokens_total=2130666
+=== Iteration 18 finished in 18.45s ===
+
+
+
+=== Epoch 1; Iteration 19 ===
+[GRZO-S] iter 18 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+5.05e-04 std=1.76e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 18 | rollout=19.4s score=9.5s update=1.5s step=30.5s | gens_total=11712 score_tokens_total=2252406
+=== Iteration 19 finished in 30.52s ===
+
+
+
+=== Epoch 1; Iteration 20 ===
+[GRZO-S] iter 19 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.16e-03 std=1.88e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 19 | rollout=13.7s score=10.2s update=1.6s step=25.5s | gens_total=12288 score_tokens_total=2374134
+=== Iteration 20 finished in 25.51s ===
+
+
+
+=== Epoch 1; Iteration 21 ===
+[GRZO-S] iter 20 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-6.76e-04 std=1.51e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 20 | rollout=13.3s score=10.5s update=1.5s step=25.3s | gens_total=12864 score_tokens_total=2495970
+=== Iteration 21 finished in 25.33s ===
+
+
+
+=== Epoch 1; Iteration 22 ===
+[GRZO-S] iter 21 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.92e-03 std=1.72e-02 | len=511 rounds=3 | UPDATED n=96
+[GRZO-T] iter 21 | rollout=13.5s score=10.3s update=2.3s step=26.1s | gens_total=13440 score_tokens_total=2617522
+=== Iteration 22 finished in 26.15s ===
+
+
+
+=== Epoch 1; Iteration 23 ===
+[GRZO-S] iter 22 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.75e-03 std=1.56e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 22 | rollout=7.8s score=10.2s update=1.6s step=19.6s | gens_total=13760 score_tokens_total=2739256
+=== Iteration 23 finished in 19.64s ===
+
+
+
+=== Epoch 1; Iteration 24 ===
+[GRZO-S] iter 23 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.38e-04 std=1.52e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 23 | rollout=13.5s score=9.6s update=2.7s step=25.9s | gens_total=14336 score_tokens_total=2861050
+=== Iteration 24 finished in 25.88s ===
+
+
+
+=== Epoch 1; Iteration 25 ===
+[GRZO-S] iter 24 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.92e-03 std=2.00e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 24 | rollout=19.0s score=9.9s update=1.8s step=30.6s | gens_total=15168 score_tokens_total=2982838
+countdown_eval -- eval pass@1 (shaped): 0.0195 -- answer_acc (0/1): 0.0195 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration25.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.0195/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 24 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 25 finished in 59.07s ===
+
+
+
+=== Epoch 2; Iteration 26 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 25 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.07e-04 std=1.62e-02 | len=510 rounds=3 | UPDATED n=96
+[GRZO-T] iter 25 | rollout=13.5s score=10.3s update=1.9s step=25.6s | gens_total=15744 score_tokens_total=3104434
+=== Iteration 26 finished in 25.62s ===
+
+
+
+=== Epoch 2; Iteration 27 ===
+[GRZO-S] iter 26 | B=8 G=8 | reward mean=0.2031 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+6.59e-04 std=1.38e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 26 | rollout=18.5s score=10.1s update=1.8s step=30.4s | gens_total=16576 score_tokens_total=3226180
+=== Iteration 27 finished in 30.36s ===
+
+
+
+=== Epoch 2; Iteration 28 ===
+[GRZO-S] iter 27 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.23e-03 std=1.99e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 27 | rollout=13.2s score=10.2s update=1.5s step=24.9s | gens_total=17152 score_tokens_total=3348016
+=== Iteration 28 finished in 24.95s ===
+
+
+
+=== Epoch 2; Iteration 29 ===
+[GRZO-S] iter 28 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.38e-03 std=2.54e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 28 | rollout=18.8s score=10.5s update=1.5s step=30.8s | gens_total=17984 score_tokens_total=3469756
+=== Iteration 29 finished in 30.75s ===
+
+
+
+=== Epoch 2; Iteration 30 ===
+[GRZO-S] iter 29 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.59e-03 std=1.80e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 29 | rollout=13.2s score=10.0s update=2.3s step=25.5s | gens_total=18560 score_tokens_total=3591544
+=== Iteration 30 finished in 25.52s ===
+
+
+
+=== Epoch 2; Iteration 31 ===
+[GRZO-S] iter 30 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.98e-03 std=2.30e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 30 | rollout=13.2s score=9.2s update=1.5s step=23.9s | gens_total=19136 score_tokens_total=3713290
+=== Iteration 31 finished in 23.95s ===
+
+
+
+=== Epoch 2; Iteration 32 ===
+[GRZO-S] iter 31 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.11e-03 std=1.76e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 31 | rollout=19.1s score=9.5s update=1.5s step=30.2s | gens_total=19968 score_tokens_total=3835142
+=== Iteration 32 finished in 30.20s ===
+
+
+
+=== Epoch 2; Iteration 33 ===
+[GRZO-S] iter 32 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.30e-03 std=1.34e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 32 | rollout=13.7s score=9.5s update=1.5s step=24.7s | gens_total=20544 score_tokens_total=3956930
+=== Iteration 33 finished in 24.72s ===
+
+
+
+=== Epoch 2; Iteration 34 ===
+[GRZO-S] iter 33 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.04e-05 std=2.24e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 33 | rollout=13.7s score=9.7s update=1.7s step=25.2s | gens_total=21120 score_tokens_total=4078718
+=== Iteration 34 finished in 25.16s ===
+
+
+
+=== Epoch 2; Iteration 35 ===
+[GRZO-S] iter 34 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.54e-03 std=1.66e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 34 | rollout=7.9s score=10.2s update=3.0s step=21.1s | gens_total=21440 score_tokens_total=4200464
+=== Iteration 35 finished in 21.15s ===
+
+
+
+=== Epoch 2; Iteration 36 ===
+[GRZO-S] iter 35 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+6.82e-04 std=1.68e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 35 | rollout=7.7s score=9.9s update=1.5s step=19.2s | gens_total=21760 score_tokens_total=4322276
+=== Iteration 36 finished in 19.21s ===
+
+
+
+=== Epoch 2; Iteration 37 ===
+[GRZO-S] iter 36 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.74e-04 std=2.17e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 36 | rollout=8.2s score=8.9s update=1.7s step=18.8s | gens_total=22080 score_tokens_total=4444010
+=== Iteration 37 finished in 18.78s ===
+
+
+
+=== Epoch 2; Iteration 38 ===
+[GRZO-S] iter 37 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.50e-04 std=1.77e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 37 | rollout=7.8s score=9.9s update=1.6s step=19.3s | gens_total=22400 score_tokens_total=4565744
+=== Iteration 38 finished in 19.27s ===
+
+
+
+=== Epoch 2; Iteration 39 ===
+[GRZO-S] iter 38 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.48e-03 std=1.72e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 38 | rollout=7.9s score=10.1s update=1.5s step=19.5s | gens_total=22720 score_tokens_total=4687490
+=== Iteration 39 finished in 19.53s ===
+
+
+
+=== Epoch 2; Iteration 40 ===
+[GRZO-S] iter 39 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.30e-03 std=2.05e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 39 | rollout=13.6s score=9.9s update=1.5s step=25.1s | gens_total=23296 score_tokens_total=4809340
+[CKPT] latest saved at iteration 39 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 40 finished in 31.78s ===
+
+
+
+=== Epoch 2; Iteration 41 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 40 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.45e-03 std=2.06e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 40 | rollout=18.8s score=9.4s update=1.5s step=29.7s | gens_total=24128 score_tokens_total=4931128
+=== Iteration 41 finished in 29.68s ===
+
+
+
+=== Epoch 2; Iteration 42 ===
+[GRZO-S] iter 41 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.63e-04 std=1.65e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 41 | rollout=13.2s score=10.6s update=1.7s step=25.5s | gens_total=24704 score_tokens_total=5052904
+=== Iteration 42 finished in 25.55s ===
+
+
+
+=== Epoch 2; Iteration 43 ===
+[GRZO-S] iter 42 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.52e-03 std=1.73e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 42 | rollout=18.6s score=10.4s update=1.5s step=30.5s | gens_total=25536 score_tokens_total=5174704
+=== Iteration 43 finished in 30.49s ===
+
+
+
+=== Epoch 2; Iteration 44 ===
+[GRZO-S] iter 43 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.15e-03 std=2.04e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 43 | rollout=7.8s score=9.3s update=2.6s step=19.8s | gens_total=25856 score_tokens_total=5296450
+=== Iteration 44 finished in 19.81s ===
+
+
+
+=== Epoch 2; Iteration 45 ===
+[GRZO-S] iter 44 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.16e-04 std=1.74e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 44 | rollout=13.4s score=10.3s update=1.5s step=25.2s | gens_total=26432 score_tokens_total=5418210
+=== Iteration 45 finished in 25.25s ===
+
+
+
+=== Epoch 2; Iteration 46 ===
+[GRZO-S] iter 45 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.11e-03 std=1.37e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 45 | rollout=13.5s score=10.0s update=1.5s step=25.0s | gens_total=27008 score_tokens_total=5540004
+=== Iteration 46 finished in 25.05s ===
+
+
+
+=== Epoch 2; Iteration 47 ===
+[GRZO-S] iter 46 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.75e-03 std=2.25e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 46 | rollout=13.5s score=10.0s update=1.7s step=25.3s | gens_total=27584 score_tokens_total=5661792
+=== Iteration 47 finished in 25.29s ===
+
+
+
+=== Epoch 2; Iteration 48 ===
+[GRZO-S] iter 47 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.38e-03 std=1.92e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 47 | rollout=19.1s score=10.1s update=1.5s step=30.7s | gens_total=28416 score_tokens_total=5783682
+=== Iteration 48 finished in 30.67s ===
+
+
+
+=== Epoch 2; Iteration 49 ===
+[GRZO-S] iter 48 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.49e-03 std=1.70e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 48 | rollout=13.6s score=10.3s update=1.5s step=25.4s | gens_total=28992 score_tokens_total=5905434
+=== Iteration 49 finished in 25.38s ===
+
+
+
+=== Epoch 2; Iteration 50 ===
+[GRZO-S] iter 49 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.80e-03 std=2.44e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 49 | rollout=8.1s score=10.3s update=1.5s step=20.0s | gens_total=29312 score_tokens_total=6027252
+countdown_eval -- eval pass@1 (shaped): 0.0385 -- answer_acc (0/1): 0.0385 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration50.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.0385/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 49 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 50 finished in 60.48s ===
+
+
+
+=== Epoch 3; Iteration 51 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 50 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.71e-04 std=1.86e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 50 | rollout=18.7s score=10.5s update=1.7s step=31.0s | gens_total=30144 score_tokens_total=6149010
+=== Iteration 51 finished in 31.02s ===
+
+
+
+=== Epoch 3; Iteration 52 ===
+[GRZO-S] iter 51 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.11e-03 std=1.89e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 51 | rollout=13.4s score=10.2s update=1.6s step=25.1s | gens_total=30720 score_tokens_total=6270792
+=== Iteration 52 finished in 25.14s ===
+
+
+
+=== Epoch 3; Iteration 53 ===
+[GRZO-S] iter 52 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.33e-03 std=1.58e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 52 | rollout=8.1s score=9.7s update=1.5s step=19.4s | gens_total=31040 score_tokens_total=6392550
+=== Iteration 53 finished in 19.43s ===
+
+
+
+=== Epoch 3; Iteration 54 ===
+[GRZO-S] iter 53 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.85e-03 std=2.00e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 53 | rollout=7.8s score=9.6s update=1.5s step=19.0s | gens_total=31360 score_tokens_total=6514290
+=== Iteration 54 finished in 18.97s ===
+
+
+
+=== Epoch 3; Iteration 55 ===
+[GRZO-S] iter 54 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.28e-03 std=1.46e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 54 | rollout=7.9s score=10.2s update=1.5s step=19.7s | gens_total=31680 score_tokens_total=6636042
+=== Iteration 55 finished in 19.73s ===
+
+
+
+=== Epoch 3; Iteration 56 ===
+[GRZO-S] iter 55 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-5.41e-03 std=1.91e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 55 | rollout=8.2s score=10.2s update=1.6s step=20.0s | gens_total=32000 score_tokens_total=6757800
+=== Iteration 56 finished in 19.96s ===
+
+
+
+=== Epoch 3; Iteration 57 ===
+[GRZO-S] iter 56 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.47e-04 std=1.83e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 56 | rollout=8.0s score=9.7s update=2.8s step=20.5s | gens_total=32320 score_tokens_total=6879590
+=== Iteration 57 finished in 20.55s ===
+
+
+
+=== Epoch 3; Iteration 58 ===
+[GRZO-S] iter 57 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.06e-03 std=1.75e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 57 | rollout=13.3s score=10.6s update=1.5s step=25.4s | gens_total=32896 score_tokens_total=7001372
+=== Iteration 58 finished in 25.38s ===
+
+
+
+=== Epoch 3; Iteration 59 ===
+[GRZO-S] iter 58 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.53e-03 std=2.61e-02 | len=508 rounds=3 | UPDATED n=96
+[GRZO-T] iter 58 | rollout=13.5s score=9.7s update=3.7s step=26.9s | gens_total=33472 score_tokens_total=7122646
+=== Iteration 59 finished in 26.90s ===
+
+
+
+=== Epoch 3; Iteration 60 ===
+[GRZO-S] iter 59 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.07e-03 std=2.04e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 59 | rollout=13.5s score=9.7s update=1.5s step=24.8s | gens_total=34048 score_tokens_total=7244380
+=== Iteration 60 finished in 24.76s ===
+
+
+
+=== Epoch 3; Iteration 61 ===
+[GRZO-S] iter 60 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.34e-03 std=1.46e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 60 | rollout=8.0s score=9.7s update=1.8s step=19.4s | gens_total=34368 score_tokens_total=7366146
+=== Iteration 61 finished in 19.38s ===
+
+
+
+=== Epoch 3; Iteration 62 ===
+[GRZO-S] iter 61 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.47e-04 std=1.56e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 61 | rollout=13.4s score=9.2s update=1.5s step=24.2s | gens_total=34944 score_tokens_total=7487916
+=== Iteration 62 finished in 24.17s ===
+
+
+
+=== Epoch 3; Iteration 63 ===
+[GRZO-S] iter 62 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.52e-03 std=1.58e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 62 | rollout=8.1s score=9.8s update=2.1s step=20.0s | gens_total=35264 score_tokens_total=7609724
+=== Iteration 63 finished in 20.03s ===
+
+
+
+=== Epoch 3; Iteration 64 ===
+[GRZO-S] iter 63 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.72e-03 std=1.33e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 63 | rollout=13.3s score=9.6s update=1.6s step=24.5s | gens_total=35840 score_tokens_total=7731518
+=== Iteration 64 finished in 24.49s ===
+
+
+
+=== Epoch 3; Iteration 65 ===
+[GRZO-S] iter 64 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.62e-03 std=1.59e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 64 | rollout=8.0s score=10.3s update=1.7s step=20.0s | gens_total=36160 score_tokens_total=7853324
+=== Iteration 65 finished in 20.00s ===
+
+
+
+=== Epoch 3; Iteration 66 ===
+[GRZO-S] iter 65 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.86e-03 std=1.66e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 65 | rollout=8.1s score=9.8s update=1.5s step=19.4s | gens_total=36480 score_tokens_total=7975160
+=== Iteration 66 finished in 19.37s ===
+
+
+
+=== Epoch 3; Iteration 67 ===
+[GRZO-S] iter 66 | B=8 G=8 | reward mean=0.2031 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.44e-03 std=1.61e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 66 | rollout=13.7s score=9.9s update=1.5s step=25.1s | gens_total=37056 score_tokens_total=8097008
+=== Iteration 67 finished in 25.16s ===
+
+
+
+=== Epoch 3; Iteration 68 ===
+[GRZO-S] iter 67 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.52e-03 std=1.59e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 67 | rollout=13.6s score=10.4s update=1.5s step=25.5s | gens_total=37632 score_tokens_total=8218874
+=== Iteration 68 finished in 25.48s ===
+
+
+
+=== Epoch 3; Iteration 69 ===
+[GRZO-S] iter 68 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.35e-04 std=1.30e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 68 | rollout=7.9s score=9.7s update=1.5s step=19.2s | gens_total=37952 score_tokens_total=8340674
+=== Iteration 69 finished in 19.17s ===
+
+
+
+=== Epoch 3; Iteration 70 ===
+[GRZO-S] iter 69 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.76e-04 std=2.32e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 69 | rollout=7.8s score=9.9s update=2.0s step=19.7s | gens_total=38272 score_tokens_total=8462486
+[CKPT] latest saved at iteration 69 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 70 finished in 26.30s ===
+
+
+
+=== Epoch 3; Iteration 71 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 70 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.34e-03 std=1.59e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 70 | rollout=7.7s score=10.9s update=1.5s step=20.1s | gens_total=38592 score_tokens_total=8584258
+=== Iteration 71 finished in 20.07s ===
+
+
+
+=== Epoch 3; Iteration 72 ===
+[GRZO-S] iter 71 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.73e-03 std=1.66e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 71 | rollout=13.3s score=10.0s update=1.7s step=25.0s | gens_total=39168 score_tokens_total=8706058
+=== Iteration 72 finished in 24.96s ===
+
+
+
+=== Epoch 3; Iteration 73 ===
+[GRZO-S] iter 72 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.77e-03 std=1.89e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 72 | rollout=13.2s score=10.0s update=1.5s step=24.7s | gens_total=39744 score_tokens_total=8827810
+=== Iteration 73 finished in 24.71s ===
+
+
+
+=== Epoch 3; Iteration 74 ===
+[GRZO-S] iter 73 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.59e-04 std=1.72e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 73 | rollout=13.3s score=10.0s update=1.5s step=24.8s | gens_total=40320 score_tokens_total=8949616
+=== Iteration 74 finished in 24.84s ===
+
+
+
+=== Epoch 3; Iteration 75 ===
+[GRZO-S] iter 74 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.09e-03 std=1.68e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 74 | rollout=13.7s score=9.9s update=1.7s step=25.3s | gens_total=40896 score_tokens_total=9071356
+countdown_eval -- eval pass@1 (shaped): 0.0200 -- answer_acc (0/1): 0.0200 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration75.json
+[CKPT] latest saved at iteration 74 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 75 finished in 45.87s ===
+
+
+
+=== Epoch 4; Iteration 76 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 75 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.94e-03 std=1.69e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 75 | rollout=7.9s score=10.2s update=1.5s step=19.6s | gens_total=41216 score_tokens_total=9193210
+=== Iteration 76 finished in 19.65s ===
+
+
+
+=== Epoch 4; Iteration 77 ===
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+[GRZO-S] iter 76 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.98e-04 std=1.39e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 76 | rollout=13.4s score=10.0s update=2.9s step=26.3s | gens_total=41792 score_tokens_total=9315082
+=== Iteration 77 finished in 26.33s ===
+
+
+
+=== Epoch 4; Iteration 78 ===
+[GRZO-S] iter 77 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.15e-03 std=2.03e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 77 | rollout=13.5s score=10.1s update=1.5s step=25.1s | gens_total=42368 score_tokens_total=9436882
+=== Iteration 78 finished in 25.07s ===
+
+
+
+=== Epoch 4; Iteration 79 ===
+<string>:1: SyntaxWarning: 'tuple' object is not callable; perhaps you missed a comma?
+[GRZO-S] iter 78 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.88e-03 std=2.03e-02 | len=512 rounds=5 | UPDATED n=96
+[GRZO-T] iter 78 | rollout=24.5s score=10.0s update=2.0s step=36.5s | gens_total=43456 score_tokens_total=9558646
+=== Iteration 79 finished in 36.48s ===
+
+
+
+=== Epoch 4; Iteration 80 ===
+[GRZO-S] iter 79 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.29e-03 std=2.01e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 79 | rollout=13.8s score=10.0s update=2.7s step=26.4s | gens_total=44032 score_tokens_total=9680394
+=== Iteration 80 finished in 26.42s ===
+
+
+
+=== Epoch 4; Iteration 81 ===
+[GRZO-S] iter 80 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.10e-03 std=1.97e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 80 | rollout=13.6s score=9.5s update=1.5s step=24.6s | gens_total=44608 score_tokens_total=9802164
+=== Iteration 81 finished in 24.60s ===
+
+
+
+=== Epoch 4; Iteration 82 ===
+[GRZO-S] iter 81 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.16e-03 std=1.47e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 81 | rollout=13.7s score=10.0s update=1.5s step=25.3s | gens_total=45184 score_tokens_total=9923958
+=== Iteration 82 finished in 25.27s ===
+
+
+
+=== Epoch 4; Iteration 83 ===
+[GRZO-S] iter 82 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+5.55e-05 std=1.66e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 82 | rollout=13.7s score=10.0s update=1.7s step=25.5s | gens_total=45760 score_tokens_total=10045716
+=== Iteration 83 finished in 25.55s ===
+
+
+
+=== Epoch 4; Iteration 84 ===
+[GRZO-S] iter 83 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+9.89e-04 std=1.98e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 83 | rollout=7.9s score=10.4s update=3.8s step=22.1s | gens_total=46080 score_tokens_total=10167534
+=== Iteration 84 finished in 22.06s ===
+
+
+
+=== Epoch 4; Iteration 85 ===
+[GRZO-S] iter 84 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.79e-04 std=1.49e-02 | len=509 rounds=3 | UPDATED n=96
+[GRZO-T] iter 84 | rollout=13.2s score=10.1s update=1.5s step=24.8s | gens_total=46656 score_tokens_total=10288986
+=== Iteration 85 finished in 24.76s ===
+
+
+
+=== Epoch 4; Iteration 86 ===
+[GRZO-S] iter 85 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.97e-03 std=1.76e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 85 | rollout=13.4s score=10.1s update=1.6s step=25.1s | gens_total=47232 score_tokens_total=10410738
+=== Iteration 86 finished in 25.09s ===
+
+
+
+=== Epoch 4; Iteration 87 ===
+[GRZO-S] iter 86 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.65e-03 std=1.56e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 86 | rollout=13.7s score=9.7s update=1.8s step=25.2s | gens_total=47808 score_tokens_total=10532490
+=== Iteration 87 finished in 25.18s ===
+
+
+
+=== Epoch 4; Iteration 88 ===
+[GRZO-S] iter 87 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.19e-04 std=1.65e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 87 | rollout=13.8s score=10.1s update=1.5s step=25.5s | gens_total=48384 score_tokens_total=10654344
+=== Iteration 88 finished in 25.50s ===
+
+
+
+=== Epoch 4; Iteration 89 ===
+[GRZO-S] iter 88 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.51e-04 std=1.46e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 88 | rollout=13.6s score=10.3s update=1.8s step=25.8s | gens_total=48960 score_tokens_total=10776110
+=== Iteration 89 finished in 25.78s ===
+
+
+
+=== Epoch 4; Iteration 90 ===
+[GRZO-S] iter 89 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.22e-03 std=1.92e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 89 | rollout=13.5s score=10.5s update=1.6s step=25.6s | gens_total=49536 score_tokens_total=10897904
+[CKPT] latest saved at iteration 89 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 90 finished in 32.44s ===
+
+
+
+=== Epoch 4; Iteration 91 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 90 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-6.51e-04 std=1.52e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 90 | rollout=7.9s score=10.1s update=1.7s step=19.7s | gens_total=49856 score_tokens_total=11019656
+=== Iteration 91 finished in 19.72s ===
+
+
+
+=== Epoch 4; Iteration 92 ===
+[GRZO-S] iter 91 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+8.76e-04 std=1.59e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 91 | rollout=7.8s score=10.3s update=1.5s step=19.6s | gens_total=50176 score_tokens_total=11141420
+=== Iteration 92 finished in 19.61s ===
+
+
+
+=== Epoch 4; Iteration 93 ===
+[GRZO-S] iter 92 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.45e-04 std=1.85e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 92 | rollout=7.8s score=10.5s update=1.5s step=19.8s | gens_total=50496 score_tokens_total=11263250
+=== Iteration 93 finished in 19.83s ===
+
+
+
+=== Epoch 4; Iteration 94 ===
+[GRZO-S] iter 93 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.02e-05 std=1.61e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 93 | rollout=8.1s score=9.9s update=1.7s step=19.7s | gens_total=50816 score_tokens_total=11385058
+=== Iteration 94 finished in 19.73s ===
+
+
+
+=== Epoch 4; Iteration 95 ===
+[GRZO-S] iter 94 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.30e-03 std=1.91e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 94 | rollout=13.7s score=10.3s update=1.5s step=25.5s | gens_total=51392 score_tokens_total=11506876
+=== Iteration 95 finished in 25.54s ===
+
+
+
+=== Epoch 4; Iteration 96 ===
+[GRZO-S] iter 95 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.95e-04 std=1.80e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 95 | rollout=13.6s score=10.2s update=2.3s step=26.1s | gens_total=51968 score_tokens_total=11628736
+=== Iteration 96 finished in 26.09s ===
+
+
+
+=== Epoch 4; Iteration 97 ===
+[GRZO-S] iter 96 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-9.29e-04 std=2.32e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 96 | rollout=7.8s score=10.3s update=1.5s step=19.6s | gens_total=52288 score_tokens_total=11750590
+=== Iteration 97 finished in 19.61s ===
+
+
+
+=== Epoch 4; Iteration 98 ===
+[GRZO-S] iter 97 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.93e-03 std=1.67e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 97 | rollout=8.3s score=10.1s update=1.6s step=20.0s | gens_total=52608 score_tokens_total=11872354
+=== Iteration 98 finished in 20.01s ===
+
+
+
+=== Epoch 4; Iteration 99 ===
+[GRZO-S] iter 98 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-8.60e-04 std=1.61e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 98 | rollout=13.5s score=10.2s update=1.5s step=25.2s | gens_total=53184 score_tokens_total=11994112
+=== Iteration 99 finished in 25.25s ===
+
+
+
+=== Epoch 4; Iteration 100 ===
+[GRZO-S] iter 99 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.59e-04 std=1.69e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 99 | rollout=13.6s score=10.4s update=1.8s step=25.7s | gens_total=53760 score_tokens_total=12115906
+countdown_eval -- eval pass@1 (shaped): 0.0415 -- answer_acc (0/1): 0.0415 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration100.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.0415/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 99 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 100 finished in 57.76s ===
+
+
+
+=== Epoch 5; Iteration 101 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 100 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.08e-04 std=1.77e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 100 | rollout=7.7s score=10.3s update=1.7s step=19.7s | gens_total=54080 score_tokens_total=12237694
+=== Iteration 101 finished in 19.68s ===
+
+
+
+=== Epoch 5; Iteration 102 ===
+[GRZO-S] iter 101 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.32e-03 std=1.76e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 101 | rollout=13.2s score=10.1s update=1.5s step=24.8s | gens_total=54656 score_tokens_total=12359506
+=== Iteration 102 finished in 24.79s ===
+
+
+
+=== Epoch 5; Iteration 103 ===
+[GRZO-S] iter 102 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-9.12e-05 std=1.44e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 102 | rollout=13.6s score=10.2s update=2.2s step=26.0s | gens_total=55232 score_tokens_total=12481258
+=== Iteration 103 finished in 26.02s ===
+
+
+
+=== Epoch 5; Iteration 104 ===
+[GRZO-S] iter 103 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.24e-03 std=1.63e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 103 | rollout=19.0s score=9.8s update=1.8s step=30.6s | gens_total=56064 score_tokens_total=12603054
+=== Iteration 104 finished in 30.60s ===
+
+
+
+=== Epoch 5; Iteration 105 ===
+[GRZO-S] iter 104 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.84e-03 std=1.61e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 104 | rollout=7.9s score=10.4s update=1.5s step=19.8s | gens_total=56384 score_tokens_total=12724986
+=== Iteration 105 finished in 19.77s ===
+
+
+
+=== Epoch 5; Iteration 106 ===
+[GRZO-S] iter 105 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.36e-04 std=1.80e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 105 | rollout=19.1s score=10.6s update=1.6s step=31.3s | gens_total=57216 score_tokens_total=12846804
+=== Iteration 106 finished in 31.32s ===
+
+
+
+=== Epoch 5; Iteration 107 ===
+[GRZO-S] iter 106 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.89e-04 std=1.88e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 106 | rollout=7.8s score=9.8s update=1.5s step=19.2s | gens_total=57536 score_tokens_total=12968670
+=== Iteration 107 finished in 19.19s ===
+
+
+
+=== Epoch 5; Iteration 108 ===
+[GRZO-S] iter 107 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.61e-04 std=2.15e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 107 | rollout=8.3s score=9.9s update=1.6s step=19.7s | gens_total=57856 score_tokens_total=13090470
+=== Iteration 108 finished in 19.75s ===
+
+
+
+=== Epoch 5; Iteration 109 ===
+[GRZO-S] iter 108 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.50e-03 std=1.97e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 108 | rollout=13.7s score=9.8s update=1.5s step=25.0s | gens_total=58432 score_tokens_total=13212270
+=== Iteration 109 finished in 25.05s ===
+
+
+
+=== Epoch 5; Iteration 110 ===
+[GRZO-S] iter 109 | B=8 G=8 | reward mean=0.1875 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.89e-03 std=2.06e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 109 | rollout=8.1s score=9.6s update=1.7s step=19.5s | gens_total=58752 score_tokens_total=13334076
+=== Iteration 110 finished in 19.46s ===
+
+
+
+=== Epoch 5; Iteration 111 ===
+<string>:1: SyntaxWarning: 'int' object is not callable; perhaps you missed a comma?
+[GRZO-S] iter 110 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.90e-03 std=1.99e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 110 | rollout=13.5s score=10.0s update=1.6s step=25.0s | gens_total=59328 score_tokens_total=13455848
+=== Iteration 111 finished in 25.00s ===
+
+
+
+=== Epoch 5; Iteration 112 ===
+[GRZO-S] iter 111 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.68e-03 std=1.77e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 111 | rollout=13.6s score=9.9s update=2.4s step=26.0s | gens_total=59904 score_tokens_total=13577672
+=== Iteration 112 finished in 25.97s ===
+
+
+
+=== Epoch 5; Iteration 113 ===
+[GRZO-S] iter 112 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.63e-04 std=1.71e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 112 | rollout=13.7s score=10.2s update=1.5s step=25.4s | gens_total=60480 score_tokens_total=13699448
+=== Iteration 113 finished in 25.35s ===
+
+
+
+=== Epoch 5; Iteration 114 ===
+[GRZO-S] iter 113 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-8.65e-04 std=2.19e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 113 | rollout=7.9s score=10.1s update=1.7s step=19.7s | gens_total=60800 score_tokens_total=13821218
+=== Iteration 114 finished in 19.75s ===
+
+
+
+=== Epoch 5; Iteration 115 ===
+[GRZO-S] iter 114 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.75e-03 std=1.86e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 114 | rollout=13.4s score=10.3s update=1.5s step=25.3s | gens_total=61376 score_tokens_total=13943030
+=== Iteration 115 finished in 25.32s ===
+
+
+
+=== Epoch 5; Iteration 116 ===
+[GRZO-S] iter 115 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+5.12e-04 std=1.41e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 115 | rollout=19.2s score=10.6s update=1.5s step=31.3s | gens_total=62208 score_tokens_total=14064842
+=== Iteration 116 finished in 31.30s ===
+
+
+
+=== Epoch 5; Iteration 117 ===
+[GRZO-S] iter 116 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.43e-03 std=1.77e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 116 | rollout=13.5s score=10.4s update=1.8s step=25.7s | gens_total=62784 score_tokens_total=14186738
+=== Iteration 117 finished in 25.67s ===
+
+
+
+=== Epoch 5; Iteration 118 ===
+[GRZO-S] iter 117 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.11e-03 std=2.01e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 117 | rollout=19.0s score=10.2s update=1.8s step=30.9s | gens_total=63616 score_tokens_total=14308594
+=== Iteration 118 finished in 30.89s ===
+
+
+
+=== Epoch 5; Iteration 119 ===
+[GRZO-S] iter 118 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.44e-03 std=1.93e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 118 | rollout=13.4s score=10.4s update=1.5s step=25.4s | gens_total=64192 score_tokens_total=14430352
+=== Iteration 119 finished in 25.37s ===
+
+
+
+=== Epoch 5; Iteration 120 ===
+[GRZO-S] iter 119 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-7.97e-04 std=1.62e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 119 | rollout=13.8s score=10.1s update=1.7s step=25.6s | gens_total=64768 score_tokens_total=14552158
+[CKPT] latest saved at iteration 119 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 120 finished in 32.43s ===
+
+
+
+=== Epoch 5; Iteration 121 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 120 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-6.76e-04 std=1.99e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 120 | rollout=13.4s score=9.7s update=1.5s step=24.6s | gens_total=65344 score_tokens_total=14674066
+=== Iteration 121 finished in 24.62s ===
+
+
+
+=== Epoch 5; Iteration 122 ===
+[GRZO-S] iter 121 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+9.57e-04 std=1.79e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 121 | rollout=7.8s score=10.2s update=2.4s step=20.5s | gens_total=65664 score_tokens_total=14795938
+=== Iteration 122 finished in 20.49s ===
+
+
+
+=== Epoch 5; Iteration 123 ===
+[GRZO-S] iter 122 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.51e-03 std=1.75e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 122 | rollout=18.7s score=10.1s update=1.7s step=30.6s | gens_total=66496 score_tokens_total=14917678
+=== Iteration 123 finished in 30.60s ===
+
+
+
+=== Epoch 5; Iteration 124 ===
+[GRZO-S] iter 123 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.20e-03 std=2.15e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 123 | rollout=7.9s score=9.6s update=1.5s step=19.0s | gens_total=66816 score_tokens_total=15039436
+=== Iteration 124 finished in 18.99s ===
+
+
+
+=== Epoch 5; Iteration 125 ===
+[GRZO-S] iter 124 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.82e-03 std=1.96e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 124 | rollout=13.9s score=9.9s update=1.7s step=25.4s | gens_total=67392 score_tokens_total=15161320
+countdown_eval -- eval pass@1 (shaped): 0.0395 -- answer_acc (0/1): 0.0395 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration125.json
+[CKPT] latest saved at iteration 124 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 125 finished in 45.35s ===
+
+
+
+=== Epoch 6; Iteration 126 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 125 | B=8 G=8 | reward mean=0.2031 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.16e-03 std=1.75e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 125 | rollout=18.8s score=9.9s update=1.5s step=30.2s | gens_total=68224 score_tokens_total=15283108
+=== Iteration 126 finished in 30.22s ===
+
+
+
+=== Epoch 6; Iteration 127 ===
+[GRZO-S] iter 126 | B=8 G=8 | reward mean=0.1875 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.24e-03 std=1.75e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 126 | rollout=13.5s score=10.1s update=1.8s step=25.3s | gens_total=68800 score_tokens_total=15404878
+=== Iteration 127 finished in 25.31s ===
+
+
+
+=== Epoch 6; Iteration 128 ===
+[GRZO-S] iter 127 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.42e-03 std=2.63e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 127 | rollout=8.0s score=10.1s update=2.7s step=20.7s | gens_total=69120 score_tokens_total=15526690
+=== Iteration 128 finished in 20.75s ===
+
+
+
+=== Epoch 6; Iteration 129 ===
+[GRZO-S] iter 128 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-5.36e-03 std=2.04e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 128 | rollout=13.3s score=10.7s update=1.5s step=25.6s | gens_total=69696 score_tokens_total=15648468
+=== Iteration 129 finished in 25.60s ===
+
+
+
+=== Epoch 6; Iteration 130 ===
+[GRZO-S] iter 129 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.07e-03 std=1.84e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 129 | rollout=13.4s score=10.1s update=3.6s step=27.1s | gens_total=70272 score_tokens_total=15770234
+=== Iteration 130 finished in 27.12s ===
+
+
+
+=== Epoch 6; Iteration 131 ===
+[GRZO-S] iter 130 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.51e-03 std=2.12e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 130 | rollout=13.5s score=10.4s update=1.5s step=25.4s | gens_total=70848 score_tokens_total=15891986
+=== Iteration 131 finished in 25.44s ===
+
+
+
+=== Epoch 6; Iteration 132 ===
+[GRZO-S] iter 131 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.72e-03 std=2.15e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 131 | rollout=13.7s score=10.3s update=2.2s step=26.2s | gens_total=71424 score_tokens_total=16013804
+=== Iteration 132 finished in 26.19s ===
+
+
+
+=== Epoch 6; Iteration 133 ===
+[GRZO-S] iter 132 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.07e-03 std=2.06e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 132 | rollout=13.4s score=10.3s update=1.5s step=25.2s | gens_total=72000 score_tokens_total=16135676
+=== Iteration 133 finished in 25.20s ===
+
+
+
+=== Epoch 6; Iteration 134 ===
+[GRZO-S] iter 133 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.48e-03 std=2.60e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 133 | rollout=13.4s score=10.4s update=2.7s step=26.5s | gens_total=72576 score_tokens_total=16257518
+=== Iteration 134 finished in 26.54s ===
+
+
+
+=== Epoch 6; Iteration 135 ===
+[GRZO-S] iter 134 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.21e-03 std=2.20e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 134 | rollout=18.9s score=10.7s update=1.7s step=31.3s | gens_total=73408 score_tokens_total=16379276
+=== Iteration 135 finished in 31.30s ===
+
+
+
+=== Epoch 6; Iteration 136 ===
+[GRZO-S] iter 135 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.03e-05 std=1.94e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 135 | rollout=13.4s score=10.2s update=1.5s step=25.1s | gens_total=73984 score_tokens_total=16501094
+=== Iteration 136 finished in 25.11s ===
+
+
+
+=== Epoch 6; Iteration 137 ===
+[GRZO-S] iter 136 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.83e-04 std=1.99e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 136 | rollout=19.0s score=10.2s update=1.5s step=30.7s | gens_total=74816 score_tokens_total=16622870
+=== Iteration 137 finished in 30.76s ===
+
+
+
+=== Epoch 6; Iteration 138 ===
+[GRZO-S] iter 137 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.19e-06 std=1.38e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 137 | rollout=13.5s score=10.6s update=1.6s step=25.7s | gens_total=75392 score_tokens_total=16744682
+=== Iteration 138 finished in 25.72s ===
+
+
+
+=== Epoch 6; Iteration 139 ===
+[GRZO-S] iter 138 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.98e-04 std=2.08e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 138 | rollout=18.9s score=10.4s update=1.5s step=30.8s | gens_total=76224 score_tokens_total=16866548
+=== Iteration 139 finished in 30.85s ===
+
+
+
+=== Epoch 6; Iteration 140 ===
+[GRZO-S] iter 139 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.33e-03 std=1.65e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 139 | rollout=13.6s score=10.2s update=1.5s step=25.3s | gens_total=76800 score_tokens_total=16988312
+[CKPT] latest saved at iteration 139 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 140 finished in 32.20s ===
+
+
+
+=== Epoch 6; Iteration 141 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 140 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.19e-03 std=1.91e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 140 | rollout=13.2s score=9.4s update=1.7s step=24.4s | gens_total=77376 score_tokens_total=17110226
+=== Iteration 141 finished in 24.36s ===
+
+
+
+=== Epoch 6; Iteration 142 ===
+[GRZO-S] iter 141 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.08e-04 std=2.15e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 141 | rollout=19.0s score=10.1s update=1.8s step=30.9s | gens_total=78208 score_tokens_total=17231990
+=== Iteration 142 finished in 30.88s ===
+
+
+
+=== Epoch 6; Iteration 143 ===
+[GRZO-S] iter 142 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.07e-03 std=2.12e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 142 | rollout=13.6s score=10.5s update=1.5s step=25.6s | gens_total=78784 score_tokens_total=17353754
+=== Iteration 143 finished in 25.59s ===
+
+
+
+=== Epoch 6; Iteration 144 ===
+[GRZO-S] iter 143 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.22e-03 std=1.99e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 143 | rollout=8.1s score=10.2s update=1.7s step=20.0s | gens_total=79104 score_tokens_total=17475634
+=== Iteration 144 finished in 20.03s ===
+
+
+
+=== Epoch 6; Iteration 145 ===
+[GRZO-S] iter 144 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+4.05e-04 std=1.99e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 144 | rollout=18.9s score=10.3s update=1.5s step=30.7s | gens_total=79936 score_tokens_total=17597542
+=== Iteration 145 finished in 30.73s ===
+
+
+
+=== Epoch 6; Iteration 146 ===
+[GRZO-S] iter 145 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.37e-04 std=1.39e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 145 | rollout=13.4s score=9.9s update=1.8s step=25.2s | gens_total=80512 score_tokens_total=17719354
+=== Iteration 146 finished in 25.20s ===
+
+
+
+=== Epoch 6; Iteration 147 ===
+[GRZO-S] iter 146 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.57e-03 std=1.82e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 146 | rollout=13.4s score=10.1s update=1.7s step=25.3s | gens_total=81088 score_tokens_total=17841166
+=== Iteration 147 finished in 25.26s ===
+
+
+
+=== Epoch 6; Iteration 148 ===
+[GRZO-S] iter 147 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.28e-04 std=1.76e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 147 | rollout=19.3s score=10.4s update=1.5s step=31.2s | gens_total=81920 score_tokens_total=17962960
+=== Iteration 148 finished in 31.16s ===
+
+
+
+=== Epoch 6; Iteration 149 ===
+[GRZO-S] iter 148 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.77e-03 std=2.77e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 148 | rollout=13.7s score=10.0s update=1.5s step=25.2s | gens_total=82496 score_tokens_total=18084850
+=== Iteration 149 finished in 25.22s ===
+
+
+
+=== Epoch 6; Iteration 150 ===
+[GRZO-S] iter 149 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.99e-03 std=1.31e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 149 | rollout=8.0s score=10.3s update=1.5s step=19.9s | gens_total=82816 score_tokens_total=18206674
+countdown_eval -- eval pass@1 (shaped): 0.0525 -- answer_acc (0/1): 0.0525 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration150.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.0525/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[CKPT] latest saved at iteration 149 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 150 finished in 49.61s ===
+
+
+
+=== Epoch 7; Iteration 151 ===
+[GRZO-S] iter 150 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-5.38e-03 std=2.26e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 150 | rollout=7.7s score=10.5s update=1.7s step=19.9s | gens_total=83136 score_tokens_total=18328450
+=== Iteration 151 finished in 19.88s ===
+
+
+
+=== Epoch 7; Iteration 152 ===
+[GRZO-S] iter 151 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.20e-03 std=2.23e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 151 | rollout=13.4s score=10.3s update=1.5s step=25.2s | gens_total=83712 score_tokens_total=18450286
+=== Iteration 152 finished in 25.25s ===
+
+
+
+=== Epoch 7; Iteration 153 ===
+[GRZO-S] iter 152 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.42e-03 std=2.05e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 152 | rollout=19.2s score=10.1s update=1.5s step=30.8s | gens_total=84544 score_tokens_total=18572152
+=== Iteration 153 finished in 30.84s ===
+
+
+
+=== Epoch 7; Iteration 154 ===
+[GRZO-S] iter 153 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.52e-05 std=2.16e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 153 | rollout=8.0s score=10.4s update=1.5s step=19.9s | gens_total=84864 score_tokens_total=18693934
+=== Iteration 154 finished in 19.94s ===
+
+
+
+=== Epoch 7; Iteration 155 ===
+[GRZO-S] iter 154 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+8.09e-04 std=1.48e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 154 | rollout=7.8s score=10.1s update=2.3s step=20.3s | gens_total=85184 score_tokens_total=18815836
+=== Iteration 155 finished in 20.27s ===
+
+
+
+=== Epoch 7; Iteration 156 ===
+[GRZO-S] iter 155 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-9.11e-04 std=2.21e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 155 | rollout=19.2s score=10.3s update=1.5s step=31.1s | gens_total=86016 score_tokens_total=18937696
+=== Iteration 156 finished in 31.07s ===
+
+
+
+=== Epoch 7; Iteration 157 ===
+[GRZO-S] iter 156 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.30e-03 std=1.86e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 156 | rollout=13.4s score=9.8s update=1.5s step=24.7s | gens_total=86592 score_tokens_total=19059454
+=== Iteration 157 finished in 24.67s ===
+
+
+
+=== Epoch 7; Iteration 158 ===
+[GRZO-S] iter 157 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.40e-03 std=1.46e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 157 | rollout=19.4s score=9.7s update=1.6s step=30.6s | gens_total=87424 score_tokens_total=19181410
+=== Iteration 158 finished in 30.59s ===
+
+
+
+=== Epoch 7; Iteration 159 ===
+[GRZO-S] iter 158 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.65e-03 std=2.19e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 158 | rollout=13.5s score=9.9s update=1.8s step=25.2s | gens_total=88000 score_tokens_total=19303240
+=== Iteration 159 finished in 25.25s ===
+
+
+
+=== Epoch 7; Iteration 160 ===
+[GRZO-S] iter 159 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+9.99e-05 std=2.21e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 159 | rollout=8.1s score=9.2s update=1.6s step=18.9s | gens_total=88320 score_tokens_total=19425262
+=== Iteration 160 finished in 18.89s ===
+
+
+
+=== Epoch 7; Iteration 161 ===
+[GRZO-S] iter 160 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.28e-03 std=2.01e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 160 | rollout=8.1s score=10.5s update=1.5s step=20.1s | gens_total=88640 score_tokens_total=19547074
+=== Iteration 161 finished in 20.13s ===
+
+
+
+=== Epoch 7; Iteration 162 ===
+[GRZO-S] iter 161 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.79e-04 std=1.74e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 161 | rollout=8.2s score=10.0s update=1.8s step=20.0s | gens_total=88960 score_tokens_total=19668886
+=== Iteration 162 finished in 20.03s ===
+
+
+
+=== Epoch 7; Iteration 163 ===
+[GRZO-S] iter 162 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.50e-03 std=1.88e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 162 | rollout=7.9s score=10.2s update=1.6s step=19.7s | gens_total=89280 score_tokens_total=19790706
+=== Iteration 163 finished in 19.70s ===
+
+
+
+=== Epoch 7; Iteration 164 ===
+[GRZO-S] iter 163 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.69e-03 std=1.71e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 163 | rollout=13.4s score=10.4s update=1.8s step=25.6s | gens_total=89856 score_tokens_total=19912542
+=== Iteration 164 finished in 25.64s ===
+
+
+
+=== Epoch 7; Iteration 165 ===
+[GRZO-S] iter 164 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.95e-03 std=2.05e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 164 | rollout=13.4s score=10.5s update=1.5s step=25.4s | gens_total=90432 score_tokens_total=20034378
+=== Iteration 165 finished in 25.44s ===
+
+
+
+=== Epoch 7; Iteration 166 ===
+[GRZO-S] iter 165 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.61e-03 std=1.49e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 165 | rollout=13.6s score=10.1s update=2.7s step=26.4s | gens_total=91008 score_tokens_total=20156268
+=== Iteration 166 finished in 26.41s ===
+
+
+
+=== Epoch 7; Iteration 167 ===
+[GRZO-S] iter 166 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.98e-03 std=1.77e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 166 | rollout=8.0s score=10.2s update=1.5s step=19.7s | gens_total=91328 score_tokens_total=20278104
+=== Iteration 167 finished in 19.70s ===
+
+
+
+=== Epoch 7; Iteration 168 ===
+[GRZO-S] iter 167 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.33e-04 std=1.48e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 167 | rollout=13.6s score=9.8s update=1.8s step=25.2s | gens_total=91904 score_tokens_total=20399940
+=== Iteration 168 finished in 25.22s ===
+
+
+
+=== Epoch 7; Iteration 169 ===
+[GRZO-S] iter 168 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.11e-03 std=1.47e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 168 | rollout=18.9s score=10.2s update=1.6s step=30.6s | gens_total=92736 score_tokens_total=20521752
+=== Iteration 169 finished in 30.65s ===
+
+
+
+=== Epoch 7; Iteration 170 ===
+[GRZO-S] iter 169 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+8.61e-04 std=1.78e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 169 | rollout=13.5s score=10.1s update=1.5s step=25.1s | gens_total=93312 score_tokens_total=20643576
+[CKPT] latest saved at iteration 169 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 170 finished in 30.99s ===
+
+
+
+=== Epoch 7; Iteration 171 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 170 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.55e-03 std=1.86e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 170 | rollout=13.1s score=10.4s update=1.5s step=25.1s | gens_total=93888 score_tokens_total=20765388
+=== Iteration 171 finished in 25.06s ===
+
+
+
+=== Epoch 7; Iteration 172 ===
+[GRZO-S] iter 171 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+7.31e-04 std=2.15e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 171 | rollout=13.3s score=9.8s update=1.8s step=24.9s | gens_total=94464 score_tokens_total=20887206
+=== Iteration 172 finished in 24.87s ===
+
+
+
+=== Epoch 7; Iteration 173 ===
+[GRZO-S] iter 172 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-4.40e-05 std=1.84e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 172 | rollout=8.1s score=10.0s update=1.5s step=19.7s | gens_total=94784 score_tokens_total=21009042
+=== Iteration 173 finished in 19.68s ===
+
+
+
+=== Epoch 7; Iteration 174 ===
+[GRZO-S] iter 173 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.04e-04 std=1.72e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 173 | rollout=19.3s score=10.2s update=2.8s step=32.4s | gens_total=95616 score_tokens_total=21130848
+=== Iteration 174 finished in 32.36s ===
+
+
+
+=== Epoch 7; Iteration 175 ===
+[GRZO-S] iter 174 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.89e-03 std=1.92e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 174 | rollout=13.2s score=10.1s update=1.7s step=25.1s | gens_total=96192 score_tokens_total=21252624
+countdown_eval -- eval pass@1 (shaped): 0.0530 -- answer_acc (0/1): 0.0530 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration175.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.053/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 174 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 175 finished in 54.75s ===
+
+
+
+=== Epoch 8; Iteration 176 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 175 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-7.56e-04 std=1.94e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 175 | rollout=18.7s score=10.5s update=1.5s step=30.7s | gens_total=97024 score_tokens_total=21374430
+=== Iteration 176 finished in 30.72s ===
+
+
+
+=== Epoch 8; Iteration 177 ===
+[GRZO-S] iter 176 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.28e-03 std=1.65e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 176 | rollout=13.4s score=10.3s update=2.1s step=25.8s | gens_total=97600 score_tokens_total=21496260
+=== Iteration 177 finished in 25.84s ===
+
+
+
+=== Epoch 8; Iteration 178 ===
+[GRZO-S] iter 177 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-3.00e-03 std=1.67e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 177 | rollout=7.8s score=9.5s update=1.5s step=18.8s | gens_total=97920 score_tokens_total=21618144
+=== Iteration 178 finished in 18.82s ===
+
+
+
+=== Epoch 8; Iteration 179 ===
+[GRZO-S] iter 178 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.50e-03 std=1.42e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 178 | rollout=13.7s score=8.9s update=1.5s step=24.1s | gens_total=98496 score_tokens_total=21739968
+=== Iteration 179 finished in 24.12s ===
+
+
+
+=== Epoch 8; Iteration 180 ===
+[GRZO-S] iter 179 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.74e-03 std=2.12e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 179 | rollout=19.2s score=9.8s update=2.4s step=31.4s | gens_total=99328 score_tokens_total=21861882
+=== Iteration 180 finished in 31.41s ===
+
+
+
+=== Epoch 8; Iteration 181 ===
+[GRZO-S] iter 180 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.25e-03 std=1.79e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 180 | rollout=13.4s score=9.0s update=1.6s step=23.9s | gens_total=99904 score_tokens_total=21983700
+=== Iteration 181 finished in 23.94s ===
+
+
+
+=== Epoch 8; Iteration 182 ===
+[GRZO-S] iter 181 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.24e-03 std=2.08e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 181 | rollout=8.3s score=10.0s update=2.3s step=20.6s | gens_total=100224 score_tokens_total=22105602
+=== Iteration 182 finished in 20.58s ===
+
+
+
+=== Epoch 8; Iteration 183 ===
+[GRZO-S] iter 182 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.48e-03 std=1.83e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 182 | rollout=7.8s score=10.3s update=1.5s step=19.7s | gens_total=100544 score_tokens_total=22227402
+=== Iteration 183 finished in 19.66s ===
+
+
+
+=== Epoch 8; Iteration 184 ===
+[GRZO-S] iter 183 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.97e-04 std=1.67e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 183 | rollout=13.6s score=9.9s update=2.9s step=26.4s | gens_total=101120 score_tokens_total=22349262
+=== Iteration 184 finished in 26.44s ===
+
+
+
+=== Epoch 8; Iteration 185 ===
+[GRZO-S] iter 184 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.22e-03 std=1.96e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 184 | rollout=13.3s score=10.1s update=1.5s step=25.0s | gens_total=101696 score_tokens_total=22471074
+=== Iteration 185 finished in 24.97s ===
+
+
+
+=== Epoch 8; Iteration 186 ===
+[GRZO-S] iter 185 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-9.73e-04 std=2.48e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 185 | rollout=13.8s score=10.3s update=2.3s step=26.4s | gens_total=102272 score_tokens_total=22592904
+=== Iteration 186 finished in 26.37s ===
+
+
+
+=== Epoch 8; Iteration 187 ===
+[GRZO-S] iter 186 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-8.59e-04 std=1.88e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 186 | rollout=13.5s score=10.2s update=1.5s step=25.3s | gens_total=102848 score_tokens_total=22714746
+=== Iteration 187 finished in 25.28s ===
+
+
+
+=== Epoch 8; Iteration 188 ===
+[GRZO-S] iter 187 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.45e-03 std=2.00e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 187 | rollout=13.4s score=9.7s update=1.5s step=24.7s | gens_total=103424 score_tokens_total=22836560
+=== Iteration 188 finished in 24.67s ===
+
+
+
+=== Epoch 8; Iteration 189 ===
+[GRZO-S] iter 188 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-9.82e-04 std=2.03e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 188 | rollout=7.9s score=10.6s update=1.5s step=20.0s | gens_total=103744 score_tokens_total=22958420
+=== Iteration 189 finished in 20.04s ===
+
+
+
+=== Epoch 8; Iteration 190 ===
+[GRZO-S] iter 189 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-5.67e-04 std=1.95e-02 | len=512 rounds=2 | UPDATED n=96
+[GRZO-T] iter 189 | rollout=8.2s score=9.9s update=1.8s step=19.8s | gens_total=104064 score_tokens_total=23080232
+[CKPT] latest saved at iteration 189 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 190 finished in 25.65s ===
+
+
+
+=== Epoch 8; Iteration 191 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 190 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+3.77e-03 std=2.23e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 190 | rollout=13.4s score=10.1s update=1.5s step=25.0s | gens_total=104640 score_tokens_total=23202056
+=== Iteration 191 finished in 25.00s ===
+
+
+
+=== Epoch 8; Iteration 192 ===
+[GRZO-S] iter 191 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.41e-05 std=1.70e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 191 | rollout=13.5s score=10.1s update=1.5s step=25.2s | gens_total=105216 score_tokens_total=23323880
+=== Iteration 192 finished in 25.19s ===
+
+
+
+=== Epoch 8; Iteration 193 ===
+[GRZO-S] iter 192 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-7.06e-04 std=1.87e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 192 | rollout=13.5s score=10.4s update=1.8s step=25.6s | gens_total=105792 score_tokens_total=23445686
+=== Iteration 193 finished in 25.65s ===
+
+
+
+=== Epoch 8; Iteration 194 ===
+[GRZO-S] iter 193 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.10e-03 std=1.66e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 193 | rollout=19.2s score=10.0s update=1.5s step=30.8s | gens_total=106624 score_tokens_total=23567510
+=== Iteration 194 finished in 30.80s ===
+
+
+
+=== Epoch 8; Iteration 195 ===
+[GRZO-S] iter 194 | B=8 G=8 | reward mean=0.1719 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+2.36e-05 std=1.74e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 194 | rollout=13.7s score=10.2s update=1.5s step=25.4s | gens_total=107200 score_tokens_total=23689346
+=== Iteration 195 finished in 25.41s ===
+
+
+
+=== Epoch 8; Iteration 196 ===
+[GRZO-S] iter 195 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+6.89e-04 std=1.67e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 195 | rollout=19.2s score=10.2s update=3.1s step=32.5s | gens_total=108032 score_tokens_total=23811098
+=== Iteration 196 finished in 32.54s ===
+
+
+
+=== Epoch 8; Iteration 197 ===
+[GRZO-S] iter 196 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-1.69e-04 std=1.88e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 196 | rollout=13.5s score=10.3s update=1.5s step=25.3s | gens_total=108608 score_tokens_total=23932916
+=== Iteration 197 finished in 25.33s ===
+
+
+
+=== Epoch 8; Iteration 198 ===
+[GRZO-S] iter 197 | B=8 G=8 | reward mean=0.1406 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+5.93e-03 std=2.46e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 197 | rollout=19.2s score=10.1s update=1.5s step=30.9s | gens_total=109440 score_tokens_total=24054698
+=== Iteration 198 finished in 30.87s ===
+
+
+
+=== Epoch 8; Iteration 199 ===
+[GRZO-S] iter 198 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+1.94e-04 std=2.17e-02 | len=512 rounds=3 | UPDATED n=96
+[GRZO-T] iter 198 | rollout=13.7s score=10.3s update=1.7s step=25.7s | gens_total=110016 score_tokens_total=24176468
+=== Iteration 199 finished in 25.72s ===
+
+
+
+=== Epoch 8; Iteration 200 ===
+[GRZO-S] iter 199 | B=8 G=8 | reward mean=0.1250 | active_groups=1.00 pairs=96 (replay 32) | delta mean=-2.19e-03 std=2.09e-02 | len=512 rounds=5 | UPDATED n=96
+[GRZO-T] iter 199 | rollout=24.6s score=10.2s update=1.7s step=36.5s | gens_total=111104 score_tokens_total=24298244
+countdown_eval -- eval pass@1 (shaped): 0.0820 -- answer_acc (0/1): 0.0820 --
+saving model outputs at /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/eval-output/model_eval_taskcountdown_eval_iteration200.json
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoints/forge-raw-N96-lr1.6e-4-s42-acc0.082/pytorch_model.pth.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/best/pytorch_model.pth.
+[CKPT] latest saved at iteration 199 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+=== Iteration 200 finished in 77.18s ===
+
+
+
+=== Epoch 9; Iteration 201 ===
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+[GRZO-S] iter 200 | B=8 G=8 | reward mean=0.1562 | active_groups=1.00 pairs=96 (replay 32) | delta mean=+5.32e-04 std=2.14e-02 | len=512 rounds=4 | UPDATED n=96
+[GRZO-T] iter 200 | rollout=18.8s score=9.1s update=1.5s step=29.5s | gens_total=111936 score_tokens_total=24420056
+=== Iteration 201 finished in 29.50s ===
+
+[CKPT] latest saved at iteration 200 -> /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/latest/pytorch_model.pth.
+Final model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoint-grzo_iteration_200.
+[INFO] Cleanup complete.
+[36m(RayWorkerWrapper pid=1174302)[0m Model weights saved to /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/checkpoint-grzo_iteration_200/pytorch_model.pth.
+wandb: updating run metadata
+wandb: uploading summary, console lines 1555-1556
+wandb: 
+wandb: Run history:
+wandb:                     cost/gens_total ▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▇▇▇▇███
+wandb:             cost/score_tokens_total ▁▁▁▁▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇▇▇██
+wandb:                    cost/t_rollout_s █▄▅█▅█▄▁▄▁▄▁▄▁▅▄▅▁▁▅▅▁▅▅██▁█▁▄▁▄█▄▁▄▁▄▄█
+wandb:                      cost/t_score_s ▁▆▅▇▇▇█▇▃▄▆▄▆█▆█▇▆▇█▆▅▇▇▇▇█▆▇▅▇▇▆▇▇▃▇▇█▇
+wandb:                       cost/t_step_s ▃▃▆▃▁▁▃▁▃▆▄▃▁▃▃▄▁▃▃▃▁▄▃▄▄▄▃▁▃▆▁▁▁▃▆▁▄▆▆█
+wandb:                     cost/t_update_s ▂▁▁▂▂▂▁▁▁▂▁▁▇▁▁▁▁▁▁▂▄▂▁▂▁▂▁▇▁▂▁▁▁▂▇▅▇▁█▁
+wandb:                      eval-iteration ▁▂▃▄▄▅▆▇█
+wandb:            eval/avg_answer_acc/mean ▁▁▃▁▄▄▅▅█
+wandb:                 eval/avgpass@1/mean ▁▁▃▁▄▄▅▅█
+wandb: eval/countdown_eval/answer_acc/mean ▁▁▃▁▄▄▅▅█
+wandb:                                 +14 ...
+wandb: 
+wandb: Run summary:
+wandb:                     cost/gens_total 111936
+wandb:             cost/score_tokens_total 24420056
+wandb:                    cost/t_rollout_s 18.8143
+wandb:                      cost/t_score_s 9.14374
+wandb:                       cost/t_step_s 29.4923
+wandb:                     cost/t_update_s 1.5319
+wandb:                      eval-iteration 199
+wandb:            eval/avg_answer_acc/mean 0.082
+wandb:                 eval/avgpass@1/mean 0.082
+wandb: eval/countdown_eval/answer_acc/mean 0.082
+wandb:                                 +14 ...
+wandb: 
+wandb: 🚀 View run forge-raw-N96-lr1.6e-4-s42 at: https://wandb.ai/liyan_tan/grzo-rlvr/runs/161qevfm
+wandb: ⭐️ View project at: https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: /data/liyan/runs/grzo/forge-raw-N96-lr1.6e-4-s42/wandb/run-20260910_195955-161qevfm/logs
+-- Training completed! --
+[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...
+
+
+

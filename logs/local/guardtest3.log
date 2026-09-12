@@ -1,0 +1,168 @@
+INFO 09-10 11:34:11 [__init__.py:216] Automatically detected platform cuda.
+Namespace(task='countdown', countdown_reward='binary', math_reward='binary', margin_tau_end=0.02, margin_tau=0.1, lr_schedule='const', eval_subsets='', model_name='x', checkpoint=None, sigma=0.001, lr=0.0005, rollout_temperature=1.0, group_size=8, batch_size=8, mini_batch_size=8, no_length_norm=False, delta_norm='zscore', min_directions=1, dapo_target_groups=0, dapo_max_rounds=4, dapo_draw=0, pairs_per_direction=1, directions_per_step=0, n_iterations=300, eval_freq=25, train_dataset='datasets/train/countdown', eval_dataset='datasets/evaluation_suite/countdown/', max_tokens=1024, n_vllm_engines=2, n_gpu_per_vllm_engine=1, logging='wandb', seed=42, use_gpus='3,4', reward_function_timeout=10, output_directory='/data/liyan/runs/grzo', save_best_models=True, experiment_name='guardtest3', wandb_project='grzo-rlvr', resume=True)
+eval subsets: ['countdown_eval']
+-- Running: guardtest3 --
+[RESUME] no latest checkpoint under /data/liyan/runs/grzo/guardtest3/latest; starting fresh
+2026-09-10 11:34:21,752	INFO worker.py:2024 -- Started a local Ray instance.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/liyan/.netrc.
+wandb: Currently logged in as: liyan_tan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+wandb: Tracking run with wandb version 0.28.0
+wandb: Run data is saved locally in /data/liyan/runs/grzo/guardtest3/wandb/run-20260910_113424-ae547h0j
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run guardtest3
+wandb: ⭐️ View project at https://wandb.ai/liyan_tan/grzo-rlvr
+wandb: 🚀 View run at https://wandb.ai/liyan_tan/grzo-rlvr/runs/ae547h0j
+wandb: Detected [openai] in use.
+wandb: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+wandb: For more information, check out the docs at: https://weave-docs.wandb.ai
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 403, in hf_raise_for_status
+    response.raise_for_status()
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/x/resolve/main/tokenizer_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 479, in cached_files
+    hf_hub_download(
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1662, in _raise_on_head_call_error
+    raise head_call_error
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1550, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1467, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 283, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 307, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 453, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-6aa2f832-61f73144215e4a9101cc5856;0978d20f-d6ad-4a92-b7f3-e23c3f5be15e)
+
+Repository Not Found for url: https://huggingface.co/x/resolve/main/tokenizer_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 284, in <module>
+    main()
+  File "/data/liyan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 237, in main
+    trainer = GRZOSurrogateTrainer(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/grzo_surrogate_trainer.py", line 54, in __init__
+    super().__init__(*args, **kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/grzo_trainer.py", line 75, in __init__
+    super().__init__(*args, **kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 156, in __init__
+    self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 1089, in from_pretrained
+    tokenizer_config = get_tokenizer_config(pretrained_model_name_or_path, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 921, in get_tokenizer_config
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 322, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 511, in cached_files
+    raise OSError(
+OSError: x is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 403, in hf_raise_for_status
+    response.raise_for_status()
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/x/resolve/main/tokenizer_config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 479, in cached_files
+    hf_hub_download(
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1121, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1662, in _raise_on_head_call_error
+    raise head_call_error
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1550, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1467, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 283, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 307, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 453, in hf_raise_for_status
+    raise _format(RepositoryNotFoundError, message, response) from e
+huggingface_hub.errors.RepositoryNotFoundError: 401 Client Error. (Request ID: Root=1-6aa2f832-61f73144215e4a9101cc5856;0978d20f-d6ad-4a92-b7f3-e23c3f5be15e)
+
+Repository Not Found for url: https://huggingface.co/x/resolve/main/tokenizer_config.json.
+Please make sure you specified the correct `repo_id` and `repo_type`.
+If you are trying to access a private or gated repo, make sure you are authenticated. For more details, see https://huggingface.co/docs/huggingface_hub/authentication
+Invalid username or password.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 284, in <module>
+    main()
+  File "/data/liyan/es-at-scale/es_at_scale/train_grzo_surrogate.py", line 237, in main
+    trainer = GRZOSurrogateTrainer(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/grzo_surrogate_trainer.py", line 54, in __init__
+    super().__init__(*args, **kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/grzo_trainer.py", line 75, in __init__
+    super().__init__(*args, **kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 156, in __init__
+    self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 1089, in from_pretrained
+    tokenizer_config = get_tokenizer_config(pretrained_model_name_or_path, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 921, in get_tokenizer_config
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 322, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/transformers/utils/hub.py", line 511, in cached_files
+    raise OSError(
+OSError: x is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo either by logging in with `hf auth login` or by passing `token=<your_token>`
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mguardtest3[0m at: [34mhttps://wandb.ai/liyan_tan/grzo-rlvr/runs/ae547h0j[0m
+[1;34mwandb[0m: Find logs at: [1;35m../runs/grzo/guardtest3/wandb/run-20260910_113424-ae547h0j/logs[0m
+[INFO] Received signal 15, cleaning up...

@@ -1,0 +1,7 @@
+[LOCAL forge-raw-N384-lr6.4e-4-s43] GPU 4 memory.used=0 MiB
+[LOCAL forge-raw-N384-lr6.4e-4-s43] FORGE_MASTER_PORT=40127
+[LOCAL forge-raw-N384-lr6.4e-4-s43] NCCL_P2P_DISABLE=1
+[LOCAL forge-raw-N384-lr6.4e-4-s43] start Fri Sep 11 08:04:41 AM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=4 engines=1 sigma=1e-3 lr=6.4e-4 G=8 B=8 iters=200
+[LOCAL forge-raw-N384-lr6.4e-4-s43] attempt 1: resume-from iter -1 Fri Sep 11 08:04:41 AM PDT 2026
+[LOCAL forge-raw-N384-lr6.4e-4-s43] trainer exited rc=0 at iter 200 Fri Sep 11 11:29:42 AM PDT 2026
+[LOCAL forge-raw-N384-lr6.4e-4-s43] DONE at iter 200 Fri Sep 11 11:29:42 AM PDT 2026

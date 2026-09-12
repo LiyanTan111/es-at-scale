@@ -1,0 +1,304 @@
+INFO 09-10 11:27:17 [__init__.py:216] Automatically detected platform cuda.
+Namespace(task='countdown', countdown_reward='binary', math_reward='binary', margin_tau_end=0.02, margin_tau=0.1, lr_schedule='const', eval_subsets='', model_name='Qwen/Qwen2.5-0.5B-Instruct', checkpoint=None, sigma=0.001, lr=0.0005, rollout_temperature=1.0, group_size=8, batch_size=8, mini_batch_size=8, no_length_norm=False, delta_norm='zscore', min_directions=1, dapo_target_groups=0, dapo_max_rounds=4, dapo_draw=0, pairs_per_direction=1, directions_per_step=0, n_iterations=6, eval_freq=5, train_dataset='datasets/train/countdown', eval_dataset='datasets/evaluation_suite/countdown/', max_tokens=512, n_vllm_engines=4, n_gpu_per_vllm_engine=1, logging='none', seed=42, use_gpus='1,2,3,4', reward_function_timeout=10, output_directory='/data/liyan/runs/grzo-smoke', save_best_models=False, experiment_name='smoke-forge-v2-0p5b', wandb_project='grzo-rlvr', resume=False)
+eval subsets: ['countdown_eval']
+-- Running: smoke-forge-v2-0p5b --
+2026-09-10 11:27:25,599	INFO worker.py:2024 -- Started a local Ray instance.
+[36m(pid=676072)[0m INFO 09-10 11:27:34 [__init__.py:216] Automatically detected platform cuda.
+[33m(raylet)[0m [2026-09-10 11:27:34,501 E 675415 675443] (raylet) file_system_monitor.cc:116: /tmp/ray/session_2026-09-10_11-27-19_963734_673472 is over 95% full, available space: 87.8344 GB; capacity: 1758.86 GB. Object creation will fail if spilling is required.
+[33m(raylet)[0m [2026-09-10 11:27:44,511 E 675415 675443] (raylet) file_system_monitor.cc:116: /tmp/ray/session_2026-09-10_11-27-19_963734_673472 is over 95% full, available space: 87.8303 GB; capacity: 1758.86 GB. Object creation will fail if spilling is required.
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:27:47 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-0.5B-Instruct'}
+[36m(pid=676076)[0m INFO 09-10 11:27:35 [__init__.py:216] Automatically detected platform cuda.[32m [repeated 3x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(ESNcclLLM pid=676064)[0m WARNING 09-10 11:27:47 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:27:48 [model.py:547] Resolved architecture: Qwen2ForCausalLM
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:27:48 [model.py:1510] Using max model len 4096
+[36m(ESNcclLLM pid=676064)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[33m(raylet)[0m [2026-09-10 11:27:54,522 E 675415 675443] (raylet) file_system_monitor.cc:116: /tmp/ray/session_2026-09-10_11-27-19_963734_673472 is over 95% full, available space: 87.8296 GB; capacity: 1758.86 GB. Object creation will fail if spilling is required.
+[36m(ESNcclLLM pid=676076)[0m `torch_dtype` is deprecated! Use `dtype` instead![32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:27:59 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:27:59 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=16384.
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:27:47 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-0.5B-Instruct'}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m WARNING 09-10 11:27:47 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:27:48 [model.py:547] Resolved architecture: Qwen2ForCausalLM[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:27:48 [model.py:1510] Using max model len 4096[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:28:00 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-0.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-0.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-0.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:28:00 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:28:00 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=676064)[0m INFO 09-10 11:28:00 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[33m(raylet)[0m [2026-09-10 11:28:04,534 E 675415 675443] (raylet) file_system_monitor.cc:116: /tmp/ray/session_2026-09-10_11-27-19_963734_673472 is over 95% full, available space: 87.8291 GB; capacity: 1758.86 GB. Object creation will fail if spilling is required.
+[36m(pid=676071)[0m INFO 09-10 11:28:05 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:27:59 [arg_utils.py:1215] Using ray runtime env: {}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:27:59 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=16384.[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:28:00 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-0.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-0.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-0.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:28:00 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:28:00 [ray_utils.py:324] Using the existing placement group[32m [repeated 3x across cluster][0m
+[36m(ESNcclLLM pid=676076)[0m INFO 09-10 11:28:00 [ray_distributed_executor.py:171] use_ray_spmd_worker: True[32m [repeated 3x across cluster][0m
+[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...
+[INFO] Received signal 15, cleaning up...
+[INFO] Received signal 15, cleaning up...
+[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...[INFO] Received signal 15, cleaning up...
+Process ForkPoolWorker-2:
+
+
+Process ForkPoolWorker-1:
+
+Process ForkPoolWorker-4:
+
+Process ForkPoolWorker-8:
+Process ForkPoolWorker-3:
+Process ForkPoolWorker-5:
+Process ForkPoolWorker-6:
+Process ForkPoolWorker-7:
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 387, in get
+    res = self._reader.recv_bytes()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py", line 216, in recv_bytes
+    buf = self._recv_bytes(maxlength)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/connection.py", line 395, in _recv
+    chunk = read(handle, remaining)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+Traceback (most recent call last):
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/pool.py", line 114, in worker
+    task = get()
+           ^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/queues.py", line 386, in get
+    with self._rlock:
+         ^^^^^^^^^^^
+  File "/data/liyan/.uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/synchronize.py", line 95, in __enter__
+    return self._semlock.__enter__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 76, in <lambda>
+    signal.signal(signal.SIGTERM, lambda sig, frame: self._handle_exit(sig, frame))
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 218, in _handle_exit
+    self.cleanup()
+  File "/data/liyan/es-at-scale/es_at_scale/trainer/es_trainer.py", line 203, in cleanup
+    for llm in self.engines:
+               ^^^^^^^^^^^^
+AttributeError: 'GRZOSurrogateTrainer' object has no attribute 'engines'
+[INFO] Received signal 15, cleaning up...
+[INFO] Cleanup complete.
+[36m(pid=676069)[0m [2026-09-10 11:28:06,790 C 676069 676069] core_worker.cc:2938:  An unexpected system state has occurred. You have likely discovered a bug in Ray. Please report this issue at https://github.com/ray-project/ray/issues and we'll work with you to fix it. Check failed: raylet_ipc_client_->ActorCreationTaskDone() Status not OK: IOError: Broken pipe Unexpected error in IPC to the Raylet; the Raylet has most likely crashed.
+[36m(pid=676069)[0m *** StackTrace Information ***
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x17c37ca) [0x7fa3dbbc07ca] ray::operator<<()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray6RayLogD1Ev+0x469) [0x7fa3dbbc2df9] ray::RayLog::~RayLog()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core10CoreWorker11ExecuteTaskERKNS_17TaskSpecificationESt8optionalISt13unordered_mapISsSt6vectorISt4pairIldESaIS9_EESt4hashISsESt8equal_toISsESaIS8_IKSsSB_EEEEPS7_IS8_INS_8ObjectIDESt10shared_ptrINS_9RayObjectEEESaISP_EESS_PS7_IS8_ISL_bESaIST_EEPN6google8protobuf16RepeatedPtrFieldINS_3rpc20ObjectReferenceCountEEEPbPSsS15_+0x2219) [0x7fa3daedb539] ray::core::CoreWorker::ExecuteTask()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZNSt17_Function_handlerIFN3ray6StatusERKNS0_17TaskSpecificationESt8optionalISt13unordered_mapISsSt6vectorISt4pairIldESaIS9_EESt4hashISsESt8equal_toISsESaIS8_IKSsSB_EEEEPS7_IS8_INS0_8ObjectIDESt10shared_ptrINS0_9RayObjectEEESaISP_EESS_PS7_IS8_ISL_bESaIST_EEPN6google8protobuf16RepeatedPtrFieldINS0_3rpc20ObjectReferenceCountEEEPbPSsS15_ESt5_BindIFMNS0_4core10CoreWorkerEFS1_S4_SK_SS_SS_SW_S13_S14_S15_S15_EPS19_St12_PlaceholderILi1EES1D_ILi2EES1D_ILi3EES1D_ILi4EES1D_ILi5EES1D_ILi6EES1D_ILi7EES1D_ILi8EES1D_ILi9EEEEE9_M_invokeERKSt9_Any_dataS4_OSK_OSS_S1U_OSW_OS13_OS14_OS15_S1Y_+0x87) [0x7fa3daea0007] std::_Function_handler<>::_M_invoke()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0xbd68ed) [0x7fa3dafd38ed] std::_Function_handler<>::_M_invoke()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0xbda835) [0x7fa3dafd7835] ray::core::NormalTaskExecutionQueue::ExecuteQueuedTasks()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1103b5b) [0x7fa3db500b5b] EventTracker::RecordExecution()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x10f8d0b) [0x7fa3db4f5d0b] std::_Function_handler<>::_M_invoke()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0xbf5f4b) [0x7fa3daff2f4b] boost::asio::detail::executor_op<>::do_complete()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x16605db) [0x7fa3dba5d5db] boost::asio::detail::scheduler::do_run_one()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1661f79) [0x7fa3dba5ef79] boost::asio::detail::scheduler::run()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1662682) [0x7fa3dba5f682] boost::asio::io_context::run()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core10CoreWorker20RunTaskExecutionLoopEv+0x132) [0x7fa3dae9f332] ray::core::CoreWorker::RunTaskExecutionLoop()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core21CoreWorkerProcessImpl26RunWorkerTaskExecutionLoopEv+0x41) [0x7fa3daef1281] ray::core::CoreWorkerProcessImpl::RunWorkerTaskExecutionLoop()
+[36m(pid=676069)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x8fcef1) [0x7fa3dacf9ef1] __pyx_pw_3ray_7_raylet_10CoreWorker_5run_task_loop()
+[36m(pid=676069)[0m ray::IDLE(_PyEval_EvalFrameDefault+0x3133) [0x18154f3] _PyEval_EvalFrameDefault
+[36m(pid=676069)[0m ray::IDLE(PyEval_EvalCode+0xde) [0x187cd9e] PyEval_EvalCode
+[36m(pid=676069)[0m ray::IDLE() [0x18bb609] run_mod.llvm.15665849144674063155
+[36m(pid=676069)[0m ray::IDLE() [0x19f8885] pyrun_file
+[36m(pid=676069)[0m ray::IDLE(_PyRun_SimpleFileObject+0x106) [0x19f8646] _PyRun_SimpleFileObject
+[36m(pid=676069)[0m ray::IDLE(_PyRun_AnyFileObject+0x4a) [0x19f83ca] _PyRun_AnyFileObject
+[36m(pid=676069)[0m ray::IDLE() [0x19f8350] pymain_run_file_obj
+[36m(pid=676069)[0m ray::IDLE() [0x19f825d] pymain_run_file
+[36m(pid=676069)[0m ray::IDLE() [0x1ae65e3] Py_RunMain.warm
+[36m(pid=676069)[0m ray::IDLE() [0x1972218] pymain_main.llvm.3962528579171415103
+[36m(pid=676069)[0m ray::IDLE() [0x197202c] main
+[36m(pid=676069)[0m /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7fa3dcc50d90]
+[36m(pid=676069)[0m /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7fa3dcc50e40] __libc_start_main
+[36m(pid=676069)[0m ray::IDLE(_start+0x29) [0x19bf069] _start
+[36m(pid=676069)[0m 
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x8fcef1) [0x7f069f258ef1] __pyx_pw_3ray_7_raylet_10CoreWorker_5run_task_loop()
+[36m(pid=676067)[0m /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f06a11afd90]
+[36m(pid=676067)[0m 
+[36m(pid=676075)[0m INFO 09-10 11:28:06 [__init__.py:216] Automatically detected platform cuda.
+[36m(pid=676067)[0m [2026-09-10 11:28:06,775 C 676067 676067] core_worker.cc:2938:  An unexpected system state has occurred. You have likely discovered a bug in Ray. Please report this issue at https://github.com/ray-project/ray/issues and we'll work with you to fix it. Check failed: raylet_ipc_client_->ActorCreationTaskDone() Status not OK: IOError: Broken pipe Unexpected error in IPC to the Raylet; the Raylet has most likely crashed.
+[36m(pid=676067)[0m *** StackTrace Information ***
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x17c37ca) [0x7f06a011f7ca] ray::operator<<()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray6RayLogD1Ev+0x469) [0x7f06a0121df9] ray::RayLog::~RayLog()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core10CoreWorker11ExecuteTaskERKNS_17TaskSpecificationESt8optionalISt13unordered_mapISsSt6vectorISt4pairIldESaIS9_EESt4hashISsESt8equal_toISsESaIS8_IKSsSB_EEEEPS7_IS8_INS_8ObjectIDESt10shared_ptrINS_9RayObjectEEESaISP_EESS_PS7_IS8_ISL_bESaIST_EEPN6google8protobuf16RepeatedPtrFieldINS_3rpc20ObjectReferenceCountEEEPbPSsS15_+0x2219) [0x7f069f43a539] ray::core::CoreWorker::ExecuteTask()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x10f8d0b) [0x7f069fa54d0b] std::_Function_handler<>::_M_invoke()[32m [repeated 3x across cluster][0m
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0xbda835) [0x7f069f536835] ray::core::NormalTaskExecutionQueue::ExecuteQueuedTasks()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1103b5b) [0x7f069fa5fb5b] EventTracker::RecordExecution()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0xbf5f4b) [0x7f069f551f4b] boost::asio::detail::executor_op<>::do_complete()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x16605db) [0x7f069ffbc5db] boost::asio::detail::scheduler::do_run_one()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1661f79) [0x7f069ffbdf79] boost::asio::detail::scheduler::run()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(+0x1662682) [0x7f069ffbe682] boost::asio::io_context::run()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core10CoreWorker20RunTaskExecutionLoopEv+0x132) [0x7f069f3fe332] ray::core::CoreWorker::RunTaskExecutionLoop()
+[36m(pid=676067)[0m /data/liyan/es-at-scale/.venv/lib/python3.12/site-packages/ray/_raylet.so(_ZN3ray4core21CoreWorkerProcessImpl26RunWorkerTaskExecutionLoopEv+0x41) [0x7f069f450281] ray::core::CoreWorkerProcessImpl::RunWorkerTaskExecutionLoop()
+[36m(pid=676067)[0m ray::IDLE(_PyEval_EvalFrameDefault+0x3133) [0x18154f3] _PyEval_EvalFrameDefault
+[36m(pid=676067)[0m ray::IDLE(PyEval_EvalCode+0xde) [0x187cd9e] PyEval_EvalCode
+[36m(pid=676067)[0m ray::IDLE() [0x1972218] pymain_main.llvm.3962528579171415103[32m [repeated 2x across cluster][0m
+[36m(pid=676067)[0m ray::IDLE() [0x19f8885] pyrun_file
+[36m(pid=676067)[0m ray::IDLE(_PyRun_SimpleFileObject+0x106) [0x19f8646] _PyRun_SimpleFileObject
+[36m(pid=676067)[0m ray::IDLE(_PyRun_AnyFileObject+0x4a) [0x19f83ca] _PyRun_AnyFileObject
+[36m(pid=676067)[0m ray::IDLE() [0x19f8350] pymain_run_file_obj
+[36m(pid=676067)[0m ray::IDLE() [0x19f825d] pymain_run_file
+[36m(pid=676067)[0m ray::IDLE() [0x1ae65e3] Py_RunMain.warm
+[36m(pid=676067)[0m ray::IDLE() [0x197202c] main
+[36m(pid=676067)[0m /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f06a11afe40] __libc_start_main
+[36m(pid=676067)[0m ray::IDLE(_start+0x29) [0x19bf069] _start

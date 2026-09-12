@@ -1,0 +1,18 @@
+REBUILD start Thu Sep 10 12:17:35 PM PDT 2026
+Activate with: source /data/liyan/venvs/grpo/bin/activate
+ + watchfiles==1.2.0
+ + websockets==17.1
+ + xformers==0.0.32.post1
+ + xgrammar==0.1.25
+ + xxhash==4.0.1
+ + yarl==1.24.5
+===== versions =====
+trl 0.29.1
+transformers 4.57.6
+vllm 0.11.0
+torch 2.8.0
+accelerate 1.15.0
+peft 0.20.0
+cuda build 12.8 available True
+vllm_mode in GRPOConfig: True
+end Thu Sep 10 12:17:57 PM PDT 2026

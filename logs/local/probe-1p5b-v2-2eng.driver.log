@@ -1,0 +1,7 @@
+[LOCAL probe-1p5b-v2-2eng] GPU 1 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-2eng] GPU 2 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-2eng] FORGE_MASTER_PORT=50457
+[LOCAL probe-1p5b-v2-2eng] start Thu Sep 10 11:56:36 AM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=1,2 engines=2 sigma=1e-3 lr=5e-4 G=8 B=8 iters=8
+[LOCAL probe-1p5b-v2-2eng] attempt 1: resume-from iter -1 Thu Sep 10 11:56:36 AM PDT 2026
+[LOCAL probe-1p5b-v2-2eng] trainer exited rc=0 at iter 8 Thu Sep 10 12:01:28 PM PDT 2026
+[LOCAL probe-1p5b-v2-2eng] DONE at iter 8 Thu Sep 10 12:01:28 PM PDT 2026

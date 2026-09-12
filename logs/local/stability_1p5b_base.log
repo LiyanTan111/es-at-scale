@@ -1,0 +1,24 @@
+[STAB] model Qwen/Qwen2.5-1.5B-Instruct d=1543.7M pairs=16 L(theta)=-0.087573
+[STAB] |g|^2=14.8673  g^T H g/|g|^2=6.9112e+01  (5s)
+[STAB] tr(H) via h=0.0005: -2.0826e+03 ± 4.0e+02  (uHu samples: min -5.412e+03 max 9.474e+02)
+[STAB] tr(H) via h=0.001: -1.7880e+03 ± 3.5e+02  (uHu samples: min -4.278e+03 max 8.744e+02)
+/data/liyan/es-at-scale/scripts/local_stability.py:196: RuntimeWarning: Mean of empty slice
+  "bf16_survival": np.nanmean(surv, 0).tolist(),
+[STAB] N=   64 | <ghat,g>=  14.48 (|g|^2=14.87) | mean|g_j|^2(fwd)=  187.65 | fit a=14.698 b=1.924e+03 -> eta_opt=3.82e-03 eta_max=7.64e-03 | pred eta_opt=-3.53e-03 eta_max=-7.05e-03 | best grid eta=4.27e-04 dL=-0.0059 | 68s
+       dL(eta): 3.3e-06:-0.0000 6.7e-06:-0.0001 1.3e-05:-0.0002 2.7e-05:-0.0004 5.3e-05:-0.0008 1.1e-04:-0.0015 2.1e-04:-0.0031 4.3e-04:-0.0059
+/data/liyan/es-at-scale/scripts/local_stability.py:209: RuntimeWarning: Mean of empty slice
+  print("       bf16 update survival at eta " + " ".join(f"{etas[i]:.1e}:{np.nanmean(surv, 0)[i]:.2f}" for i in surv_idx))
+       bf16 update survival at eta 3.3e-06:0.41 5.3e-05:1.04 4.3e-04:1.00
+[STAB] N=   96 | <ghat,g>=  11.60 (|g|^2=14.87) | mean|g_j|^2(fwd)=  213.97 | fit a=11.973 b=7.629e+02 -> eta_opt=7.85e-03 eta_max=1.57e-02 | pred eta_opt=-5.03e-03 eta_max=-1.01e-02 | best grid eta=6.40e-04 dL=-0.0073 | 88s
+       dL(eta): 5.0e-06:-0.0001 1.0e-05:-0.0001 2.0e-05:-0.0002 4.0e-05:-0.0005 8.0e-05:-0.0009 1.6e-04:-0.0019 3.2e-04:-0.0038 6.4e-04:-0.0073
+       bf16 update survival at eta 5.0e-06:0.47 8.0e-05:1.04 6.4e-04:1.00
+[STAB] N=  256 | <ghat,g>=  12.00 (|g|^2=14.87) | mean|g_j|^2(fwd)=  199.80 | fit a=12.130 b=6.405e+02 -> eta_opt=9.47e-03 eta_max=1.89e-02 | pred eta_opt=-4.04e-02 eta_max=-8.08e-02 | best grid eta=1.71e-03 dL=-0.0188 | 178s
+       dL(eta): 1.3e-05:-0.0002 2.7e-05:-0.0003 5.3e-05:-0.0006 1.1e-04:-0.0013 2.1e-04:-0.0025 4.3e-04:-0.0050 8.5e-04:-0.0099 1.7e-03:-0.0188
+       bf16 update survival at eta 1.3e-05:0.58 2.1e-04:1.03 1.7e-03:1.00
+[STAB] N=  512 | <ghat,g>=  13.30 (|g|^2=14.87) | mean|g_j|^2(fwd)=  208.00 | fit a=13.275 b=5.487e+02 -> eta_opt=1.21e-02 eta_max=2.42e-02 | pred eta_opt=4.94e-02 eta_max=9.88e-02 | best grid eta=3.41e-03 dL=-0.0389 | 334s
+       dL(eta): 2.7e-05:-0.0004 5.3e-05:-0.0007 1.1e-04:-0.0014 2.1e-04:-0.0028 4.3e-04:-0.0056 8.5e-04:-0.0110 1.7e-03:-0.0210 3.4e-03:-0.0389
+       bf16 update survival at eta 2.7e-05:0.69 4.3e-04:1.01 3.4e-03:1.00
+[STAB] N= 1024 | <ghat,g>=  15.04 (|g|^2=14.87) | mean|g_j|^2(fwd)=  227.03 | fit a=14.702 b=6.412e+02 -> eta_opt=1.15e-02 eta_max=2.29e-02 | pred eta_opt=2.36e-02 eta_max=4.71e-02 | best grid eta=6.83e-03 dL=-0.0706 | 634s
+       dL(eta): 5.3e-05:-0.0008 1.1e-04:-0.0016 2.1e-04:-0.0032 4.3e-04:-0.0063 8.5e-04:-0.0124 1.7e-03:-0.0236 3.4e-03:-0.0422 6.8e-03:-0.0706
+       bf16 update survival at eta 5.3e-05:0.80 8.5e-04:1.01 6.8e-03:1.00
+[STAB] wrote /data/liyan/runs/grzo-smoke/align/stability_1p5b_base.json

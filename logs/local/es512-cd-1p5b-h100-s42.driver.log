@@ -1,0 +1,14 @@
+[LOCAL es512-cd-1p5b-h100-s42] GPU 3 memory.used=0 MiB
+[LOCAL es512-cd-1p5b-h100-s42] GPU 4 memory.used=0 MiB
+[LOCAL es512-cd-1p5b-h100-s42] FORGE_MASTER_PORT=33203
+[LOCAL es512-cd-1p5b-h100-s42] GPU set spans NUMA nodes -> NCCL_P2P_DISABLE=1
+[LOCAL es512-cd-1p5b-h100-s42] start Thu Sep 10 12:09:54 PM PDT 2026: ES model=Qwen/Qwen2.5-1.5B-Instruct gpus=3,4 engines=2 sigma=1e-3 alpha=-1 pop=30 B=200 iters=500
+[LOCAL es512-cd-1p5b-h100-s42] attempt 1: resume-from iter -1 Thu Sep 10 12:09:54 PM PDT 2026
+[LOCAL es512-cd-1p5b-h100-s42] trainer exited rc=1 at iter 29 Thu Sep 10 12:41:04 PM PDT 2026
+[LOCAL es512-cd-1p5b-h100-s42] attempt 2: resume-from iter 29 Thu Sep 10 12:42:04 PM PDT 2026
+[LOCAL es512-cd-1p5b-h100-s42] trainer exited rc=0 at iter 500 Thu Sep 10 06:23:42 PM PDT 2026
+[LOCAL es512-cd-1p5b-h100-s42] DONE at iter 500 Thu Sep 10 06:23:42 PM PDT 2026
+scripts/local_es.sh: line 127: continue: only meaningful in a `for', `while', or `until' loop
+[LOCAL es512-cd-1p5b-h100-s42] rc=0 but not done -- check log
+scripts/local_es.sh: line 130: syntax error near unexpected token `done'
+scripts/local_es.sh: line 130: `done'

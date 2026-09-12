@@ -1,0 +1,7 @@
+[LOCAL smoke-fp32master] GPU 2 memory.used=0 MiB
+[LOCAL smoke-fp32master] FORGE_MASTER_PORT=33230
+[LOCAL smoke-fp32master] NCCL_P2P_DISABLE=1
+[LOCAL smoke-fp32master] start Fri Sep 11 02:49:38 PM PDT 2026: model=Qwen/Qwen2.5-0.5B-Instruct gpus=2 engines=1 sigma=1e-3 lr=1.6e-4 G=8 B=8 iters=3
+[LOCAL smoke-fp32master] attempt 1: resume-from iter -1 Fri Sep 11 02:49:38 PM PDT 2026
+[LOCAL smoke-fp32master] trainer exited rc=0 at iter 3 Fri Sep 11 02:52:32 PM PDT 2026
+[LOCAL smoke-fp32master] DONE at iter 3 Fri Sep 11 02:52:32 PM PDT 2026

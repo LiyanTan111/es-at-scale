@@ -1,0 +1,21 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+[ALIGN] model Qwen/Qwen2.5-0.5B-Instruct d=494.0M device=cuda
+[ALIGN] pooling round 1: active 0/8
+[ALIGN] pooling round 2: active 0/8
+[ALIGN] pooling round 3: active 0/8
+[ALIGN] pooling round 4: active 0/8
+[ALIGN] pooling round 5: active 0/8
+[ALIGN] pooling round 6: active 0/8
+[ALIGN] pooling round 7: active 0/8
+[ALIGN] pooling round 8: active 0/8
+[ALIGN] pooling round 9: active 0/8
+[ALIGN] pooling round 10: active 0/8
+[ALIGN] pooling round 11: active 0/8
+[ALIGN] pooling round 12: active 0/8
+Traceback (most recent call last):
+  File "/data/liyan/es-at-scale/scripts/grad_alignment.py", line 366, in <module>
+    main()
+  File "/data/liyan/es-at-scale/scripts/grad_alignment.py", line 294, in main
+    assert P_prompts, "no active groups found"
+           ^^^^^^^^^
+AssertionError: no active groups found

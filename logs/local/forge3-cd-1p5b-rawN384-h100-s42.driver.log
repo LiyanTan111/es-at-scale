@@ -1,0 +1,7 @@
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] GPU 1 memory.used=0 MiB
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] GPU 2 memory.used=4 MiB
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] FORGE_MASTER_PORT=32981
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] NCCL_P2P_DISABLE=1
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] start Fri Sep 11 02:53:48 PM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=1,2 engines=2 sigma=1e-3 lr=6.4e-4 G=8 B=8 iters=4000
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] attempt 1: resume-from iter 424 Fri Sep 11 02:53:48 PM PDT 2026
+[LOCAL forge3-cd-1p5b-rawN384-h100-s42] driver got signal; forwarding TERM to trainer 3739641

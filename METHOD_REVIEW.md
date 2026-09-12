@@ -415,3 +415,28 @@ still rising), ratchet warm-up 200 / drop 0.03 / patience 3 as a reset. 4000 ite
 GPUs (1,4), started 14:55 PT. Companion on GPU 3 after the ES parity run: the same recipe with
 **FORGE_FP32_MASTER=1** (B6) for 1500 iterations — a direct A/B on the rounding effect.
 GRPO final: 45.9% @2000 steps (1.0M generations; 42–48% over the last 500 steps).
+
+## R12 (2026-09-11 15:10, project paused) — two results captured at the stop
+
+**1. F3 (raw, N=384, η=1.6e-4, ratchet warm-up 200) is the best FORGE run so far.**
+At iteration 400 when it was stopped: 8.7% @325 → 10.6% @350 → 10.8% @375 → **11.6% @400**,
+still rising, ratchet had fired once (lr_scale 0.5), best_avg 0.116. For comparison at the
+same iteration count: F1/v2 z-score ≈ 4.6%, NERSC v2 ≈ 5.9%. Previous all-time FORGE best was
+11.0% (N=384/η=6.4e-4 probe at iteration 200, which then collapsed by 225). **F3 reached a
+higher number at 400 iterations without collapsing** — consistent with the R10 prediction that
+a moderate η with large N trades speed for a longer usable horizon. Resume point saved.
+
+**2. The ES-on-H100 gap is NOT bf16 perturb/restore drift.** ES with `ES_MASTER_COPY=1`
+(bitwise-exact restore, fp32 update) vs the original in-place bf16 ES, same seed, same box:
+
+| iteration | 50 | 100 | 150 | 200 | 250 | 270 |
+|---|---|---|---|---|---|---|
+| ES original (2 engines) | 15.2 | 17.1 | 19.2 | 19.7 | 20.6 | 21.1 |
+| ES master-copy (1 engine) | 15.3 | 17.0 | 20.2 | 22.1 | 22.5 | 23.7 |
+
+Master-copy is ~2 pp ahead at matched iterations but on the same trajectory — heading for
+mid-20s, not NERSC's 37.9%. Drift is a small effect; **the H100/NERSC ES discrepancy remains
+unexplained** and is the top open question for the ES baseline (candidates not yet tested:
+vLLM sampling/batching differences in greedy decoding at different engine counts, the eval
+sharding path, or the NERSC run's relay-hop resumes acting as an implicit reset). Stopped at
+iteration 270/500; resume point saved.

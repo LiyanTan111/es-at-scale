@@ -1,0 +1,12 @@
+[STAB] model Qwen/Qwen2.5-1.5B-Instruct d=1543.7M pairs=16 L(theta)=-0.087573
+[STAB] |g|^2=14.8673  g^T H g/|g|^2=6.8896e+01  (5s)
+[STAB] tr(H) via h=0.0001: -1.4586e+03 ± 4.4e+02  (uHu samples: min -5.849e+03 max 4.306e+03)
+[STAB] tr(H) via h=0.0002: -1.4364e+03 ± 4.4e+02  (uHu samples: min -5.801e+03 max 4.333e+03)
+[STAB] tr(H) via h=0.0005: -1.3799e+03 ± 4.2e+02  (uHu samples: min -5.412e+03 max 4.244e+03)
+[STAB] tr(H) via h=0.001: -1.1166e+03 ± 3.8e+02  (uHu samples: min -4.278e+03 max 3.979e+03)
+[STAB] random noise h=0.0005: dL_pos=+0.0012 dL_neg=-0.0018 | mean dlogpi: pos-adv seqs -0.0037, neg-adv seqs -0.0047 (n_pos=3, n_neg=13)
+[STAB] random noise h=0.001: dL_pos=+0.0054 dL_neg=-0.0070 | mean dlogpi: pos-adv seqs -0.0156, neg-adv seqs -0.0186 (n_pos=3, n_neg=13)
+[STAB] N=   64 | <ghat,g>=  12.21 (|g|^2=14.87) | mean|g_j|^2(fwd)=  187.22 | fit a=12.246 b=-3.266e-04 -> eta_opt=nan eta_max=nan | pred eta_opt=-6.63e-03 eta_max=-1.33e-02 | best grid eta=2.67e-05 dL=-0.0003 | 16s
+       dL(eta): 2.7e-05:-0.0003
+       bf16 update survival at eta 2.7e-05:0.96
+[STAB] wrote /data/liyan/runs/grzo-smoke/align/curvature_check_1p5b.json

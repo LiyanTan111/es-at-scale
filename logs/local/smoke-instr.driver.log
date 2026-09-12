@@ -1,0 +1,7 @@
+[LOCAL smoke-instr] GPU 3 memory.used=0 MiB
+[LOCAL smoke-instr] GPU 4 memory.used=0 MiB
+[LOCAL smoke-instr] FORGE_MASTER_PORT=35482
+[LOCAL smoke-instr] start Thu Sep 10 12:05:25 PM PDT 2026: model=Qwen/Qwen2.5-0.5B-Instruct gpus=3,4 engines=2 sigma=1e-3 lr=5e-4 G=8 B=8 iters=3
+[LOCAL smoke-instr] attempt 1: resume-from iter -1 Thu Sep 10 12:05:25 PM PDT 2026
+[LOCAL smoke-instr] trainer exited rc=0 at iter 3 Thu Sep 10 12:08:01 PM PDT 2026
+[LOCAL smoke-instr] DONE at iter 3 Thu Sep 10 12:08:01 PM PDT 2026

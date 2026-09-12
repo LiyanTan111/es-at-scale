@@ -1,0 +1,6 @@
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] GPU 1 memory.used=0 MiB
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] GPU 4 memory.used=0 MiB
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] FORGE_MASTER_PORT=48750
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] NCCL_P2P_DISABLE=1
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] start Fri Sep 11 02:53:45 PM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=1,4 engines=2 sigma=1e-3 lr=1.6e-4 G=8 B=8 iters=4000
+[LOCAL forge4-cd-1p5b-rawN384-lr1.6e-4-h100-s42] attempt 1: resume-from iter -1 Fri Sep 11 02:53:45 PM PDT 2026

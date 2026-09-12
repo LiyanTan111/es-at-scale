@@ -1,0 +1,11 @@
+[LOCAL forge2-cd-1p5b-h100-s42] GPU 1 memory.used=0 MiB
+[LOCAL forge2-cd-1p5b-h100-s42] GPU 2 memory.used=0 MiB
+[LOCAL forge2-cd-1p5b-h100-s42] FORGE_MASTER_PORT=31320
+[LOCAL forge2-cd-1p5b-h100-s42] NCCL_P2P_DISABLE=1
+[LOCAL forge2-cd-1p5b-h100-s42] start Thu Sep 10 12:11:50 PM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=1,2 engines=2 sigma=1e-3 lr=5e-4 G=8 B=8 iters=4000
+[LOCAL forge2-cd-1p5b-h100-s42] attempt 1: resume-from iter -1 Thu Sep 10 12:11:50 PM PDT 2026
+[LOCAL forge2-cd-1p5b-h100-s42] trainer exited rc=143 at iter 4000 Fri Sep 11 07:52:35 AM PDT 2026
+[LOCAL forge2-cd-1p5b-h100-s42] DONE at iter 4000 Fri Sep 11 07:52:35 AM PDT 2026
+scripts/local_forge.sh: line 157: us: command not found
+scripts/local_forge.sh: line 160: syntax error near unexpected token `)'
+scripts/local_forge.sh: line 160: `    ) >> "$LOGDIR/$EXPNAME.log" 2>&1 &'

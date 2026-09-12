@@ -1,0 +1,8 @@
+[LOCAL probe-1p5b-v2-speed] GPU 1 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-speed] GPU 2 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-speed] GPU 3 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-speed] GPU 4 memory.used=0 MiB
+[LOCAL probe-1p5b-v2-speed] start Thu Sep 10 11:43:09 AM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=1,2,3,4 engines=4 sigma=1e-3 lr=5e-4 G=8 B=8 iters=30
+[LOCAL probe-1p5b-v2-speed] attempt 1: resume-from iter -1 Thu Sep 10 11:43:09 AM PDT 2026
+[LOCAL probe-1p5b-v2-speed] trainer exited rc=0 at iter 30 Thu Sep 10 11:52:49 AM PDT 2026
+[LOCAL probe-1p5b-v2-speed] DONE at iter 30 Thu Sep 10 11:52:49 AM PDT 2026

@@ -1,0 +1,6 @@
+[LOCAL forge-raw-N96-lr4e-5-s42] GPU 4 memory.used=0 MiB
+[LOCAL forge-raw-N96-lr4e-5-s42] FORGE_MASTER_PORT=30592
+[LOCAL forge-raw-N96-lr4e-5-s42] NCCL_P2P_DISABLE=1
+[LOCAL forge-raw-N96-lr4e-5-s42] start Thu Sep 10 06:59:04 PM PDT 2026: model=Qwen/Qwen2.5-1.5B-Instruct gpus=4 engines=1 sigma=1e-3 lr=4e-5 G=8 B=8 iters=400
+[LOCAL forge-raw-N96-lr4e-5-s42] attempt 1: resume-from iter -1 Thu Sep 10 06:59:04 PM PDT 2026
+[LOCAL forge-raw-N96-lr4e-5-s42] driver got signal; forwarding TERM to trainer 670544

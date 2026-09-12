@@ -1,0 +1,126 @@
+INFO 09-11 07:53:53 [__init__.py:216] Automatically detected platform cuda.
+2026-09-11 07:54:06,172	INFO worker.py:2024 -- Started a local Ray instance.
+[ENGINES] inter-engine rendezvous 128.111.185.29:51760
+[36m(pid=2739395)[0m INFO 09-11 07:54:13 [__init__.py:216] Automatically detected platform cuda.
+[33m(raylet)[0m [2026-09-11 07:54:15,075 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.96 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:16 [utils.py:233] non-default args: {'dtype': 'bfloat16', 'max_model_len': 4096, 'distributed_executor_backend': 'ray', 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.7, 'disable_log_stats': True, 'worker_extension_cls': 'es_at_scale.utils.worker_extension.WorkerExtension', 'model': 'Qwen/Qwen2.5-1.5B-Instruct'}
+[36m(ESNcclLLM pid=2739395)[0m WARNING 09-11 07:54:16 [model.py:371] The global random seed is set to 0. Since VLLM_ENABLE_V1_MULTIPROCESSING is set to False, this may affect the random state of the Python process that launched vLLM.
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:16 [model.py:547] Resolved architecture: Qwen2ForCausalLM
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:16 [model.py:1510] Using max model len 4096
+[36m(ESNcclLLM pid=2739395)[0m `torch_dtype` is deprecated! Use `dtype` instead!
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:17 [arg_utils.py:1215] Using ray runtime env: {}
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:17 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=16384.
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:18 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen2.5-1.5B-Instruct', speculative_config=None, tokenizer='Qwen/Qwen2.5-1.5B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen2.5-1.5B-Instruct, enable_prefix_caching=False, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:18 [ray_utils.py:295] Ray is already initialized. Skipping Ray initialization.
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:18 [ray_utils.py:324] Using the existing placement group
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:18 [ray_distributed_executor.py:171] use_ray_spmd_worker: True
+[36m(pid=2739393)[0m INFO 09-11 07:54:22 [__init__.py:216] Automatically detected platform cuda.
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:24 [ray_env.py:63] RAY_NON_CARRY_OVER_ENV_VARS from config: set()
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:24 [ray_env.py:65] Copying the following environment variables to workers: ['VLLM_USE_RAY_COMPILED_DAG', 'VLLM_USE_RAY_SPMD_WORKER', 'VLLM_ENABLE_V1_MULTIPROCESSING', 'VLLM_USE_V1']
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:24 [ray_env.py:68] If certain env vars should NOT be copied, add them to /home/liyan/.config/vllm/ray_non_carry_over_env_vars.json file
+[33m(raylet)[0m [2026-09-11 07:54:25,087 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.96 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:28 [worker_base.py:243] Injected <class 'es_at_scale.utils.worker_extension.WorkerExtension'> into <class 'vllm.v1.worker.gpu_worker.Worker'> for extended collective_rpc calls ['_set_seed', '_tp_rank_suffix', 'broadcast_all_weights', 'direction_stats', 'init_inter_engine_group', 'load_weights_from_disk', 'perturb_from_master', 'perturb_self_weights', 'restore_from_master', 'restore_self_weights', 'save_master_weights', 'save_self_initial_weights', 'save_self_weights_to_disk', 'update_weights_from_seeds', 'update_weights_from_seeds_fp32']
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m [Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:30 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[36m(RayWorkerWrapper pid=2739393)[0m WARNING 09-11 07:54:30 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:30 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen2.5-1.5B-Instruct...
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:30 [gpu_model_runner.py:2634] Loading model from scratch...
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:30 [cuda.py:366] Using Flash Attention backend on V1 engine.
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:31 [weight_utils.py:392] Using model weights format ['*.safetensors']
+[36m(RayWorkerWrapper pid=2739393)[0m Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:31 [weight_utils.py:450] No model.safetensors.index.json found in remote.
+[36m(RayWorkerWrapper pid=2739393)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  2.26it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:00<00:00,  2.26it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m 
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:31 [default_loader.py:267] Loading weights took 0.58 seconds
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:32 [gpu_model_runner.py:2653] Model loading took 2.8876 GiB and 1.077730 seconds
+[33m(raylet)[0m [2026-09-11 07:54:35,100 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.96 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:35 [backends.py:548] Using cache directory: /home/liyan/.cache/vllm/torch_compile_cache/8220326b2b/rank_0_0/backbone for vLLM's torch.compile
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:35 [backends.py:559] Dynamo bytecode transform time: 3.15 s
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:36 [backends.py:164] Directly load the compiled graph(s) for dynamic shape from the cache, took 0.927 s
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:37 [monitor.py:34] torch.compile takes 3.15 s in total
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:38 [gpu_worker.py:298] Available KV cache memory: 56.55 GiB
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:38 [kv_cache_utils.py:1087] GPU KV cache size: 2,117,760 tokens
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:38 [kv_cache_utils.py:1091] Maximum concurrency for 4,096 tokens per request: 517.03x
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   6%|▌         | 4/67 [00:00<00:01, 39.84it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  13%|█▎        | 9/67 [00:00<00:01, 43.03it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  21%|██        | 14/67 [00:00<00:01, 43.83it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  28%|██▊       | 19/67 [00:00<00:01, 43.60it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  36%|███▌      | 24/67 [00:00<00:01, 42.87it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  43%|████▎     | 29/67 [00:00<00:00, 41.59it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  51%|█████     | 34/67 [00:00<00:00, 39.86it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  58%|█████▊    | 39/67 [00:00<00:00, 38.99it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  64%|██████▍   | 43/67 [00:01<00:00, 38.20it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  70%|███████   | 47/67 [00:01<00:00, 37.47it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  76%|███████▌  | 51/67 [00:01<00:00, 36.61it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  82%|████████▏ | 55/67 [00:01<00:00, 34.84it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  88%|████████▊ | 59/67 [00:01<00:00, 34.45it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  94%|█████████▍| 63/67 [00:01<00:00, 34.55it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 67/67 [00:01<00:00, 38.17it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):   0%|          | 0/67 [00:00<?, ?it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):   7%|▋         | 5/67 [00:00<00:01, 48.36it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  16%|█▋        | 11/67 [00:00<00:01, 52.08it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  25%|██▌       | 17/67 [00:00<00:00, 53.06it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  34%|███▍      | 23/67 [00:00<00:00, 52.92it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  43%|████▎     | 29/67 [00:00<00:00, 52.45it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  52%|█████▏    | 35/67 [00:00<00:00, 52.36it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  61%|██████    | 41/67 [00:00<00:00, 52.74it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  70%|███████   | 47/67 [00:00<00:00, 52.97it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  79%|███████▉  | 53/67 [00:01<00:00, 53.35it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  88%|████████▊ | 59/67 [00:01<00:00, 53.75it/s]
+[36m(RayWorkerWrapper pid=2739393)[0m Capturing CUDA graphs (decode, FULL):  97%|█████████▋| 65/67 [00:01<00:00, 54.34it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 67/67 [00:01<00:00, 53.33it/s]
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:42 [core.py:210] init engine (profile, create kv cache, warmup model) took 10.01 seconds
+[36m(RayWorkerWrapper pid=2739393)[0m INFO 09-11 07:54:42 [gpu_model_runner.py:3480] Graph capturing finished in 4 secs, took 0.94 GiB
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:43 [llm.py:306] Supported_tasks: ('generate',)
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:43 [ray_distributed_executor.py:552] RAY_CGRAPH_get_timeout is set to 300
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:43 [ray_distributed_executor.py:554] VLLM_USE_RAY_COMPILED_DAG_CHANNEL_TYPE = auto
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:43 [ray_distributed_executor.py:556] VLLM_USE_RAY_COMPILED_DAG_OVERLAP_COMM = False
+[36m(ESNcclLLM pid=2739395)[0m INFO 09-11 07:54:43 [ray_distributed_executor.py:621] Using RayPPCommunicator (which wraps vLLM _PP GroupCoordinator) for Ray Compiled Graph communication.
+[33m(raylet)[0m [2026-09-11 07:54:45,111 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0: {'train200': {'shaped': 0.09290000000000001, 'acc': 0.015}, 'eval500': {'shaped': 0.08480000000000001, 'acc': 0.016}}
+[33m(raylet)[0m [2026-09-11 07:54:55,121 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.0001 seed=0: train200: acc 0.0150 shaped 0.0948 | eval500: acc 0.0100 shaped 0.0848
+[33m(raylet)[0m [2026-09-11 07:55:05,133 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.0001 seed=1: train200: acc 0.0100 shaped 0.0836 | eval500: acc 0.0060 shaped 0.0790
+[33m(raylet)[0m [2026-09-11 07:55:15,156 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.0001 seed=2: train200: acc 0.0200 shaped 0.0942 | eval500: acc 0.0040 shaped 0.0734
+[TOL] h=0.00025 seed=0: train200: acc 0.0150 shaped 0.1080 | eval500: acc 0.0140 shaped 0.1035
+[33m(raylet)[0m [2026-09-11 07:55:25,169 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.00025 seed=1: train200: acc 0.0050 shaped 0.0904 | eval500: acc 0.0100 shaped 0.0941
+[33m(raylet)[0m [2026-09-11 07:55:35,178 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.00025 seed=2: train200: acc 0.0200 shaped 0.0974 | eval500: acc 0.0100 shaped 0.0878
+[TOL] h=0.0005 seed=0: train200: acc 0.0050 shaped 0.0959 | eval500: acc 0.0180 shaped 0.1092
+[33m(raylet)[0m [2026-09-11 07:55:45,188 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.0005 seed=1: train200: acc 0.0000 shaped 0.0936 | eval500: acc 0.0040 shaped 0.0930
+[TOL] h=0.0005 seed=2: train200: acc 0.0150 shaped 0.1001 | eval500: acc 0.0060 shaped 0.0894
+[33m(raylet)[0m [2026-09-11 07:55:55,198 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.001 seed=0: train200: acc 0.0050 shaped 0.0862 | eval500: acc 0.0140 shaped 0.1030
+[33m(raylet)[0m [2026-09-11 07:56:05,208 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.95 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.001 seed=1: train200: acc 0.0050 shaped 0.0853 | eval500: acc 0.0000 shaped 0.0816
+[TOL] h=0.001 seed=2: train200: acc 0.0000 shaped 0.0857 | eval500: acc 0.0000 shaped 0.0857
+[33m(raylet)[0m [2026-09-11 07:56:15,221 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.002 seed=0: train200: acc 0.0100 shaped 0.1055 | eval500: acc 0.0240 shaped 0.1193
+[33m(raylet)[0m [2026-09-11 07:56:25,248 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.002 seed=1: train200: acc 0.0000 shaped 0.0838 | eval500: acc 0.0120 shaped 0.0959
+[33m(raylet)[0m [2026-09-11 07:56:35,261 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.002 seed=2: train200: acc 0.0000 shaped 0.0433 | eval500: acc 0.0080 shaped 0.0543
+[TOL] h=0.004 seed=0: train200: acc 0.0150 shaped 0.0743 | eval500: acc 0.0180 shaped 0.0801
+[33m(raylet)[0m [2026-09-11 07:56:45,272 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.004 seed=1: train200: acc 0.0000 shaped 0.0710 | eval500: acc 0.0000 shaped 0.0716
+[33m(raylet)[0m [2026-09-11 07:56:55,281 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.004 seed=2: train200: acc 0.0000 shaped 0.0177 | eval500: acc 0.0000 shaped 0.0191
+[33m(raylet)[0m [2026-09-11 07:57:05,293 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.008 seed=0: train200: acc 0.0000 shaped 0.0000 | eval500: acc 0.0000 shaped 0.0000
+[33m(raylet)[0m [2026-09-11 07:57:15,306 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.008 seed=1: train200: acc 0.0000 shaped 0.0033 | eval500: acc 0.0000 shaped 0.0031
+[33m(raylet)[0m [2026-09-11 07:57:25,319 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[33m(raylet)[0m [2026-09-11 07:57:35,333 E 2739122 2739151] (raylet) file_system_monitor.cc:116: /data/liyan/ray_tmp/session_2026-09-11_07-53-56_495703_2735641 is over 95% full, available space: 1204.94 GB; capacity: 28496.1 GB. Object creation will fail if spilling is required.
+[TOL] h=0.008 seed=2: train200: acc 0.0000 shaped 0.0000 | eval500: acc 0.0000 shaped 0.0000
+[TOL] wrote /data/liyan/runs/grzo-smoke/noise/noise_tolerance_1p5b.json
+[INFO] Cleanup complete.
